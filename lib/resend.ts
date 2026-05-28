@@ -10,6 +10,12 @@ const audienceEnvByType: Record<SubmissionType, string> = {
 
 const requiredNotifyEmail = "support@getonvibe.com";
 
+type LeadEmailResult = {
+  internalNotificationAttempted: boolean;
+  internalNotificationSucceeded: boolean;
+  confirmationSucceeded: boolean;
+};
+
 export function getLeadTags(type: SubmissionType) {
   if (type === "attendee") {
     return ["attendee", "app-launch"];
@@ -37,10 +43,13 @@ export function getEmailConfigStatus() {
 }
 
 function getNotifyRecipients() {
+  const configuredRecipients = process.env.LEADS_NOTIFY_EMAIL
+    ? process.env.LEADS_NOTIFY_EMAIL.split(/[;,]/)
+    : [];
+
   return Array.from(
     new Set(
-      [requiredNotifyEmail, process.env.LEADS_NOTIFY_EMAIL]
-        .filter((email): email is string => Boolean(email))
+      [requiredNotifyEmail, ...configuredRecipients]
         .map((email) => email.trim().toLowerCase())
         .filter(Boolean),
     ),
@@ -168,7 +177,7 @@ export async function upsertAudienceContact(payload: SignupPayload) {
   }
 }
 
-export async function sendLeadEmails(payload: SignupPayload) {
+export async function sendLeadEmails(payload: SignupPayload): Promise<LeadEmailResult> {
   const resend = getResendClient();
   const from = process.env.RESEND_FROM_EMAIL;
   const notifyRecipients = getNotifyRecipients();
@@ -180,24 +189,43 @@ export async function sendLeadEmails(payload: SignupPayload) {
   const internal = buildInternalNotificationEmail(payload);
   const confirmation = buildConfirmationEmail(payload);
 
-  await Promise.all([
-    resend.emails.send({
-      from,
-      to: notifyRecipients,
-      subject: internal.subject,
-      html: internal.html,
-    }),
-    resend.emails.send({
+  const internalResults = await Promise.allSettled(
+    notifyRecipients.map((recipient) =>
+      resend.emails.send({
+        from,
+        to: recipient,
+        subject: internal.subject,
+        html: internal.html,
+      }),
+    ),
+  );
+
+  const failedInternalCount = internalResults.filter((result) => result.status === "rejected").length;
+
+  if (failedInternalCount > 0) {
+    console.error("Internal lead notification send failed", {
+      submissionType: payload.type,
+      failedRecipientCount: failedInternalCount,
+      totalRecipientCount: notifyRecipients.length,
+    });
+  }
+
+  await resend.emails.send({
       from,
       to: payload.email,
       subject: confirmation.subject,
       html: confirmation.html,
-    }),
-  ]);
+  });
 
   try {
     await upsertAudienceContact(payload);
   } catch (error) {
     console.warn("Resend audience contact sync failed", error instanceof Error ? error.message : "Unknown error");
   }
+
+  return {
+    internalNotificationAttempted: notifyRecipients.length > 0,
+    internalNotificationSucceeded: failedInternalCount === 0,
+    confirmationSucceeded: true,
+  };
 }

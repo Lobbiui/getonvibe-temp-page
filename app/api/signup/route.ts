@@ -5,6 +5,20 @@ import { signupSchema, successMessages } from "@/lib/validation";
 
 export const runtime = "nodejs";
 
+function withDevelopmentDebug(
+  body: Record<string, unknown>,
+  debug: Record<string, unknown>,
+) {
+  if (process.env.NODE_ENV === "production") {
+    return body;
+  }
+
+  return {
+    ...body,
+    debug,
+  };
+}
+
 function validationResponse(error: ZodError) {
   const fieldErrors = error.issues.reduce<Record<string, string>>((acc, issue) => {
     const field = issue.path.join(".");
@@ -72,7 +86,20 @@ export async function POST(request: Request) {
   }
 
   try {
-    await sendLeadEmails(parsed.data);
+    const emailResult = await sendLeadEmails(parsed.data);
+
+    return NextResponse.json(
+      withDevelopmentDebug(
+        {
+          ok: true,
+          message: successMessages[parsed.data.type],
+        },
+        {
+          internalNotificationAttempted: emailResult.internalNotificationAttempted,
+          internalNotificationSucceeded: emailResult.internalNotificationSucceeded,
+        },
+      ),
+    );
   } catch (error) {
     console.error("Signup email send failed", error instanceof Error ? error.message : "Unknown error");
     return NextResponse.json(
@@ -83,9 +110,4 @@ export async function POST(request: Request) {
       { status: 500 },
     );
   }
-
-  return NextResponse.json({
-    ok: true,
-    message: successMessages[parsed.data.type],
-  });
 }
