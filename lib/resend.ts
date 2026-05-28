@@ -8,6 +8,8 @@ const audienceEnvByType: Record<SubmissionType, string> = {
   "food-vendor": "RESEND_FOOD_VENDOR_AUDIENCE_ID",
 };
 
+const requiredNotifyEmail = "support@getonvibe.com";
+
 export function getLeadTags(type: SubmissionType) {
   if (type === "attendee") {
     return ["attendee", "app-launch"];
@@ -30,8 +32,19 @@ export function getEmailConfigStatus() {
   return {
     hasApiKey: Boolean(process.env.RESEND_API_KEY),
     hasFromEmail: Boolean(process.env.RESEND_FROM_EMAIL),
-    hasNotifyEmail: Boolean(process.env.LEADS_NOTIFY_EMAIL),
+    notifyRecipients: getNotifyRecipients(),
   };
+}
+
+function getNotifyRecipients() {
+  return Array.from(
+    new Set(
+      [requiredNotifyEmail, process.env.LEADS_NOTIFY_EMAIL]
+        .filter((email): email is string => Boolean(email))
+        .map((email) => email.trim().toLowerCase())
+        .filter(Boolean),
+    ),
+  );
 }
 
 function htmlEscape(value: string) {
@@ -158,9 +171,9 @@ export async function upsertAudienceContact(payload: SignupPayload) {
 export async function sendLeadEmails(payload: SignupPayload) {
   const resend = getResendClient();
   const from = process.env.RESEND_FROM_EMAIL;
-  const notify = process.env.LEADS_NOTIFY_EMAIL;
+  const notifyRecipients = getNotifyRecipients();
 
-  if (!resend || !from || !notify) {
+  if (!resend || !from) {
     throw new Error("Email configuration is incomplete.");
   }
 
@@ -170,7 +183,7 @@ export async function sendLeadEmails(payload: SignupPayload) {
   await Promise.all([
     resend.emails.send({
       from,
-      to: notify,
+      to: notifyRecipients,
       subject: internal.subject,
       html: internal.html,
     }),
@@ -180,6 +193,11 @@ export async function sendLeadEmails(payload: SignupPayload) {
       subject: confirmation.subject,
       html: confirmation.html,
     }),
-    upsertAudienceContact(payload),
   ]);
+
+  try {
+    await upsertAudienceContact(payload);
+  } catch (error) {
+    console.warn("Resend audience contact sync failed", error instanceof Error ? error.message : "Unknown error");
+  }
 }

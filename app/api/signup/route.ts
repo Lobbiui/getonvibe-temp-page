@@ -30,7 +30,7 @@ function missingEmailConfigResponse() {
   const isProduction = process.env.NODE_ENV === "production";
   const message = isProduction
     ? "Signup email service is not configured. Please try again later."
-    : "Signup email service is not configured. Set RESEND_API_KEY, RESEND_FROM_EMAIL, and LEADS_NOTIFY_EMAIL.";
+    : "Signup email service is not configured. Set RESEND_API_KEY and RESEND_FROM_EMAIL.";
 
   if (!isProduction) {
     const status = getEmailConfigStatus();
@@ -67,7 +67,7 @@ export async function POST(request: Request) {
 
   const config = getEmailConfigStatus();
 
-  if (!config.hasApiKey || !config.hasFromEmail || !config.hasNotifyEmail) {
+  if (!config.hasApiKey || !config.hasFromEmail) {
     return missingEmailConfigResponse();
   }
 
