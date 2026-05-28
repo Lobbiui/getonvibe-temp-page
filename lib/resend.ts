@@ -40,6 +40,7 @@ export function getEmailConfigStatus() {
   return {
     hasApiKey: Boolean(process.env.RESEND_API_KEY),
     hasFromEmail: Boolean(process.env.RESEND_FROM_EMAIL),
+    hasInternalFromEmail: Boolean(getInternalFromEmail()),
     notifyRecipients: getNotifyRecipients(),
   };
 }
@@ -60,6 +61,14 @@ function getNotifyRecipients() {
 
 function resendSendFailed(result: ResendSendResult) {
   return Boolean(result.error);
+}
+
+function getInternalFromEmail() {
+  return process.env.RESEND_INTERNAL_FROM_EMAIL || process.env.RESEND_FROM_EMAIL;
+}
+
+function getReplyToEmail(payload: SignupPayload) {
+  return payload.email;
 }
 
 function htmlEscape(value: string) {
@@ -186,9 +195,10 @@ export async function upsertAudienceContact(payload: SignupPayload) {
 export async function sendLeadEmails(payload: SignupPayload): Promise<LeadEmailResult> {
   const resend = getResendClient();
   const from = process.env.RESEND_FROM_EMAIL;
+  const internalFrom = getInternalFromEmail();
   const notifyRecipients = getNotifyRecipients();
 
-  if (!resend || !from) {
+  if (!resend || !from || !internalFrom) {
     throw new Error("Email configuration is incomplete.");
   }
 
@@ -198,9 +208,10 @@ export async function sendLeadEmails(payload: SignupPayload): Promise<LeadEmailR
   const internalResults = await Promise.allSettled(
     notifyRecipients.map((recipient) =>
       resend.emails.send({
-        from,
+        from: internalFrom,
         to: recipient,
-        subject: internal.subject,
+        replyTo: getReplyToEmail(payload),
+        subject: `[ACTION REQUIRED] ${internal.subject}`,
         html: internal.html,
       }),
     ),
