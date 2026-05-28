@@ -8,7 +8,7 @@ const audienceEnvByType: Record<SubmissionType, string> = {
   "food-vendor": "RESEND_FOOD_VENDOR_AUDIENCE_ID",
 };
 
-const requiredNotifyEmail = "support@getonvibe.com";
+const requiredNotifyEmails = ["support@getonvibe.com", "office@lobbicore.com"];
 
 type LeadEmailResult = {
   internalNotificationAttempted: boolean;
@@ -52,7 +52,7 @@ function getNotifyRecipients() {
 
   return Array.from(
     new Set(
-      [requiredNotifyEmail, ...configuredRecipients]
+      [...requiredNotifyEmails, ...configuredRecipients]
         .map((email) => email.trim().toLowerCase())
         .filter(Boolean),
     ),
