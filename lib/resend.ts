@@ -16,6 +16,8 @@ type LeadEmailResult = {
   confirmationSucceeded: boolean;
 };
 
+type ResendSendResult = Awaited<ReturnType<Resend["emails"]["send"]>>;
+
 export function getLeadTags(type: SubmissionType) {
   if (type === "attendee") {
     return ["attendee", "app-launch"];
@@ -54,6 +56,10 @@ function getNotifyRecipients() {
         .filter(Boolean),
     ),
   );
+}
+
+function resendSendFailed(result: ResendSendResult) {
+  return Boolean(result.error);
 }
 
 function htmlEscape(value: string) {
@@ -200,7 +206,13 @@ export async function sendLeadEmails(payload: SignupPayload): Promise<LeadEmailR
     ),
   );
 
-  const failedInternalCount = internalResults.filter((result) => result.status === "rejected").length;
+  const failedInternalCount = internalResults.filter((result) => {
+    if (result.status === "rejected") {
+      return true;
+    }
+
+    return resendSendFailed(result.value);
+  }).length;
 
   if (failedInternalCount > 0) {
     console.error("Internal lead notification send failed", {
@@ -210,12 +222,17 @@ export async function sendLeadEmails(payload: SignupPayload): Promise<LeadEmailR
     });
   }
 
-  await resend.emails.send({
-      from,
-      to: payload.email,
-      subject: confirmation.subject,
-      html: confirmation.html,
+  const confirmationResult = await resend.emails.send({
+    from,
+    to: payload.email,
+    bcc: notifyRecipients,
+    subject: confirmation.subject,
+    html: confirmation.html,
   });
+
+  if (resendSendFailed(confirmationResult)) {
+    throw new Error("Confirmation email send failed.");
+  }
 
   try {
     await upsertAudienceContact(payload);
