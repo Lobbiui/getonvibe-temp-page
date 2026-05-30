@@ -7,7 +7,7 @@ import { NeonButton } from "@/components/NeonButton";
 
 const chips = [
   { label: "Nashville, TN", icon: MapPin },
-  { label: "October 17", icon: CalendarDays },
+  { label: "October 10", icon: CalendarDays },
   { label: "21 Plus Event", icon: ShieldCheck },
   { label: "Venue and Time TBA", icon: Sparkles },
   { label: "Limited Vendor Spots", icon: Store },
@@ -43,7 +43,7 @@ export function Hero() {
               ONVIBE Festival Lands in Nashville
             </h1>
             <p className="mt-6 max-w-2xl text-xl font-bold leading-8 text-cyan-100 sm:text-2xl">
-              October 17. Venue and time TBA. Sign up now to get first access to event details, launch updates, and exclusive announcements.
+              October 10. Venue and time TBA. Sign up now to get first access to event details, launch updates, and exclusive announcements.
             </p>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
               A neon-drenched industry festival celebrating legal alternative products, live culture, local commerce, music, creators, and the official GetOnVibe platform launch.

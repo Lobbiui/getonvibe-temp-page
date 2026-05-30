@@ -7,11 +7,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "ONVIBE Festival Nashville | GetOnVibe Launch",
   description:
-    "Sign up for ONVIBE Festival in Nashville on October 17 and get updates on the official GetOnVibe platform launch. Venue and time TBA. 21 plus event.",
+    "Sign up for ONVIBE Festival in Nashville on October 10 and get updates on the official GetOnVibe platform launch. Venue and time TBA. 21 plus event.",
   openGraph: {
     title: "ONVIBE Festival Nashville | GetOnVibe Launch",
     description:
-      "Sign up for ONVIBE Festival in Nashville on October 17 and get updates on the official GetOnVibe platform launch. Venue and time TBA. 21 plus event.",
+      "Sign up for ONVIBE Festival in Nashville on October 10 and get updates on the official GetOnVibe platform launch. Venue and time TBA. 21 plus event.",
     url: siteUrl,
     siteName: "ONVIBE Festival",
     images: [
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ONVIBE Festival Nashville | GetOnVibe Launch",
     description:
-      "Sign up for ONVIBE Festival in Nashville on October 17 and get updates on the official GetOnVibe platform launch. Venue and time TBA. 21 plus event.",
+      "Sign up for ONVIBE Festival in Nashville on October 10 and get updates on the official GetOnVibe platform launch. Venue and time TBA. 21 plus event.",
     images: ["/logos/OnVibeFestival.png"],
   },
 };
@@ -43,8 +43,8 @@ const eventJsonLd = {
   "@type": "Event",
   name: "ONVIBE Festival",
   description:
-    "ONVIBE Festival in Nashville on October 17, co-launching with the official GetOnVibe platform rollout. Venue and time TBA. 21 plus event.",
-  startDate: "2026-10-17",
+    "ONVIBE Festival in Nashville on October 10, co-launching with the official GetOnVibe platform rollout. Venue and time TBA. 21 plus event.",
+  startDate: "2026-10-10",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   eventStatus: "https://schema.org/EventScheduled",
   location: {

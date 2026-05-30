@@ -9,7 +9,7 @@ export function FinalCTA() {
           Nashville gets the launch first.
         </p>
         <h2 className="neon-text mx-auto mt-4 max-w-4xl text-4xl font-black leading-tight text-white sm:text-6xl">
-          October 17 is coming.
+          October 10 is coming.
         </h2>
         <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-slate-300">
           Venue, time, judges, and exclusive updates go to the list first.

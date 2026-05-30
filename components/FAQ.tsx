@@ -4,7 +4,7 @@ const faqs = [
   {
     question: "When and where is ONVIBE Festival?",
     answer:
-      "Nashville, TN on October 17. Venue and time are TBA and will be sent first to registered subscribers.",
+      "Nashville, TN on October 10. Venue and time are TBA and will be sent first to registered subscribers.",
   },
   {
     question: "Is this a 21 plus event?",
