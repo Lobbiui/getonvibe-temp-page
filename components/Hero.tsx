@@ -14,6 +14,12 @@ const chips = [
   { label: "Legal Hemp and COA Required Brand Partners", icon: CheckCircle2 },
 ];
 
+const competitionBadges = [
+  { prize: "$1,000", label: "Costume Competition" },
+  { prize: "$1,000", label: "Dance Competition" },
+  { prize: "$500", label: "GetOnVibe Selfie Competition" },
+];
+
 export function Hero() {
   return (
     <header className="relative min-h-screen px-4 pb-14 pt-4 sm:px-6 lg:px-8">
@@ -49,8 +55,36 @@ export function Hero() {
               A neon-drenched industry festival celebrating legal alternative products, live culture, local commerce, music, creators, and the official GetOnVibe platform launch.
             </p>
 
+            <motion.div
+              className="glass-panel glow-border mt-7 rounded-lg p-4 sm:p-5"
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.18, ease: "easeOut" }}
+            >
+              <p className="text-sm font-black uppercase tracking-[0.22em] text-fuchsia-200">
+                Over $2,500 in live competition prizes
+              </p>
+              <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                {competitionBadges.map((badge) => (
+                  <a
+                    key={badge.label}
+                    href="#competitions"
+                    className="rounded-md border border-cyan-300/25 bg-slate-950/60 p-3 transition hover:border-fuchsia-300 hover:bg-fuchsia-300/10 focus:outline-none focus:ring-2 focus:ring-cyan-300"
+                  >
+                    <span className="block text-2xl font-black text-white neon-text">{badge.prize}</span>
+                    <span className="mt-1 block text-xs font-bold uppercase tracking-[0.12em] text-cyan-100">
+                      {badge.label}
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <NeonButton href="#signup">Get Event and App Launch Updates</NeonButton>
+              <NeonButton href="#competitions" variant="secondary">
+                View Competitions
+              </NeonButton>
               <NeonButton href="#vendor-forms" variant="secondary">
                 Apply as a Vendor
               </NeonButton>
