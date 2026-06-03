@@ -32,6 +32,9 @@ export const metadata: Metadata = {
       "Sign up for ONVIBE Festival in Nashville on October 10 and get updates on the official GetOnVibe platform launch. Venue and time TBA. 21 plus event.",
     images: ["/logos/OnVibeFestival.png"],
   },
+  verification: {
+    google: "2QWJErsLQLc7DhsanubPgBPKqx2LDwtlF7MRzxD3rB4",
+  },
 };
 
 export const viewport: Viewport = {
