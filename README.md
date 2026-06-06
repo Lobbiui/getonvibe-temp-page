@@ -1,6 +1,6 @@
 # ONVIBE Festival Nashville Landing Page
 
-Production-ready Next.js landing page for ONVIBE Festival in Nashville on October 10 and the official GetOnVibe website/app launch.
+Production-ready Next.js landing page for ONVIBE Festival in the Nashville area, target date October 10, 2026, and the official GetOnVibe website/app launch.
 
 ## Stack
 

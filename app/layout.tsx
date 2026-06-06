@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { eventDetails } from "@/lib/event";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://getonvibe.com";
@@ -7,11 +8,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "ONVIBE Festival Nashville | GetOnVibe Launch",
   description:
-    "Sign up for ONVIBE Festival in Nashville on October 10 and get updates on the official GetOnVibe platform launch. Venue and time TBA. 21 plus event.",
+    "Sign up for ONVIBE Festival in the Nashville area, target date October 10, 2026, and get updates on the official GetOnVibe platform launch. Venue announcement coming soon. 21 plus event.",
   openGraph: {
     title: "ONVIBE Festival Nashville | GetOnVibe Launch",
     description:
-      "Sign up for ONVIBE Festival in Nashville on October 10 and get updates on the official GetOnVibe platform launch. Venue and time TBA. 21 plus event.",
+      "Sign up for ONVIBE Festival in the Nashville area, target date October 10, 2026, and get updates on the official GetOnVibe platform launch. Venue announcement coming soon. 21 plus event.",
     url: siteUrl,
     siteName: "ONVIBE Festival",
     images: [
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ONVIBE Festival Nashville | GetOnVibe Launch",
     description:
-      "Sign up for ONVIBE Festival in Nashville on October 10 and get updates on the official GetOnVibe platform launch. Venue and time TBA. 21 plus event.",
+      "Sign up for ONVIBE Festival in the Nashville area, target date October 10, 2026, and get updates on the official GetOnVibe platform launch. Venue announcement coming soon. 21 plus event.",
     images: ["/logos/OnVibeFestival.png"],
   },
   verification: {
@@ -46,8 +47,8 @@ const eventJsonLd = {
   "@type": "Event",
   name: "ONVIBE Festival",
   description:
-    "ONVIBE Festival in Nashville on October 10, co-launching with the official GetOnVibe platform rollout. Venue and time TBA. 21 plus event.",
-  startDate: "2026-10-10",
+    "ONVIBE Festival in the Nashville area, target date October 10, 2026, co-launching with the official GetOnVibe platform rollout. Venue announcement coming soon. 21 plus event.",
+  startDate: eventDetails.targetDateIso,
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   eventStatus: "https://schema.org/EventScheduled",
   location: {

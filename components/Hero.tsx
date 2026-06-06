@@ -4,12 +4,13 @@ import { motion } from "framer-motion";
 import { CalendarDays, CheckCircle2, MapPin, ShieldCheck, Sparkles, Store } from "lucide-react";
 import { DualLogoHero } from "@/components/DualLogoHero";
 import { NeonButton } from "@/components/NeonButton";
+import { eventDetails } from "@/lib/event";
 
 const chips = [
-  { label: "Nashville, TN", icon: MapPin },
-  { label: "October 10", icon: CalendarDays },
+  { label: eventDetails.locationLabel, icon: MapPin },
+  { label: eventDetails.targetDateLabel, icon: CalendarDays },
   { label: "21 Plus Event", icon: ShieldCheck },
-  { label: "Venue and Time TBA", icon: Sparkles },
+  { label: "Venue Announcement Coming Soon", icon: Sparkles },
   { label: "Limited Vendor Spots", icon: Store },
   { label: "Legal Hemp and COA Required Brand Partners", icon: CheckCircle2 },
 ];
@@ -22,7 +23,8 @@ const competitionBadges = [
 
 export function Hero() {
   return (
-    <header className="relative min-h-screen px-4 pb-14 pt-4 sm:px-6 lg:px-8">
+    <header className="hero-stage relative min-h-screen px-4 pb-14 pt-4 sm:px-6 lg:px-8">
+      <div className="stage-silhouette" aria-hidden="true" />
       <div className="mx-auto max-w-7xl">
         <div className="glass-panel mb-6 rounded-md px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.16em] text-slate-200 sm:text-sm">
           Must be 21 or older to attend. Valid government-issued ID required at entry. Venue and time will be announced to registered subscribers first.
@@ -49,10 +51,10 @@ export function Hero() {
               ONVIBE Festival Lands in Nashville
             </h1>
             <p className="mt-6 max-w-2xl text-xl font-bold leading-8 text-cyan-100 sm:text-2xl">
-              October 10. Venue and time TBA. Sign up now to get first access to event details, launch updates, and exclusive announcements.
+              {eventDetails.targetDateLabel}. {eventDetails.venueStatus} Sign up now to get first access to event details, launch updates, and exclusive announcements.
             </p>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
-              A neon-drenched industry festival celebrating legal alternative products, live culture, local commerce, music, creators, and the official GetOnVibe platform launch.
+              A neon-driven 21+ festival experience built around music, competitions, brands, food, creators, local discovery, and the official GetOnVibe platform launch.
             </p>
 
             <motion.div
@@ -78,10 +80,16 @@ export function Hero() {
                   </a>
                 ))}
               </div>
+              <p className="mt-4 text-sm font-bold leading-6 text-slate-300">
+                Competition details, rules, and sign-up instructions will be released first to registered attendees.
+              </p>
             </motion.div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <NeonButton href="#signup">Get Event and App Launch Updates</NeonButton>
+              <NeonButton href="#signup" variant="secondary">
+                Get Competition Updates
+              </NeonButton>
               <NeonButton href="#competitions" variant="secondary">
                 View Competitions
               </NeonButton>

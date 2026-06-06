@@ -6,9 +6,9 @@ export function Footer() {
           <div>
             <p className="text-lg font-black text-white">ONVIBE Festival</p>
             <p className="mt-2">GetOnVibe</p>
-            <p>Nashville, TN</p>
-            <p>October 10</p>
-            <p>Venue and time TBA</p>
+            <p>Nashville Area</p>
+            <p>Target Date: October 10, 2026</p>
+            <p>Venue announcement coming soon</p>
             <p>21 plus event. Valid ID required.</p>
           </div>
           <div className="md:text-right">
