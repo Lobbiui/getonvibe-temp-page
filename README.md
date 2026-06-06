@@ -36,7 +36,7 @@ RESEND_FOOD_VENDOR_AUDIENCE_ID=
 NEXT_PUBLIC_SITE_URL=
 ```
 
-`RESEND_API_KEY` is required for actual email sending. `RESEND_FROM_EMAIL` should be a verified Resend sender for attendee and vendor confirmation emails. `RESEND_INTERNAL_FROM_EMAIL` is optional and should be a different verified sender, such as `ONVIBE Leads <leads@getonvibe.com>`, for internal lead notifications. Internal lead notifications are always sent to `support@getonvibe.com` and `office@lobbicore.com`. `LEADS_NOTIFY_EMAIL` is optional and can add another internal recipient. Audience IDs are optional; when blank, the API skips audience contact creation and still sends notification and confirmation emails.
+`RESEND_API_KEY` is required for actual email sending. `RESEND_FROM_EMAIL` should be a verified Resend sender for attendee, vendor, and hotel partner confirmation emails. `RESEND_INTERNAL_FROM_EMAIL` is optional and should be a different verified sender, such as `ONVIBE Leads <leads@getonvibe.com>`, for internal lead notifications. Internal lead notifications are always sent to `support@getonvibe.com` and `office@lobbicore.com`. `LEADS_NOTIFY_EMAIL` is optional and can add comma-separated internal recipients, such as `office@lobbicore.com,support@getonvibe.com`. Audience IDs are optional; when blank, the API skips audience contact creation and still sends notification and confirmation emails.
 
 ## Logo Assets
 
@@ -54,6 +54,7 @@ All three forms submit JSON to `POST /api/signup`:
 - Attendee pre-registration
 - Brand vendor inquiry
 - Food vendor inquiry
+- Hotel partnership inquiry
 
 Validation runs client-side and server-side with Zod. Attendee age is checked on both sides. Resend API keys are only used server-side.
 

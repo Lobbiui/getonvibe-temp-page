@@ -2,7 +2,7 @@ import { Resend } from "resend";
 import type { SignupPayload, SubmissionType } from "@/lib/validation";
 import { formatFieldLabel } from "@/lib/utils";
 
-const audienceEnvByType: Record<SubmissionType, string> = {
+const audienceEnvByType: Partial<Record<SubmissionType, string>> = {
   attendee: "RESEND_ATTENDEE_AUDIENCE_ID",
   "brand-vendor": "RESEND_BRAND_VENDOR_AUDIENCE_ID",
   "food-vendor": "RESEND_FOOD_VENDOR_AUDIENCE_ID",
@@ -24,6 +24,22 @@ export function getLeadTags(type: SubmissionType) {
   }
 
   return [type];
+}
+
+function getInternalSubject(type: SubmissionType) {
+  if (type === "hotel-partner") {
+    return "ONVIBE lead: hotel partnership";
+  }
+
+  return `ONVIBE lead: ${type}`;
+}
+
+function getOutboundInternalSubject(type: SubmissionType, subject: string) {
+  if (type === "hotel-partner") {
+    return subject;
+  }
+
+  return `[ACTION REQUIRED] ${subject}`;
 }
 
 function getResendClient() {
@@ -98,7 +114,7 @@ export function buildInternalNotificationEmail(payload: SignupPayload) {
   const tags = getLeadTags(payload.type).join(", ");
 
   return {
-    subject: `ONVIBE lead: ${payload.type}`,
+    subject: getInternalSubject(payload.type),
     html: `
       <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
         <h1 style="margin:0 0 12px;font-size:24px;">ONVIBE Festival Lead</h1>
@@ -139,6 +155,19 @@ export function buildConfirmationEmail(payload: SignupPayload) {
     };
   }
 
+  if (payload.type === "hotel-partner") {
+    return {
+      subject: "Your ONVIBE Festival hotel partnership inquiry was received",
+      html: `
+        <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
+          <h1 style="margin:0 0 12px;font-size:24px;">Your hotel partnership inquiry was received</h1>
+          <p style="color:#cbd5e1;line-height:1.6;">Thank you for submitting a hotel partnership inquiry for ONVIBE Festival. The ONVIBE team will review the opportunity and follow up with next steps.</p>
+          <p style="color:#cbd5e1;line-height:1.6;">Venue, timing, lodging partnership details, and hospitality opportunities will be reviewed as planning continues.</p>
+        </div>
+      `,
+    };
+  }
+
   return {
     subject: "You are on the ONVIBE Festival and GetOnVibe launch list",
     html: `
@@ -153,7 +182,8 @@ export function buildConfirmationEmail(payload: SignupPayload) {
 
 export async function upsertAudienceContact(payload: SignupPayload) {
   const resend = getResendClient();
-  const audienceId = process.env[audienceEnvByType[payload.type]];
+  const audienceEnv = audienceEnvByType[payload.type];
+  const audienceId = audienceEnv ? process.env[audienceEnv] : undefined;
 
   if (!resend || !audienceId) {
     return;
@@ -211,7 +241,7 @@ export async function sendLeadEmails(payload: SignupPayload): Promise<LeadEmailR
         from: internalFrom,
         to: recipient,
         replyTo: getReplyToEmail(payload),
-        subject: `[ACTION REQUIRED] ${internal.subject}`,
+        subject: getOutboundInternalSubject(payload.type, internal.subject),
         html: internal.html,
       }),
     ),

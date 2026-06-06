@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { isAtLeastTwentyOne } from "@/lib/age";
 
-export const submissionTypes = ["attendee", "brand-vendor", "food-vendor"] as const;
+export const submissionTypes = ["attendee", "brand-vendor", "food-vendor", "hotel-partner"] as const;
 
 const phoneSchema = z.string().trim().min(7, "Phone number is required.");
 const emailSchema = z.string().trim().email("Enter a valid email address.");
@@ -67,10 +67,37 @@ export const foodVendorSchema = baseSchema.extend({
   consent: consentSchema,
 });
 
+export const hotelPartnershipInterests = [
+  "Room Block",
+  "Discounted Attendee Rate",
+  "Preferred Hotel Listing",
+  "Shuttle / Transportation Coordination",
+  "Hospitality Package",
+  "Sponsorship / Brand Partnership",
+  "Other",
+] as const;
+
+export const hotelPartnerSchema = baseSchema.extend({
+  type: z.literal("hotel-partner"),
+  hotelName: requiredText("Hotel / Property Name"),
+  contactName: requiredText("Contact name"),
+  email: emailSchema,
+  phone: phoneSchema,
+  propertyAddress: requiredText("Property address"),
+  website: optionalText,
+  partnershipInterest: z.enum(hotelPartnershipInterests, {
+    error: "Choose a partnership interest.",
+  }),
+  roomCapacity: optionalText,
+  message: optionalText,
+  consent: consentSchema,
+});
+
 export const signupSchema = z.discriminatedUnion("type", [
   attendeeSchema,
   brandVendorSchema,
   foodVendorSchema,
+  hotelPartnerSchema,
 ]);
 
 export type SignupPayload = z.infer<typeof signupSchema>;
@@ -83,6 +110,8 @@ export const successMessages: Record<SubmissionType, string> = {
     "Your brand vendor inquiry has been received. Our team will review fit, availability, and compliance requirements.",
   "food-vendor":
     "Your food vendor inquiry has been received. Our team will review availability and follow up with next steps.",
+  "hotel-partner":
+    "Your hotel partnership inquiry has been received. Our team will review the opportunity and follow up with next steps.",
 };
 
 export function getEmailFromPayload(payload: SignupPayload) {

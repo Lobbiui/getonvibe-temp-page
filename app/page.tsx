@@ -5,6 +5,7 @@ import { FestivalAtmosphere } from "@/components/FestivalAtmosphere";
 import { FinalCTA } from "@/components/FinalCTA";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
+import { HotelPartnerships } from "@/components/HotelPartnerships";
 import { PlatformLaunch } from "@/components/PlatformLaunch";
 import { SignupForms } from "@/components/SignupForms";
 
@@ -15,6 +16,7 @@ export default function Home() {
       <PlatformLaunch />
       <CompetitionCards />
       <FestivalAtmosphere />
+      <HotelPartnerships />
       <ComplianceNotice />
       <SignupForms />
       <FAQ />

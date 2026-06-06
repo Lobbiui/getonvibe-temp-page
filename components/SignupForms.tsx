@@ -1,12 +1,14 @@
 "use client";
 
-import { ClipboardCheck, Mail, Store, Utensils } from "lucide-react";
+import { Building2, ClipboardCheck, Mail, Store, Utensils } from "lucide-react";
 import type { FormEvent, ReactNode } from "react";
 import { useMemo, useState } from "react";
 import {
   attendeeSchema,
   brandVendorSchema,
   foodVendorSchema,
+  hotelPartnerSchema,
+  hotelPartnershipInterests,
   productCategories,
   successMessages,
   type SubmissionType,
@@ -34,6 +36,7 @@ const tabs: Array<{ type: SubmissionType; label: string; icon: typeof Mail }> = 
   { type: "attendee", label: "Attendee Pre-Registration", icon: Mail },
   { type: "brand-vendor", label: "Brand Vendor Inquiry", icon: Store },
   { type: "food-vendor", label: "Food Vendor Inquiry", icon: Utensils },
+  { type: "hotel-partner", label: "Hotel Partner Inquiry", icon: Building2 },
 ];
 
 function formDataValue(formData: FormData, key: string) {
@@ -72,14 +75,29 @@ function payloadFromForm(type: SubmissionType, formData: FormData) {
     };
   }
 
+  if (type === "food-vendor") {
+    return {
+      ...base,
+      businessName: formDataValue(formData, "businessName"),
+      contactName: formDataValue(formData, "contactName"),
+      email: formDataValue(formData, "email"),
+      phone: formDataValue(formData, "phone"),
+      cuisineType: formDataValue(formData, "cuisineType"),
+      websiteOrInstagram: formDataValue(formData, "websiteOrInstagram"),
+      message: formDataValue(formData, "message"),
+    };
+  }
+
   return {
     ...base,
-    businessName: formDataValue(formData, "businessName"),
+    hotelName: formDataValue(formData, "hotelName"),
     contactName: formDataValue(formData, "contactName"),
     email: formDataValue(formData, "email"),
     phone: formDataValue(formData, "phone"),
-    cuisineType: formDataValue(formData, "cuisineType"),
-    websiteOrInstagram: formDataValue(formData, "websiteOrInstagram"),
+    propertyAddress: formDataValue(formData, "propertyAddress"),
+    website: formDataValue(formData, "website"),
+    partnershipInterest: formDataValue(formData, "partnershipInterest"),
+    roomCapacity: formDataValue(formData, "roomCapacity"),
     message: formDataValue(formData, "message"),
   };
 }
@@ -93,7 +111,11 @@ function schemaForType(type: SubmissionType) {
     return brandVendorSchema;
   }
 
-  return foodVendorSchema;
+  if (type === "food-vendor") {
+    return foodVendorSchema;
+  }
+
+  return hotelPartnerSchema;
 }
 
 function errorsFromIssues(issues: Array<{ path: PropertyKey[]; message: string }>) {
@@ -215,6 +237,7 @@ export function SignupForms() {
     attendee: initialState,
     "brand-vendor": initialState,
     "food-vendor": initialState,
+    "hotel-partner": initialState,
   });
 
   const activeState = states[active];
@@ -293,11 +316,12 @@ export function SignupForms() {
       id="signup"
       eyebrow="Get on the list"
       title="Choose your lane and claim first access."
-      copy="Attendees get ONVIBE Festival details and GetOnVibe launch updates. Vendors can apply for limited onsite opportunities."
+      copy="Attendees get ONVIBE Festival details and GetOnVibe launch updates. Vendors and hotel partners can apply for limited onsite, hospitality, and partnership opportunities."
     >
       <div id="vendor-forms" className="absolute -mt-24" aria-hidden="true" />
+      <div id="hotel-partner-form" className="absolute -mt-24" aria-hidden="true" />
       <div className="glass-panel glow-border rounded-lg p-4 sm:p-6">
-        <div className="grid gap-3 md:grid-cols-3" role="tablist" aria-label="Signup forms">
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4" role="tablist" aria-label="Signup forms">
           {tabs.map((tab) => (
             <button
               key={tab.type}
@@ -434,6 +458,65 @@ export function SignupForms() {
               >
                 <ClipboardCheck className="h-4 w-4" aria-hidden="true" />
                 {activeState.loading ? "Submitting" : "Submit Food Vendor Inquiry"}
+              </button>
+            </form>
+          )}
+
+          {active === "hotel-partner" && (
+            <form className="grid gap-5" onSubmit={(event) => handleSubmit("hotel-partner", event)}>
+              <input className="hidden" tabIndex={-1} autoComplete="off" name="company" aria-hidden="true" />
+              <div className="rounded-md border border-cyan-300/40 bg-cyan-300/10 p-4 text-sm font-bold leading-6 text-cyan-100">
+                Hotels interested in room blocks, attendee discounts, lodging partnerships, transportation coordination, hospitality packages, or sponsorship opportunities can submit their information below.
+              </div>
+              <div className="grid gap-5 md:grid-cols-2">
+                <Field label="Hotel / Property Name" name="hotelName" errors={activeState.errors} required />
+                <Field label="Contact Name" name="contactName" errors={activeState.errors} required />
+                <Field label="Email" name="email" type="email" errors={activeState.errors} required />
+                <Field label="Phone Number" name="phone" type="tel" errors={activeState.errors} required />
+                <Field label="Property Address" name="propertyAddress" errors={activeState.errors} required />
+                <Field label="Website" name="website" errors={activeState.errors} />
+                <Field label="Partnership Interest" name="partnershipInterest" errors={activeState.errors} required>
+                  <select
+                    id="partnershipInterest"
+                    name="partnershipInterest"
+                    required
+                    aria-invalid={Boolean(activeState.errors.partnershipInterest)}
+                    aria-describedby={
+                      activeState.errors.partnershipInterest ? "partnershipInterest-error" : undefined
+                    }
+                    className="min-h-12 w-full rounded-md border border-white/15 bg-slate-950/70 px-4 text-white outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/30"
+                  >
+                    <option value="">Choose interest</option>
+                    {hotelPartnershipInterests.map((interest) => (
+                      <option key={interest} value={interest}>
+                        {interest}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+                <Field
+                  label="Number of Available Rooms or Estimated Capacity"
+                  name="roomCapacity"
+                  errors={activeState.errors}
+                />
+              </div>
+              <Field label="Message" name="message" errors={activeState.errors}>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={4}
+                  className="w-full rounded-md border border-white/15 bg-slate-950/70 px-4 py-3 text-white outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/30"
+                />
+              </Field>
+              <ConsentFields type="hotel-partner" errors={activeState.errors} />
+              <StatusMessage state={activeState} />
+              <button
+                type="submit"
+                disabled={activeState.loading}
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-cyan-300 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-slate-950 transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-300 focus:ring-offset-2 focus:ring-offset-slate-950 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <ClipboardCheck className="h-4 w-4" aria-hidden="true" />
+                {activeState.loading ? "Submitting" : "Submit Hotel Partnership Inquiry"}
               </button>
             </form>
           )}
