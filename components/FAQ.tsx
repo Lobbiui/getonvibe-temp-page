@@ -42,6 +42,11 @@ const faqs = [
       "Current announced competitions include the $1,000 Costume Competition, $1,000 Light Up Dance Battle, and $1,000 Cloud Competition. Additional activities, experiences, and special guest announcements will be released closer to the event. The Cloud Competition is subject to venue approval, applicable law, final event rules, and 21+ verification requirements.",
   },
   {
+    question: "Do I need to compete to attend ONVIBE Festival?",
+    answer:
+      "No. ONVIBE Festival is designed for everyone. While attendees will have the opportunity to participate in competitions, competing is completely optional. Come enjoy the music, discover new brands, explore food vendors, connect with creators, meet new people, and experience the official launch of GetOnVibe. Food. Gear. Culture. Find Your Vibe.",
+  },
+  {
     question: "Why is ONVIBE Festival different?",
     answer:
       "ONVIBE Festival combines Food, Gear, and Culture into one experience: music, creators, vendors, competitions, community, and the launch of GetOnVibe all in one place.",
