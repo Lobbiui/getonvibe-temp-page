@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
-import { Crown, Camera, Music2 } from "lucide-react";
+import { Cloud, Crown, Music2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { NeonButton } from "@/components/NeonButton";
 import { Section } from "@/components/Section";
@@ -32,19 +32,19 @@ const competitions = [
     title: "Costume Competition",
     prize: 1000,
     icon: Crown,
-    copy: "Bring the look. Own the room. The ONVIBE Costume Competition is built for custom fits, characters, visual art, bold concepts, and stage presence.",
+    copy: "Show us your vibe. Festival fashion, cosplay, illuminated outfits, creative concepts, and original designs are welcome.",
   },
   {
-    title: "Dance Competition",
+    title: "Light Up Dance Battle",
     prize: 1000,
     icon: Music2,
-    copy: "A high-energy live dance battle powered by crowd energy, performance, movement, and special guest judges.",
+    copy: "Light up the stage. Contestants must incorporate illuminated elements into their performance, including LED clothing, fiber optic apparel, light gloves, glow accessories, or light-up props.",
   },
   {
-    title: "GetOnVibe Selfie Competition",
-    prize: 500,
-    icon: Camera,
-    copy: "Capture the best ONVIBE moment of the night. This activation connects the festival experience with the official GetOnVibe platform launch.",
+    title: "Cloud Competition",
+    prize: 1000,
+    icon: Cloud,
+    copy: "Bring your best. Cloud Competition subject to venue approval, applicable law, final event rules, and 21+ verification requirements.",
   },
 ];
 
@@ -93,7 +93,7 @@ export function CompetitionCards() {
               <AnimatedPrize value={competition.prize} />
             </p>
             <h3 className="mt-4 text-2xl font-black text-cyan-100">
-              {competition.prize === 500 ? "$500 " : "$1,000 "}
+              $1,000{" "}
               {competition.title}
             </h3>
             <p className="mt-4 leading-7 text-slate-300">{competition.copy}</p>

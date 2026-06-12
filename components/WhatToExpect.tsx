@@ -1,6 +1,6 @@
 import {
   BadgeCheck,
-  Camera,
+  Cloud,
   Crown,
   Disc3,
   Hotel,
@@ -19,8 +19,8 @@ const expectations = [
   { title: "Brand Village", icon: Store },
   { title: "Food Vendor Row", icon: Salad },
   { title: "$1,000 Costume Competition", icon: Crown },
-  { title: "$1,000 Dance Competition", icon: Music2 },
-  { title: "$500 GetOnVibe Selfie Competition", icon: Camera },
+  { title: "$1,000 Light Up Dance Battle", icon: Music2 },
+  { title: "$1,000 Cloud Competition", icon: Cloud },
   { title: "GetOnVibe Registration Hub", icon: ScanLine },
   { title: "Creator and community activations", icon: UsersRound },
   { title: "Official hotel partner updates", icon: Hotel },

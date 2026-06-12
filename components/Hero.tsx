@@ -17,8 +17,8 @@ const chips = [
 
 const competitionBadges = [
   { prize: "$1,000", label: "Costume Competition" },
-  { prize: "$1,000", label: "Dance Competition" },
-  { prize: "$500", label: "GetOnVibe Selfie Competition" },
+  { prize: "$1,000", label: "Light Up Dance Battle" },
+  { prize: "$1,000", label: "Cloud Competition" },
 ];
 
 export function Hero() {
@@ -50,11 +50,17 @@ export function Hero() {
             <h1 className="neon-text max-w-5xl text-5xl font-black leading-[0.94] text-white sm:text-7xl lg:text-8xl">
               ONVIBE Festival Lands in Nashville
             </h1>
+            <p className="mt-5 text-2xl font-black uppercase tracking-[0.16em] text-fuchsia-200 sm:text-3xl">
+              Food. Gear. Culture.
+            </p>
+            <p className="mt-2 text-3xl font-black text-white sm:text-5xl">
+              Find Your Vibe.
+            </p>
             <p className="mt-6 max-w-2xl text-xl font-bold leading-8 text-cyan-100 sm:text-2xl">
               {eventDetails.targetDateLabel}. {eventDetails.venueStatus} Sign up now to get first access to event details, launch updates, and exclusive announcements.
             </p>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
-              A neon-driven 21+ festival experience built around music, competitions, brands, food, creators, local discovery, and the official GetOnVibe platform launch.
+              Music. Creators. Vendors. Community. The Official Launch Experience for GetOnVibe.
             </p>
 
             <motion.div
@@ -64,7 +70,7 @@ export function Hero() {
               transition={{ duration: 0.7, delay: 0.18, ease: "easeOut" }}
             >
               <p className="text-sm font-black uppercase tracking-[0.22em] text-fuchsia-200">
-                Over $2,500 in live competition prizes
+                Over $2,500 in competition prizes
               </p>
               <div className="mt-4 grid gap-3 sm:grid-cols-3">
                 {competitionBadges.map((badge) => (
