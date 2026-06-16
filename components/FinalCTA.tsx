@@ -9,7 +9,7 @@ export function FinalCTA() {
           Nashville gets the launch first.
         </p>
         <h2 className="neon-text mx-auto mt-4 max-w-4xl text-4xl font-black leading-tight text-white sm:text-6xl">
-          Target Date: October 10, 2026.
+          Target Date: October 17, 2026.
         </h2>
         <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-slate-300">
           Venue announcement, ticket details, judges, hotel partners, and exclusive updates go to the list first.

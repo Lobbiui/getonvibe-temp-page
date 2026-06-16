@@ -4,7 +4,7 @@ const faqs = [
   {
     question: "When and where is ONVIBE Festival?",
     answer:
-      "ONVIBE Festival is planned for the Nashville Area with a target date of October 10, 2026. The official venue announcement and event details will be released to registered subscribers first.",
+      "ONVIBE Festival is planned for the Nashville Area with a target date of October 17, 2026. The official venue announcement and event details will be released to registered subscribers first.",
   },
   {
     question: "Is this a 21+ event?",

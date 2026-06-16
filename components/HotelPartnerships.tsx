@@ -18,7 +18,7 @@ export function HotelPartnerships() {
       id="hotel-partnerships"
       eyebrow="Lodging and hospitality"
       title="Hotel Partnerships"
-      copy="ONVIBE Festival is connecting with Nashville-area hotels interested in supporting attendee lodging for the target October 10, 2026 launch event. Hotels can inquire about room blocks, discounted attendee rates, preferred lodging visibility, shuttle coordination, hospitality packages, and official partnership opportunities."
+      copy="ONVIBE Festival is connecting with Nashville-area hotels interested in supporting attendee lodging for the target October 17, 2026 launch event. Hotels can inquire about room blocks, discounted attendee rates, preferred lodging visibility, shuttle coordination, hospitality packages, and official partnership opportunities."
     >
       <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
         <div className="glass-panel glow-border rounded-lg p-6 sm:p-8">

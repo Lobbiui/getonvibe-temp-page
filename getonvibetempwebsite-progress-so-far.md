@@ -10,7 +10,7 @@ Current public positioning:
 
 - ONVIBE Festival
 - Nashville Area
-- Target Date: October 10, 2026
+- Target Date: October 17, 2026
 - Venue announcement coming soon
 - 21+ event with valid government-issued ID required
 - Official GetOnVibe platform launch experience
@@ -292,7 +292,7 @@ Recent copy changes also avoid claiming a confirmed venue or fully finalized eve
 
 The event is currently framed as:
 
-`Target Date: October 10, 2026`
+`Target Date: October 17, 2026`
 
 Venue language is:
 
@@ -350,7 +350,7 @@ Recent commit history includes:
 - `eb607ce` Harden Resend lead notification delivery
 - `e922cb0` Support dedicated internal lead sender
 - `7f8821c` Add office lead notification recipient
-- `a224513` Update ONVIBE Festival date to October 10
+- `a224513` Earlier ONVIBE Festival date update
 - `f172fea` Highlight ONVIBE Festival competitions
 - `1128cb7` Add Google Search Console verification
 - `154641a` Add hotel partnership inquiry form
