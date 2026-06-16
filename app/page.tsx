@@ -1,4 +1,5 @@
 import { CompetitionCards } from "@/components/CompetitionCards";
+import { CompetitionOptional } from "@/components/CompetitionOptional";
 import { ComplianceNotice } from "@/components/ComplianceNotice";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { DJLineupTeaser } from "@/components/DJLineupTeaser";
@@ -32,6 +33,7 @@ export default function Home() {
       <WhatToExpect />
       <PlatformLaunch />
       <CompetitionCards />
+      <CompetitionOptional />
       <DJLineupTeaser />
       <FestivalAtmosphere />
       <HotelPartnersTeaser />
