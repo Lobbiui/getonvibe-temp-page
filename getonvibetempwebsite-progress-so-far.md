@@ -14,6 +14,8 @@ Current public positioning:
 - Venue announcement coming soon
 - 21+ event with valid government-issued ID required
 - Official GetOnVibe platform launch experience
+- Food. Gear. Culture.
+- Find Your Vibe.
 
 ## Technology Stack
 
@@ -42,6 +44,9 @@ The homepage currently includes:
 - Momentum/status badges
 - What To Expect section
 - GetOnVibe platform launch section
+- GetOnVibe ecosystem links section for creator and business education
+- Food. Gear. Culture. ecosystem section
+- Have You Vibed? brand moment
 - Competition spotlight section
 - DJ lineup teaser
 - Festival atmosphere section
@@ -64,6 +69,8 @@ The page uses a dark luxury nightlife style:
 - Animated equalizer bars
 - CSS-only stage lighting and hero atmosphere
 - Motion-enhanced card reveals and countdown elements
+- Brand-forward Food, Gear, and Culture language throughout the page
+- Premium festival and app launch messaging without relying on random stock imagery
 
 No external random images are used. The main visual assets are the supplied logo files:
 
@@ -82,8 +89,22 @@ The site is built to push visitors toward:
 - Competition updates
 - DJ lineup updates
 - Hotel partner updates
+- Platform education for creators and businesses
 
-The current copy emphasizes that subscribers receive venue announcements, ticket details, hotel partner updates, competition rules, and DJ lineup updates first.
+The current copy emphasizes that subscribers receive venue announcements, ticket details, hotel partner updates, competition rules, DJ lineup updates, and GetOnVibe launch updates first.
+
+The attendee experience is positioned as broader than competitions alone. Visitors are told they can come for music, vendors, food, creators, culture, and the official GetOnVibe launch even if they do not plan to compete.
+
+## Platform Education Links
+
+A new section called `Learn More About The GetOnVibe Ecosystem` has been added after the `What Is GetOnVibe?` platform discovery section.
+
+The section uses the existing dark neon glassmorphism style and includes two outbound education cards:
+
+- For Creators: `https://creators.getonvibe.com`
+- For Businesses: `https://business.getonvibe.com`
+
+These links help visitors learn more about the broader GetOnVibe platform without changing the festival-focused structure of the landing page.
 
 ## Forms Built So Far
 
@@ -233,6 +254,8 @@ Google verification is configured in:
 
 `app/layout.tsx`
 
+Safari and browser reputation warnings have also been investigated separately from the codebase. The deployed site has been checked for HTTPS availability, expected DNS routing, unexpected redirects, and obvious injected scripts. The current working assumption is that any Safari phishing or malware warning is a safe-browsing reputation issue that must be reviewed through Google Search Console, Google Safe Browsing tools, and related browser reporting channels.
+
 ## Compliance Work Completed
 
 The page includes compliance-focused language:
@@ -262,6 +285,24 @@ The date and related labels are centralized in:
 `lib/event.ts`
 
 This makes future date updates easier.
+
+## Current FAQ Positioning
+
+The FAQ has been refined to answer visitor concerns more clearly and to reduce confusion around the event format. Current FAQ themes include:
+
+- When and where ONVIBE Festival is planned
+- 21+ entry and valid government-issued ID requirements
+- What GetOnVibe is
+- What ONVIBE Festival is
+- Whether this is a music festival
+- Vendor and food vendor applications
+- Featured competition concepts
+- Whether attendees need to compete
+- Why ONVIBE Festival is different
+- Whether a GetOnVibe account is required
+- Discounted attendee lodging plans
+
+The most recent FAQ addition clarifies that attendees do not need to compete to attend. Competitions are optional, and the festival is positioned as a full attendee experience with music, brands, food vendors, creators, community, and the official GetOnVibe launch.
 
 ## Deployment and Domain Work
 
@@ -296,6 +337,9 @@ Recent commit history includes:
 - `1128cb7` Add Google Search Console verification
 - `154641a` Add hotel partnership inquiry form
 - `7bb2ea2` Add festival hype sections
+- `d4aab15` Refine ONVIBE messaging and ecosystem positioning
+- `3755a55` Refine ONVIBE FAQ messaging
+- `4c4df1e` Add FAQ for competition participation
 
 ## Current Quality Checks
 
@@ -314,6 +358,15 @@ Additional content checks have been run for:
 - No invented venue names
 - No invented DJ names
 
+Latest verification for the ecosystem links update:
+
+- `npm run lint` passed
+- `npm run build` passed
+
+TODOs:
+
+- Monitor the creator and business education pages after launch to ensure the outbound learning paths remain active.
+
 ## Current Status
 
 The site is a functioning production-oriented landing page with:
@@ -326,5 +379,8 @@ The site is a functioning production-oriented landing page with:
 - DigitalOcean deployment structure
 - HTTPS custom domains
 - Mobile-responsive neon festival design
+- Refined Food, Gear, and Culture ecosystem messaging
+- Creator and business education links for the broader GetOnVibe ecosystem
+- Updated FAQ content that clarifies optional competition participation
 
-The next likely areas to refine are live email deliverability monitoring, final event date and venue updates once contracted, ticketing integration if needed, and any official DJ/hotel/vendor announcements once approved.
+The next likely areas to refine are browser reputation review follow-up, live email deliverability monitoring, final event date and venue updates once contracted, ticketing integration if needed, and any official DJ/hotel/vendor announcements once approved.

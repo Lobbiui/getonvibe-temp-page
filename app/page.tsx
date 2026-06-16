@@ -2,6 +2,7 @@ import { CompetitionCards } from "@/components/CompetitionCards";
 import { ComplianceNotice } from "@/components/ComplianceNotice";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { DJLineupTeaser } from "@/components/DJLineupTeaser";
+import { EcosystemLinks } from "@/components/EcosystemLinks";
 import { FAQ } from "@/components/FAQ";
 import { FestivalAtmosphere } from "@/components/FestivalAtmosphere";
 import { FinalCTA } from "@/components/FinalCTA";
@@ -25,6 +26,7 @@ export default function Home() {
       <CountdownTimer />
       <MomentumBadges />
       <WhatIsGetOnVibe />
+      <EcosystemLinks />
       <FoodGearCulture />
       <OnVibeExperienceFlow />
       <WhatToExpect />
