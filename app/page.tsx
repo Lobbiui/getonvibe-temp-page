@@ -26,6 +26,7 @@ export default function Home() {
       <Hero />
       <CountdownTimer />
       <MomentumBadges />
+      <CompetitionOptional />
       <WhatIsGetOnVibe />
       <EcosystemLinks />
       <FoodGearCulture />
@@ -33,7 +34,6 @@ export default function Home() {
       <WhatToExpect />
       <PlatformLaunch />
       <CompetitionCards />
-      <CompetitionOptional />
       <DJLineupTeaser />
       <FestivalAtmosphere />
       <HotelPartnersTeaser />

@@ -42,6 +42,7 @@ The homepage currently includes:
 - Festival hype treatment with neon background effects
 - Countdown timer for the target date
 - Momentum/status badges
+- Attendee invitation section clarifying competitions are optional
 - What To Expect section
 - GetOnVibe platform launch section
 - GetOnVibe ecosystem links section for creator and business education
@@ -94,6 +95,22 @@ The site is built to push visitors toward:
 The current copy emphasizes that subscribers receive venue announcements, ticket details, hotel partner updates, competition rules, DJ lineup updates, and GetOnVibe launch updates first.
 
 The attendee experience is positioned as broader than competitions alone. Visitors are told they can come for music, vendors, food, creators, culture, and the official GetOnVibe launch even if they do not plan to compete.
+
+## Competition-Optional Attendee Invitation
+
+The `You Don't Need To Compete To Attend.` section has been moved higher in the homepage flow so visitors see it before reaching the detailed competition cards.
+
+Current placement:
+
+- After `Hero`
+- After `CountdownTimer`
+- After `MomentumBadges`
+- Before platform discovery, ecosystem, and competition detail sections
+
+Verification for this placement update:
+
+- `npm run lint` passed
+- `npm run build` passed
 
 ## Platform Education Links
 
