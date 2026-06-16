@@ -26,6 +26,23 @@ export function Hero() {
     <header className="hero-stage relative min-h-screen px-4 pb-14 pt-4 sm:px-6 lg:px-8">
       <div className="stage-silhouette" aria-hidden="true" />
       <div className="mx-auto max-w-7xl">
+        <nav aria-label="GetOnVibe ecosystem" className="mb-4 flex justify-center sm:justify-end">
+          <div className="glass-panel flex flex-wrap items-center justify-center gap-2 rounded-md px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-cyan-100">
+            <a
+              href="https://creators.getonvibe.com"
+              className="rounded px-3 py-2 transition hover:bg-cyan-300/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-300"
+            >
+              Creators
+            </a>
+            <a
+              href="https://business.getonvibe.com"
+              className="rounded px-3 py-2 transition hover:bg-fuchsia-300/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-300"
+            >
+              Businesses
+            </a>
+          </div>
+        </nav>
+
         <div className="glass-panel mb-6 rounded-md px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.16em] text-slate-200 sm:text-sm">
           Must be 21 or older to attend. Valid government-issued ID required at entry. Venue and time will be announced to registered subscribers first.
         </div>

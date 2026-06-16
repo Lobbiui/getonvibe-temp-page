@@ -106,6 +106,24 @@ The section uses the existing dark neon glassmorphism style and includes two out
 
 These links help visitors learn more about the broader GetOnVibe platform without changing the festival-focused structure of the landing page.
 
+## Cross-Site Navigation
+
+A minimal ecosystem navigation area has been added near the top of the ONVIBE Festival / GetOnVibe temporary landing page.
+
+Links added:
+
+- Creators: `https://creators.getonvibe.com`
+- Businesses: `https://business.getonvibe.com`
+
+Files changed:
+
+- `components/Hero.tsx`
+
+Verification for this navigation update:
+
+- `npm run lint` passed
+- `npm run build` passed
+
 ## Forms Built So Far
 
 All forms submit to:
@@ -384,3 +402,4 @@ The site is a functioning production-oriented landing page with:
 - Updated FAQ content that clarifies optional competition participation
 
 The next likely areas to refine are browser reputation review follow-up, live email deliverability monitoring, final event date and venue updates once contracted, ticketing integration if needed, and any official DJ/hotel/vendor announcements once approved.
+
