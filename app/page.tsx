@@ -153,7 +153,6 @@ export default function Home() {
           <strong>ONVIBE Events</strong>
           <span>Powered by GetOnVibe</span>
         </div>
-        <p>Age, entry, and participation requirements may vary by event. Valid ID may be required.</p>
         <p>Copyright {new Date().getFullYear()} GetOnVibe. All rights reserved.</p>
       </footer>
     </main>
