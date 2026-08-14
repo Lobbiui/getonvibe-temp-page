@@ -353,7 +353,7 @@ export function SignupForms() {
             <form className="grid gap-5" onSubmit={(event) => handleSubmit("attendee", event)}>
               <input className="hidden" tabIndex={-1} autoComplete="off" name="company" aria-hidden="true" />
               <div className="rounded-md border border-cyan-300/35 bg-cyan-300/10 p-4 text-sm font-bold leading-6 text-cyan-100">
-                Get event drops, location updates, special announcements, and GetOnVibe launch news first.
+                Get event drops, location updates, special announcements, and future ONVIBE news first.
               </div>
               <div className="grid gap-5 md:grid-cols-2">
                 <Field label="Full name" name="fullName" errors={activeState.errors} required />

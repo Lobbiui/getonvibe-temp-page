@@ -1,33 +1,48 @@
 "use client";
 
 import { Player } from "@remotion/player";
-import { AbsoluteFill, Img, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame } from "remotion";
 
 function CinematicComposition() {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const pulse = Math.sin(frame / 9);
-  const flyerOne = interpolate(frame, [0, 70, 140, 210], [1, 1.05, 0.98, 1.04]);
-  const flyerTwo = interpolate(frame, [0, 90, 160, 240], [1.06, 0.98, 1.04, 1]);
-  const titleIn = spring({ frame, fps, config: { damping: 18, stiffness: 90 } });
-  const sweep = interpolate(frame % 180, [0, 180], [-35, 135]);
+  const drift = interpolate(frame % 240, [0, 120, 240], [-4, 4, -4]);
+  const flyerScale = interpolate(frame % 240, [0, 120, 240], [1.02, 1.08, 1.02]);
+  const sweep = interpolate(frame % 180, [0, 180], [-40, 140]);
 
   return (
     <AbsoluteFill style={{ background: "#050008", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
       <AbsoluteFill
         style={{
           background:
-            "radial-gradient(circle at 20% 20%, rgba(236,72,153,0.45), transparent 30%), radial-gradient(circle at 80% 15%, rgba(6,182,212,0.35), transparent 28%), linear-gradient(135deg, #050008 0%, #111827 52%, #050008 100%)",
+            "linear-gradient(90deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.46) 42%, rgba(0,0,0,0.25) 100%), radial-gradient(circle at 18% 18%, rgba(236,72,153,0.45), transparent 28%), radial-gradient(circle at 82% 22%, rgba(6,182,212,0.35), transparent 28%), linear-gradient(135deg, #050008 0%, #111827 52%, #050008 100%)",
         }}
       />
-      <div
+      <Img
+        src={staticFile("events/flyer1.jpeg")}
         style={{
           position: "absolute",
-          inset: 0,
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)",
-          backgroundSize: "42px 42px",
-          opacity: 0.45,
+          right: "-5%",
+          top: "-24%",
+          width: "47%",
+          minWidth: 460,
+          scale: flyerScale,
+          rotate: "3deg",
+          opacity: 0.92,
+          boxShadow: "0 0 90px rgba(236,72,153,0.34)",
+        }}
+      />
+      <Img
+        src={staticFile("events/flyer2.jpeg")}
+        style={{
+          position: "absolute",
+          right: "28%",
+          bottom: "-30%",
+          width: "34%",
+          minWidth: 330,
+          scale: 1.02,
+          rotate: "-5deg",
+          opacity: 0.38,
+          boxShadow: "0 0 80px rgba(6,182,212,0.24)",
         }}
       />
       <div
@@ -43,52 +58,27 @@ function CinematicComposition() {
         }}
       />
 
-      <Img
-        src="/events/flyer1.jpeg"
-        style={{
-          position: "absolute",
-          right: "8%",
-          top: "8%",
-          width: "33%",
-          borderRadius: 20,
-          transform: `rotate(5deg) scale(${flyerOne})`,
-          boxShadow: "0 0 70px rgba(236,72,153,0.42)",
-        }}
-      />
-      <Img
-        src="/events/flyer2.jpeg"
-        style={{
-          position: "absolute",
-          left: "8%",
-          bottom: "8%",
-          width: "31%",
-          borderRadius: 20,
-          transform: `rotate(-6deg) scale(${flyerTwo})`,
-          boxShadow: "0 0 70px rgba(6,182,212,0.34)",
-        }}
-      />
-
       <div
         style={{
           position: "absolute",
-          inset: "0 12%",
+          left: "8%",
+          top: 0,
+          bottom: 0,
+          width: "50%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center",
-          textAlign: "center",
-          transform: `translateY(${(1 - titleIn) * 45}px)`,
-          opacity: titleIn,
+          alignItems: "flex-start",
+          translate: `${drift}px 0`,
         }}
       >
         <div
           style={{
             color: "#facc15",
-            fontSize: 34,
+            fontSize: 22,
             fontWeight: 900,
-            letterSpacing: 7,
+            letterSpacing: 5,
             textTransform: "uppercase",
-            textShadow: "0 0 28px rgba(250,204,21,0.42)",
           }}
         >
           ONVIBE Events Presents
@@ -97,11 +87,10 @@ function CinematicComposition() {
           style={{
             marginTop: 12,
             color: "#ec4899",
-            fontSize: 102,
-            lineHeight: 0.9,
+            fontSize: 74,
+            lineHeight: 0.92,
             fontWeight: 900,
             textTransform: "uppercase",
-            textShadow: `0 0 ${32 + pulse * 10}px rgba(236,72,153,0.85)`,
           }}
         >
           Bikini
@@ -109,33 +98,32 @@ function CinematicComposition() {
         <div
           style={{
             color: "#ffffff",
-            fontSize: 92,
-            lineHeight: 0.9,
+            fontSize: 68,
+            lineHeight: 0.92,
             fontWeight: 900,
             textTransform: "uppercase",
-            textShadow: "0 0 30px rgba(6,182,212,0.65)",
           }}
         >
           Carwash
         </div>
         <div
           style={{
-            marginTop: 24,
+            marginTop: 20,
             display: "flex",
+            flexWrap: "wrap",
             gap: 14,
-            color: "#020617",
-            fontSize: 24,
+            color: "#ffffff",
+            fontSize: 18,
             fontWeight: 900,
             textTransform: "uppercase",
           }}
         >
-          {["Food Trucks", "Music", "Free Carwash", "12PM to 4PM"].map((item) => (
+          {["September 12", "12PM to 4PM", "Smokeville"].map((item) => (
             <span
               key={item}
               style={{
-                background: item === "Free Carwash" ? "#ec4899" : "#06b6d4",
-                borderRadius: 999,
-                padding: "12px 18px",
+                border: "1px solid rgba(255,255,255,0.72)",
+                padding: "10px 14px",
               }}
             >
               {item}
@@ -147,19 +135,21 @@ function CinematicComposition() {
   );
 }
 
-export function EventCinematic() {
+export function EventCinematic({ variant = "wide" }: { variant?: "wide" | "square" }) {
+  const isSquare = variant === "square";
+
   return (
-    <div className="overflow-hidden rounded-lg border border-pink-400/30 bg-black shadow-[0_0_60px_rgba(236,72,153,0.18)]">
+    <div className={isSquare ? "event-cinematic event-cinematic-square" : "event-cinematic event-cinematic-wide"}>
       <Player
         component={CinematicComposition}
         durationInFrames={240}
-        compositionWidth={1280}
-        compositionHeight={720}
+        compositionWidth={isSquare ? 1080 : 1280}
+        compositionHeight={isSquare ? 1080 : 720}
         fps={30}
         autoPlay
         loop
         acknowledgeRemotionLicense
-        style={{ width: "100%", aspectRatio: "16 / 9" }}
+        style={{ width: "100%", height: "100%" }}
       />
     </div>
   );
