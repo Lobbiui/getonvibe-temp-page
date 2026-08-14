@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { isAtLeastTwentyOne } from "@/lib/age";
 
-export const submissionTypes = ["attendee", "model", "brand-vendor", "food-vendor", "hotel-partner"] as const;
+export const submissionTypes = ["attendee", "model", "brand-vendor", "food-vendor", "hotel-partner", "store-host"] as const;
 
 const phoneSchema = z.string().trim().min(7, "Phone number is required.");
 const emailSchema = z.string().trim().email("Enter a valid email address.");
@@ -81,6 +81,20 @@ export const foodVendorSchema = baseSchema.extend({
   consent: consentSchema,
 });
 
+export const storeHostSchema = baseSchema.extend({
+  type: z.literal("store-host"),
+  storeName: requiredText("Store name"),
+  contactName: requiredText("Contact name"),
+  email: emailSchema,
+  phone: phoneSchema,
+  city: requiredText("City"),
+  storeAddress: requiredText("Store address"),
+  parkingLotAvailability: requiredText("Parking lot availability"),
+  websiteOrInstagram: optionalText,
+  message: optionalText,
+  consent: consentSchema,
+});
+
 export const hotelPartnershipInterests = [
   "Room Block",
   "Discounted Attendee Rate",
@@ -113,6 +127,7 @@ export const signupSchema = z.discriminatedUnion("type", [
   brandVendorSchema,
   foodVendorSchema,
   hotelPartnerSchema,
+  storeHostSchema,
 ]);
 
 export type SignupPayload = z.infer<typeof signupSchema>;
@@ -120,7 +135,7 @@ export type SubmissionType = SignupPayload["type"];
 
 export const successMessages: Record<SubmissionType, string> = {
   attendee:
-    "You are on the list. Watch your inbox for ONVIBE event details and GetOnVibe launch updates.",
+    "You are on the list. Watch your inbox for ONVIBE event details and tour updates.",
   model:
     "Your model signup has been received. Our team will review event fit and follow up with next steps.",
   "brand-vendor":
@@ -129,6 +144,8 @@ export const successMessages: Record<SubmissionType, string> = {
     "Your food vendor inquiry has been received. Our team will review availability and follow up with next steps.",
   "hotel-partner":
     "Your hotel partnership inquiry has been received. Our team will review the opportunity and follow up with next steps.",
+  "store-host":
+    "Your store host inquiry has been received. Our team will review the location, parking lot fit, and tour timing.",
 };
 
 export function getEmailFromPayload(payload: SignupPayload) {

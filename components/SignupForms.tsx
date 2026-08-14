@@ -8,13 +8,14 @@ import {
   foodVendorSchema,
   modelSchema,
   productCategories,
+  storeHostSchema,
   successMessages,
   type SubmissionType,
 } from "@/lib/validation";
 import { Section } from "@/components/Section";
 import { cn } from "@/lib/utils";
 
-type HubSubmissionType = "attendee" | "model" | "food-vendor" | "brand-vendor";
+type HubSubmissionType = "attendee" | "model" | "food-vendor" | "brand-vendor" | "store-host";
 type FieldErrors = Record<string, string>;
 
 type SubmitState = {
@@ -40,6 +41,7 @@ const tabs: Array<{
   { type: "model", label: "Models", kicker: "Join activations" },
   { type: "food-vendor", label: "Food Vendors", kicker: "Feed the crowd" },
   { type: "brand-vendor", label: "Brands", kicker: "Activate onsite" },
+  { type: "store-host", label: "Stores", kicker: "Host a stop" },
 ];
 
 function formDataValue(formData: FormData, key: string) {
@@ -90,6 +92,21 @@ function payloadFromForm(type: HubSubmissionType, formData: FormData) {
     };
   }
 
+  if (type === "store-host") {
+    return {
+      ...base,
+      storeName: formDataValue(formData, "storeName"),
+      contactName: formDataValue(formData, "contactName"),
+      email: formDataValue(formData, "email"),
+      phone: formDataValue(formData, "phone"),
+      city: formDataValue(formData, "city"),
+      storeAddress: formDataValue(formData, "storeAddress"),
+      parkingLotAvailability: formDataValue(formData, "parkingLotAvailability"),
+      websiteOrInstagram: formDataValue(formData, "websiteOrInstagram"),
+      message: formDataValue(formData, "message"),
+    };
+  }
+
   return {
     ...base,
     brandName: formDataValue(formData, "brandName"),
@@ -114,6 +131,10 @@ function schemaForType(type: HubSubmissionType) {
 
   if (type === "food-vendor") {
     return foodVendorSchema;
+  }
+
+  if (type === "store-host") {
+    return storeHostSchema;
   }
 
   return brandVendorSchema;
@@ -234,6 +255,7 @@ export function SignupForms() {
     model: initialState,
     "food-vendor": initialState,
     "brand-vendor": initialState,
+    "store-host": initialState,
   });
 
   const activeState = states[active];
@@ -317,8 +339,9 @@ export function SignupForms() {
       <div id="models" className="absolute -mt-24" aria-hidden="true" />
       <div id="food-vendors" className="absolute -mt-24" aria-hidden="true" />
       <div id="brands" className="absolute -mt-24" aria-hidden="true" />
+      <div id="stores" className="absolute -mt-24" aria-hidden="true" />
       <div className="glass-panel glow-border rounded-lg p-4 sm:p-6">
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4" role="tablist" aria-label="ONVIBE signup forms">
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5" role="tablist" aria-label="ONVIBE signup forms">
           {tabs.map((tab) => (
             <button
               key={tab.type}
@@ -448,6 +471,33 @@ export function SignupForms() {
               <StatusMessage state={activeState} />
               <button type="submit" disabled={activeState.loading} className="event-submit-button">
                 {activeState.loading ? "Submitting" : "Submit Brand Activation Inquiry"}
+              </button>
+            </form>
+          )}
+
+          {active === "store-host" && (
+            <form className="grid gap-5" onSubmit={(event) => handleSubmit("store-host", event)}>
+              <input className="hidden" tabIndex={-1} autoComplete="off" name="company" aria-hidden="true" />
+              <div className="rounded-md border border-cyan-300/35 bg-cyan-300/10 p-4 text-sm font-bold leading-6 text-cyan-100">
+                Tennessee stores can apply to host a future ONVIBE tour stop in their parking lot.
+              </div>
+              <div className="grid gap-5 md:grid-cols-2">
+                <Field label="Store name" name="storeName" errors={activeState.errors} required />
+                <Field label="Contact name" name="contactName" errors={activeState.errors} required />
+                <Field label="Email" name="email" type="email" errors={activeState.errors} required />
+                <Field label="Phone number" name="phone" type="tel" errors={activeState.errors} required />
+                <Field label="City" name="city" errors={activeState.errors} required />
+                <Field label="Store address" name="storeAddress" errors={activeState.errors} required />
+                <Field label="Parking lot availability" name="parkingLotAvailability" errors={activeState.errors} required />
+                <Field label="Website or Instagram" name="websiteOrInstagram" errors={activeState.errors} />
+              </div>
+              <Field label="Message" name="message" errors={activeState.errors}>
+                <textarea id="message" name="message" rows={4} className="event-textarea" />
+              </Field>
+              <ConsentFields type="store-host" errors={activeState.errors} />
+              <StatusMessage state={activeState} />
+              <button type="submit" disabled={activeState.loading} className="event-submit-button">
+                {activeState.loading ? "Submitting" : "Host A Tour Stop"}
               </button>
             </form>
           )}

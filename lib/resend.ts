@@ -35,6 +35,10 @@ function getInternalSubject(type: SubmissionType) {
     return "ONVIBE lead: hotel partnership";
   }
 
+  if (type === "store-host") {
+    return "ONVIBE lead: store host";
+  }
+
   return `ONVIBE lead: ${type}`;
 }
 
@@ -149,12 +153,12 @@ export function buildConfirmationEmail(payload: SignupPayload) {
 
   if (payload.type === "brand-vendor") {
     return {
-      subject: "ONVIBE Festival brand vendor inquiry received",
+      subject: "ONVIBE brand activation inquiry received",
       html: `
         <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
-          <h1 style="margin:0 0 12px;font-size:24px;">Your brand vendor inquiry was received</h1>
-          <p style="color:#cbd5e1;line-height:1.6;">Thank you for applying for ONVIBE Festival in Nashville. Our team will review fit, availability, and compliance requirements, including legal hemp space alignment and current COA readiness for applicable products.</p>
-          <p style="color:#cbd5e1;line-height:1.6;">Venue, time, and vendor next steps will be shared with selected applicants as details are finalized.</p>
+          <h1 style="margin:0 0 12px;font-size:24px;">Your brand activation inquiry was received</h1>
+          <p style="color:#cbd5e1;line-height:1.6;">Thank you for applying for ONVIBE event opportunities. Our team will review fit, availability, and compliance requirements, including legal hemp space alignment and current COA readiness for applicable products.</p>
+          <p style="color:#cbd5e1;line-height:1.6;">Tour stop details and vendor next steps will be shared with selected applicants as details are finalized.</p>
         </div>
       `,
     };
@@ -162,11 +166,11 @@ export function buildConfirmationEmail(payload: SignupPayload) {
 
   if (payload.type === "food-vendor") {
     return {
-      subject: "ONVIBE Festival food vendor inquiry received",
+      subject: "ONVIBE food vendor inquiry received",
       html: `
         <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
           <h1 style="margin:0 0 12px;font-size:24px;">Your food vendor inquiry was received</h1>
-          <p style="color:#cbd5e1;line-height:1.6;">Thank you for applying for ONVIBE Festival in Nashville. Our team will review availability and follow up with next steps as the festival layout is finalized.</p>
+          <p style="color:#cbd5e1;line-height:1.6;">Thank you for applying for ONVIBE event opportunities. Our team will review availability and follow up with next steps for current and future tour stops.</p>
         </div>
       `,
     };
@@ -185,13 +189,26 @@ export function buildConfirmationEmail(payload: SignupPayload) {
     };
   }
 
+  if (payload.type === "store-host") {
+    return {
+      subject: "Your ONVIBE store host inquiry was received",
+      html: `
+        <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
+          <h1 style="margin:0 0 12px;font-size:24px;">Your store host inquiry was received</h1>
+          <p style="color:#cbd5e1;line-height:1.6;">Thank you for submitting your store for the ONVIBE Tennessee Community Tour. Our team will review location fit, parking lot availability, and timing for future stops.</p>
+          <p style="color:#cbd5e1;line-height:1.6;">If the location is a fit, we will follow up with next steps for event planning and requirements.</p>
+        </div>
+      `,
+    };
+  }
+
   return {
-    subject: "You are on the ONVIBE Festival and GetOnVibe launch list",
+    subject: "You are on the ONVIBE Events list",
     html: `
       <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
         <h1 style="margin:0 0 12px;font-size:24px;">You are on the list</h1>
-        <p style="color:#cbd5e1;line-height:1.6;">You are registered for ONVIBE Festival updates and GetOnVibe launch communications. Venue, time, competition details, special guest judges, and launch announcements will go to the list first.</p>
-        <p style="color:#cbd5e1;line-height:1.6;">ONVIBE Festival is a 21 plus event. Valid government-issued ID is required at entry.</p>
+        <p style="color:#cbd5e1;line-height:1.6;">You are registered for ONVIBE event updates, tour stop announcements, and future community events.</p>
+        <p style="color:#cbd5e1;line-height:1.6;">Age, entry, and participation requirements may vary by event. Valid ID may be required.</p>
       </div>
     `,
   };

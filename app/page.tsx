@@ -1,146 +1,177 @@
 import Image from "next/image";
 import { EventCinematic } from "@/components/EventCinematic";
 import { NeonButton } from "@/components/NeonButton";
-import { Section } from "@/components/Section";
 import { SignupForms } from "@/components/SignupForms";
 
-const eventFacts = ["September 12", "Saturday", "12PM to 4PM", "Smokeville"];
-
-const upcomingEvents = [
+const tourStops = [
   {
-    date: "September 12",
-    title: "ONVIBE Bikini Carwash",
-    location: "Smokeville, Hendersonville, TN",
+    city: "Hendersonville, TN",
+    venue: "Smokeville",
+    address: "699 W Main St, Hendersonville, TN 37075",
+    date: "September 12, 2026",
     time: "12PM to 4PM",
-    detail: "Food trucks, music, vendors, models, and a free bikini carwash from 1PM to 4PM.",
-    image: "/events/flyer1.jpeg",
+    status: "Next Stop",
   },
   {
-    date: "Coming Soon",
-    title: "Next ONVIBE Event Drop",
-    location: "Location TBA",
-    time: "Details first to the list",
-    detail: "New food, brand, model, and entertainment activations are being announced soon.",
-    image: "/events/flyer2.jpeg",
+    city: "More Tennessee Stops",
+    venue: "Coming Soon",
+    address: "Stores, lots, and community spaces",
+    date: "TBA",
+    time: "Get updates first",
+    status: "Tour Expanding",
   },
 ];
 
-const signupLanes = [
-  ["Attend", "Get updates", "#signup"],
-  ["Models", "Apply now", "#models"],
-  ["Food Vendors", "Request a spot", "#food-vendors"],
-  ["Brands", "Work with us", "#brands"],
+const experienceTiles = [
+  {
+    title: "Free Car Wash",
+    copy: "Yes, really free.",
+    image: "/event-assets/carwashfree.png",
+    href: "#signup",
+  },
+  {
+    title: "Food Trucks",
+    copy: "Come hungry.",
+    image: "/event-assets/onvibefood.png",
+    href: "#food-vendors",
+  },
+  {
+    title: "Music And Good Vibes",
+    copy: "A parking lot with a pulse.",
+    image: "/event-assets/onvibeevents.png",
+    href: "#signup",
+  },
+  {
+    title: "Brand Activations",
+    copy: "Put your brand in the middle of it.",
+    image: "/event-assets/Brandactivation.jpeg",
+    href: "#brands",
+  },
+];
+
+const signupCards = [
+  ["Attend", "Find the next stop", "#signup"],
+  ["Bikini Team", "Apply to join", "#models"],
+  ["Food Vendors", "Feed the tour", "#food-vendors"],
+  ["Brands", "Activate onsite", "#brands"],
+  ["Tennessee Stores", "Host a stop", "#stores"],
 ];
 
 export default function Home() {
   return (
-    <main className="site-shell event-hub">
-      <header className="event-page-header px-4 pt-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <nav className="event-topbar sticky top-3 z-40 mb-5">
-            <a href="#top" className="event-wordmark">
-              ONVIBE Events
-            </a>
-            <div className="event-nav">
-              <a href="#shows">Shows</a>
-              <a href="#signup">Sign Up</a>
-              <a href="https://creators.getonvibe.com">Creators</a>
-              <a href="https://business.getonvibe.com">Businesses</a>
-            </div>
-          </nav>
-        </div>
+    <main className="tour-site">
+      <header className="tour-header">
+        <nav className="tour-nav" aria-label="Main navigation">
+          <a href="#top" className="tour-logo">ONVIBE Events</a>
+          <div>
+            <a href="#tour-dates">Tour Dates</a>
+            <a href="#experience">Experience</a>
+            <a href="#signup">Sign Up</a>
+            <a href="https://creators.getonvibe.com">Creators</a>
+            <a href="https://business.getonvibe.com">Businesses</a>
+          </div>
+        </nav>
       </header>
 
-      <section id="top" className="event-hero-stage px-4 pb-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="event-hero-media">
-            <EventCinematic />
-            <div className="event-hero-cta">
-              <NeonButton href="#signup">Get Event Updates</NeonButton>
-            </div>
-          </div>
-
-          <div className="event-fact-bar">
-            {eventFacts.map((fact) => (
-              <span key={fact}>{fact}</span>
-            ))}
-          </div>
+      <section id="top" className="tour-hero">
+        <EventCinematic />
+        <div className="tour-hero-actions">
+          <NeonButton href="#tour-dates">Find The Next Stop</NeonButton>
+          <NeonButton href="#signup" variant="secondary">Get On The List</NeonButton>
         </div>
       </section>
 
-      <section id="shows" className="event-shows px-4 py-14 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="event-simple-heading">
-            <p>Upcoming Shows</p>
-            <h2>What is happening next</h2>
-          </div>
+      <section className="tour-free-strip" aria-label="Free carwash price reveal">
+        <Image src="/event-assets/onvibe_20_crossed_out.png" alt="20 dollars crossed out" width={500} height={300} />
+        <Image src="/event-assets/onvibe_10_crossed_out.png" alt="10 dollars crossed out" width={500} height={300} />
+        <Image src="/event-assets/onvibe_0_free.png" alt="0 dollars free" width={500} height={300} />
+      </section>
 
-          <div className="event-show-list">
-            {upcomingEvents.map((event) => (
-              <article key={event.title} className="event-show-row">
-                <div className="event-show-date">{event.date}</div>
-                <div className="event-show-main">
-                  <h3>{event.title}</h3>
-                  <p>{event.location}</p>
-                  <p>{event.time}</p>
-                  <p className="event-show-detail">{event.detail}</p>
-                  <div className="event-show-actions">
-                    <a href="#signup">Get Updates</a>
-                    <a href="#brands">Vendor Inquiry</a>
-                  </div>
-                </div>
-                <Image src={event.image} alt={`${event.title} flyer`} width={420} height={540} />
+      <section id="tour-dates" className="tour-section tour-dates">
+        <div className="tour-section-heading">
+          <p>Tennessee Community Tour</p>
+          <h1>Tour Dates</h1>
+        </div>
+        <div className="tour-date-grid">
+          <Image src="/event-assets/tourdates.png" alt="ONVIBE Tennessee Community Tour" width={1536} height={1024} />
+          <div className="tour-stop-list">
+            {tourStops.map((stop) => (
+              <article key={stop.city} className="tour-stop-card">
+                <span>{stop.status}</span>
+                <h2>{stop.city}</h2>
+                <p>{stop.venue}</p>
+                <p>{stop.date}</p>
+                <p>{stop.time}</p>
+                <small>{stop.address}</small>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="event-signup-lanes px-4 py-10 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="event-lane-list">
-            {signupLanes.map(([title, action, href]) => (
-              <a key={title} href={href} className="event-lane-row">
-                <span className="event-lane-title">{title}</span>
-                <span className="event-lane-action">{action}</span>
-              </a>
-            ))}
-          </div>
+      <section id="experience" className="tour-section">
+        <div className="tour-section-heading compact">
+          <p>Come Enjoy The Vibe</p>
+          <h2>Free car wash. Food. Music. Brands. Community.</h2>
+        </div>
+        <div className="tour-experience-grid">
+          {experienceTiles.map((tile) => (
+            <a href={tile.href} key={tile.title} className="tour-experience-card">
+              <Image src={tile.image} alt={tile.title} width={900} height={600} />
+              <div>
+                <h3>{tile.title}</h3>
+                <p>{tile.copy}</p>
+              </div>
+            </a>
+          ))}
         </div>
       </section>
 
-      <Section eyebrow="Flyers" title="Save the date." copy="September 12 at Smokeville in Hendersonville, TN.">
-        <div className="event-flyer-wall">
-          <Image src="/events/flyer1.jpeg" alt="Bikini Carwash event flyer" width={900} height={1160} />
-          <Image src="/events/flyer2.jpeg" alt="ONVIBE Events Bikini Carwash flyer" width={900} height={1160} />
+      <section className="tour-section tour-split">
+        <div className="tour-split-copy">
+          <p>For stores across Tennessee</p>
+          <h2>We turn parking lots into experiences.</h2>
+          <span>
+            ONVIBE brings the attraction: free car wash, food, brand energy, music, and community traffic.
+          </span>
+          <NeonButton href="#stores">Host A Tour Stop</NeonButton>
         </div>
-      </Section>
+        <Image src="/event-assets/Foodtrucks.jpeg" alt="ONVIBE food truck and event crowd" width={1536} height={1024} />
+      </section>
+
+      <section className="tour-section">
+        <div className="tour-section-heading compact">
+          <p>Get Involved</p>
+          <h2>Pick your lane.</h2>
+        </div>
+        <div className="tour-signup-cards">
+          {signupCards.map(([title, action, href]) => (
+            <a href={href} key={title}>
+              <strong>{title}</strong>
+              <span>{action}</span>
+            </a>
+          ))}
+        </div>
+      </section>
 
       <SignupForms />
 
-      <Section className="pb-10" eyebrow="Stay Connected" title="Get the next ONVIBE drop.">
-        <div className="event-final-callout">
-          <p>Join the list for event updates, vendor openings, model calls, and upcoming ONVIBE events.</p>
-          <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
-            <NeonButton href="#signup">Get Event Updates</NeonButton>
-            <NeonButton href="#brands" variant="secondary">Work With ONVIBE</NeonButton>
-          </div>
+      <section className="tour-section tour-final">
+        <Image src="/event-assets/pullupgetwashed.png" alt="Pull up get washed have a good time" width={1536} height={1024} />
+        <div>
+          <p>The car wash is free.</p>
+          <h2>Pull up. Get washed. Have a good time.</h2>
+          <NeonButton href="#signup">Get Event Updates</NeonButton>
         </div>
-      </Section>
+      </section>
 
-      <footer className="px-4 pb-10 pt-6 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-6 border-t border-white/10 pt-8 text-sm text-slate-300 md:grid-cols-2">
-          <div>
-            <p className="text-lg font-black text-white">ONVIBE Events</p>
-            <p className="mt-2">Powered by GetOnVibe</p>
-            <p>Food. Gear. Culture. Live.</p>
-          </div>
-          <div className="md:text-right">
-            <p>Age, entry, and participation requirements may vary by event. Valid ID may be required.</p>
-            <p className="mt-2">Brand partners are responsible for all applicable legal and compliance requirements.</p>
-            <p className="mt-4">Copyright {new Date().getFullYear()} GetOnVibe. All rights reserved.</p>
-          </div>
+      <footer className="tour-footer">
+        <div>
+          <strong>ONVIBE Events</strong>
+          <span>Powered by GetOnVibe</span>
         </div>
+        <p>Age, entry, and participation requirements may vary by event. Valid ID may be required.</p>
+        <p>Copyright {new Date().getFullYear()} GetOnVibe. All rights reserved.</p>
       </footer>
     </main>
   );
