@@ -49,10 +49,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="tour-art-break">
-        <Image src="/event-assets/soapandsuds.png" alt="" width={1536} height={768} aria-hidden="true" />
-      </section>
-
       <section className="tour-free-strip" aria-label="Free carwash price reveal">
         <Image src="/event-assets/onvibe_20_crossed_out.png" alt="20 dollars crossed out" width={500} height={300} />
         <Image src="/event-assets/onvibe_10_crossed_out.png" alt="10 dollars crossed out" width={500} height={300} />

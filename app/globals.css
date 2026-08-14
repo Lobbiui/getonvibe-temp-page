@@ -1207,23 +1207,6 @@ button {
   background: #000000;
 }
 
-.tour-art-break {
-  pointer-events: none;
-  position: relative;
-  z-index: 7;
-  height: 0;
-}
-
-.tour-art-break img {
-  position: absolute;
-  left: 50%;
-  top: -7rem;
-  width: min(1180px, 115vw);
-  height: auto;
-  transform: translateX(-50%) rotate(-2deg);
-  filter: drop-shadow(0 0 30px rgba(34, 211, 238, 0.4));
-}
-
 .tour-free-strip img:hover {
   transform: translateY(-10px) scale(1.04);
   box-shadow: 0 0 0 8px rgba(34, 211, 238, 0.16), 0 24px 70px rgba(236, 72, 153, 0.34);
