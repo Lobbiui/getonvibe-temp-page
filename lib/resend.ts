@@ -39,6 +39,10 @@ function getInternalSubject(type: SubmissionType) {
     return "ONVIBE lead: store host";
   }
 
+  if (type === "creator") {
+    return "ONVIBE lead: creator co-promotion";
+  }
+
   return `ONVIBE lead: ${type}`;
 }
 
@@ -202,6 +206,18 @@ export function buildConfirmationEmail(payload: SignupPayload) {
     };
   }
 
+  if (payload.type === "creator") {
+    return {
+      subject: "Your ONVIBE creator inquiry was received",
+      html: `
+        <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
+          <h1 style="margin:0 0 12px;font-size:24px;">Your creator inquiry was received</h1>
+          <p style="color:#cbd5e1;line-height:1.6;">Thank you for reaching out about attending an ONVIBE event as a content creator. Our team will review co-promotion fit and follow up with next steps.</p>
+        </div>
+      `,
+    };
+  }
+
   return {
     subject: "You are on the ONVIBE Events list",
     html: `
@@ -223,7 +239,7 @@ export async function upsertAudienceContact(payload: SignupPayload) {
     return;
   }
 
-  const name = payload.type === "attendee" || payload.type === "model" ? payload.fullName : payload.contactName;
+  const name = payload.type === "attendee" || payload.type === "model" || payload.type === "creator" ? payload.fullName : payload.contactName;
   const properties = {
     lead_type: payload.type,
     lead_tags: getLeadTags(payload.type).join(","),

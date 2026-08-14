@@ -23,6 +23,7 @@ const signupCards = [
   ["Food Vendors", "Feed the tour", "#food-vendors"],
   ["Brands", "Activate onsite", "#brands"],
   ["Tennessee Stores", "Host a stop", "#stores"],
+  ["Creators", "Co-promote", "#creators"],
 ];
 
 export default function Home() {
@@ -35,8 +36,6 @@ export default function Home() {
             <a href="#tour-dates">Tour Dates</a>
             <a href="#experience">Experience</a>
             <a href="#signup">Sign Up</a>
-            <a href="https://creators.getonvibe.com">Creators</a>
-            <a href="https://business.getonvibe.com">Businesses</a>
           </div>
         </nav>
       </header>
@@ -106,6 +105,20 @@ export default function Home() {
           <NeonButton href="#stores">Host A Tour Stop</NeonButton>
         </div>
         <Image src="/event-assets/Checkusout.png" alt="Check us out ONVIBE tour car artwork" width={1536} height={1024} />
+      </section>
+
+      <section className="tour-brand-break">
+        <Image src="/event-assets/onvibeeventstour.png" alt="ONVIBE Events Tour" width={1800} height={900} />
+      </section>
+
+      <section className="tour-section tour-creator-callout">
+        <Image src="/event-assets/creators.png" alt="Creators" width={1800} height={760} />
+        <div>
+          <p>Content Creators</p>
+          <h2>Want to attend?</h2>
+          <span>We do co-promotion. Reach out with a contact form and tell us where you create.</span>
+          <NeonButton href="#creators">Contact Us</NeonButton>
+        </div>
       </section>
 
       <section className="tour-section">

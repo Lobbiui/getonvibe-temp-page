@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { isAtLeastTwentyOne } from "@/lib/age";
 
-export const submissionTypes = ["attendee", "model", "brand-vendor", "food-vendor", "hotel-partner", "store-host"] as const;
+export const submissionTypes = ["attendee", "model", "brand-vendor", "food-vendor", "hotel-partner", "store-host", "creator"] as const;
 
 const phoneSchema = z.string().trim().min(7, "Phone number is required.");
 const emailSchema = z.string().trim().email("Enter a valid email address.");
@@ -95,6 +95,18 @@ export const storeHostSchema = baseSchema.extend({
   consent: consentSchema,
 });
 
+export const creatorSchema = baseSchema.extend({
+  type: z.literal("creator"),
+  fullName: requiredText("Full name"),
+  email: emailSchema,
+  phone: phoneSchema,
+  city: requiredText("City"),
+  instagram: requiredText("Instagram / primary channel"),
+  audienceSize: optionalText,
+  collaborationIdea: optionalText,
+  consent: consentSchema,
+});
+
 export const hotelPartnershipInterests = [
   "Room Block",
   "Discounted Attendee Rate",
@@ -128,6 +140,7 @@ export const signupSchema = z.discriminatedUnion("type", [
   foodVendorSchema,
   hotelPartnerSchema,
   storeHostSchema,
+  creatorSchema,
 ]);
 
 export type SignupPayload = z.infer<typeof signupSchema>;
@@ -146,6 +159,8 @@ export const successMessages: Record<SubmissionType, string> = {
     "Your hotel partnership inquiry has been received. Our team will review the opportunity and follow up with next steps.",
   "store-host":
     "Your store host inquiry has been received. Our team will review the location, parking lot fit, and tour timing.",
+  creator:
+    "Your creator inquiry has been received. Our team will review co-promotion fit and follow up with next steps.",
 };
 
 export function getEmailFromPayload(payload: SignupPayload) {
@@ -153,7 +168,7 @@ export function getEmailFromPayload(payload: SignupPayload) {
 }
 
 export function getNameFromPayload(payload: SignupPayload) {
-  if (payload.type === "attendee" || payload.type === "model") {
+  if (payload.type === "attendee" || payload.type === "model" || payload.type === "creator") {
     return payload.fullName;
   }
 

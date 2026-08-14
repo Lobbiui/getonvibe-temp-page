@@ -16,12 +16,6 @@ const bubbles = [
   { left: 92, top: 58, size: 20, delay: 162, drift: -16 },
 ];
 
-const foamPatches = [
-  { left: 54, top: 58, width: 22, delay: 0, rotate: -6 },
-  { left: 66, top: 54, width: 26, delay: 42, rotate: 8 },
-  { left: 76, top: 60, width: 20, delay: 84, rotate: -12 },
-];
-
 function CinematicComposition() {
   const frame = useCurrentFrame();
   const heroScale = interpolate(frame % 260, [0, 130, 260], [1.05, 1.12, 1.05]);
@@ -57,27 +51,6 @@ function CinematicComposition() {
           background: "linear-gradient(105deg, transparent 25%, #ffffff 48%, transparent 68%)",
         }}
       />
-      {foamPatches.map((patch) => {
-        const localFrame = (frame + patch.delay) % 160;
-
-        return (
-          <Img
-            key={`${patch.left}-${patch.top}`}
-            src={staticFile("event-assets/soapandsuds.png")}
-            style={{
-              position: "absolute",
-              left: `${patch.left}%`,
-              top: `${patch.top}%`,
-              width: `${patch.width}%`,
-              opacity: interpolate(localFrame, [0, 42, 120, 160], [0.12, 0.76, 0.58, 0.12]),
-              scale: interpolate(localFrame, [0, 80, 160], [0.88, 1.08, 0.94]),
-              translate: `${interpolate(localFrame, [0, 160], [0, -18])}px ${interpolate(localFrame, [0, 80, 160], [8, -8, 8])}px`,
-              rotate: `${patch.rotate}deg`,
-              filter: "drop-shadow(0 0 28px rgba(6,182,212,0.4))",
-            }}
-          />
-        );
-      })}
       {bubbles.map((bubble) => {
         const localFrame = (frame + bubble.delay) % 180;
 

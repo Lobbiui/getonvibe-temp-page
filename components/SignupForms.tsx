@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import {
   attendeeSchema,
   brandVendorSchema,
+  creatorSchema,
   foodVendorSchema,
   modelSchema,
   productCategories,
@@ -15,7 +16,7 @@ import {
 import { Section } from "@/components/Section";
 import { cn } from "@/lib/utils";
 
-type HubSubmissionType = "attendee" | "model" | "food-vendor" | "brand-vendor" | "store-host";
+type HubSubmissionType = "attendee" | "model" | "food-vendor" | "brand-vendor" | "store-host" | "creator";
 type FieldErrors = Record<string, string>;
 
 type SubmitState = {
@@ -42,6 +43,7 @@ const tabs: Array<{
   { type: "food-vendor", label: "Food Vendors", kicker: "Feed the crowd" },
   { type: "brand-vendor", label: "Brands", kicker: "Activate onsite" },
   { type: "store-host", label: "Stores", kicker: "Host a stop" },
+  { type: "creator", label: "Creators", kicker: "Co-promote" },
 ];
 
 function formDataValue(formData: FormData, key: string) {
@@ -76,6 +78,19 @@ function payloadFromForm(type: HubSubmissionType, formData: FormData) {
       instagram: formDataValue(formData, "instagram"),
       experience: formDataValue(formData, "experience"),
       ageConfirmation: formData.get("ageConfirmation") === "on",
+    };
+  }
+
+  if (type === "creator") {
+    return {
+      ...base,
+      fullName: formDataValue(formData, "fullName"),
+      email: formDataValue(formData, "email"),
+      phone: formDataValue(formData, "phone"),
+      city: formDataValue(formData, "city"),
+      instagram: formDataValue(formData, "instagram"),
+      audienceSize: formDataValue(formData, "audienceSize"),
+      collaborationIdea: formDataValue(formData, "collaborationIdea"),
     };
   }
 
@@ -127,6 +142,10 @@ function schemaForType(type: HubSubmissionType) {
 
   if (type === "model") {
     return modelSchema;
+  }
+
+  if (type === "creator") {
+    return creatorSchema;
   }
 
   if (type === "food-vendor") {
@@ -256,6 +275,7 @@ export function SignupForms() {
     "food-vendor": initialState,
     "brand-vendor": initialState,
     "store-host": initialState,
+    creator: initialState,
   });
 
   const activeState = states[active];
@@ -334,14 +354,15 @@ export function SignupForms() {
       id="signup"
       eyebrow="Get involved"
       title="Choose your lane."
-      copy="Attend the next event, apply for model activations, bring a food truck, or put your brand in front of the ONVIBE crowd."
+      copy="Attend the next event, apply for activations, bring a food truck, host a stop, or co-promote as a creator."
     >
       <div id="models" className="absolute -mt-24" aria-hidden="true" />
       <div id="food-vendors" className="absolute -mt-24" aria-hidden="true" />
       <div id="brands" className="absolute -mt-24" aria-hidden="true" />
       <div id="stores" className="absolute -mt-24" aria-hidden="true" />
+      <div id="creators" className="absolute -mt-24" aria-hidden="true" />
       <div className="glass-panel glow-border rounded-lg p-4 sm:p-6">
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5" role="tablist" aria-label="ONVIBE signup forms">
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6" role="tablist" aria-label="ONVIBE signup forms">
           {tabs.map((tab) => (
             <button
               key={tab.type}
@@ -412,6 +433,31 @@ export function SignupForms() {
               <StatusMessage state={activeState} />
               <button type="submit" disabled={activeState.loading} className="event-submit-button">
                 {activeState.loading ? "Submitting" : "Apply For Model Activations"}
+              </button>
+            </form>
+          )}
+
+          {active === "creator" && (
+            <form className="grid gap-5" onSubmit={(event) => handleSubmit("creator", event)}>
+              <input className="hidden" tabIndex={-1} autoComplete="off" name="company" aria-hidden="true" />
+              <div className="rounded-md border border-pink-300/35 bg-pink-500/10 p-4 text-sm font-bold leading-6 text-pink-100">
+                Are you a content creator and want to attend? We do co-promotion. Reach out with your contact info and channel.
+              </div>
+              <div className="grid gap-5 md:grid-cols-2">
+                <Field label="Full name" name="fullName" errors={activeState.errors} required />
+                <Field label="Email" name="email" type="email" errors={activeState.errors} required />
+                <Field label="Phone number" name="phone" type="tel" errors={activeState.errors} required />
+                <Field label="City" name="city" errors={activeState.errors} required />
+                <Field label="Instagram / primary channel" name="instagram" errors={activeState.errors} required />
+                <Field label="Audience size" name="audienceSize" errors={activeState.errors} />
+              </div>
+              <Field label="Collaboration idea" name="collaborationIdea" errors={activeState.errors}>
+                <textarea id="collaborationIdea" name="collaborationIdea" rows={4} className="event-textarea" />
+              </Field>
+              <ConsentFields type="creator" errors={activeState.errors} />
+              <StatusMessage state={activeState} />
+              <button type="submit" disabled={activeState.loading} className="event-submit-button">
+                {activeState.loading ? "Submitting" : "Contact Us About Co-Promotion"}
               </button>
             </form>
           )}
