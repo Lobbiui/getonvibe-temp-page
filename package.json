@@ -1,7 +1,7 @@
 {
   "name": "getonvibe-temp-page",
   "version": "1.0.0",
-  "description": "ONVIBE Festival Nashville and GetOnVibe launch landing page.",
+  "description": "ONVIBE Events and GetOnVibe temporary entertainment hub.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -13,12 +13,14 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@remotion/player": "^4.0.509",
     "clsx": "^2.1.1",
     "framer-motion": "^12.40.0",
     "lucide-react": "^1.16.0",
     "next": "^16.2.6",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
+    "remotion": "^4.0.509",
     "resend": "^6.12.4",
     "zod": "^4.4.3"
   },

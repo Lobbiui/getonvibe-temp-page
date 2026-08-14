@@ -1,26 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { eventDetails } from "@/lib/event";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://getonvibe.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "ONVIBE Festival Nashville | GetOnVibe Launch",
+  title: "ONVIBE Events | GetOnVibe Entertainment Hub",
   description:
-    "Sign up for ONVIBE Festival in the Nashville area, target date October 17, 2026, and get updates on the official GetOnVibe platform launch. Venue announcement coming soon. 21 plus event.",
+    "Follow ONVIBE Events for food trucks, music, model activations, brand pop-ups, vendor opportunities, and real-world GetOnVibe launch experiences.",
   openGraph: {
-    title: "ONVIBE Festival Nashville | GetOnVibe Launch",
+    title: "ONVIBE Events | GetOnVibe Entertainment Hub",
     description:
-      "Sign up for ONVIBE Festival in the Nashville area, target date October 17, 2026, and get updates on the official GetOnVibe platform launch. Venue announcement coming soon. 21 plus event.",
+      "Food trucks, music, model activations, brand pop-ups, vendor opportunities, and real-world GetOnVibe launch experiences.",
     url: siteUrl,
-    siteName: "ONVIBE Festival",
+    siteName: "ONVIBE Events",
     images: [
       {
-        url: "/logos/OnVibeFestival.png",
+        url: "/events/flyer1.jpeg",
         width: 1200,
         height: 630,
-        alt: "ONVIBE Festival",
+        alt: "ONVIBE Events Bikini Carwash flyer",
       },
     ],
     locale: "en_US",
@@ -28,10 +27,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ONVIBE Festival Nashville | GetOnVibe Launch",
+    title: "ONVIBE Events | GetOnVibe Entertainment Hub",
     description:
-      "Sign up for ONVIBE Festival in the Nashville area, target date October 17, 2026, and get updates on the official GetOnVibe platform launch. Venue announcement coming soon. 21 plus event.",
-    images: ["/logos/OnVibeFestival.png"],
+      "Food trucks, music, model activations, brand pop-ups, vendor opportunities, and real-world GetOnVibe launch experiences.",
+    images: ["/events/flyer1.jpeg"],
   },
   verification: {
     google: "2QWJErsLQLc7DhsanubPgBPKqx2LDwtlF7MRzxD3rB4",
@@ -45,19 +44,22 @@ export const viewport: Viewport = {
 const eventJsonLd = {
   "@context": "https://schema.org",
   "@type": "Event",
-  name: "ONVIBE Festival",
+  name: "ONVIBE Events Bikini Carwash",
   description:
-    "ONVIBE Festival in the Nashville area, target date October 17, 2026, co-launching with the official GetOnVibe platform rollout. Venue announcement coming soon. 21 plus event.",
-  startDate: eventDetails.targetDateIso,
+    "ONVIBE Events presents a Bikini Carwash activation with food trucks, music, and a free carwash at Smokeville in Hendersonville, Tennessee.",
+  startDate: "2026-09-12T12:00:00-05:00",
+  endDate: "2026-09-12T16:00:00-05:00",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   eventStatus: "https://schema.org/EventScheduled",
   location: {
     "@type": "Place",
-    name: "Venue TBA",
+    name: "Smokeville",
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Nashville",
+      streetAddress: "699 W Main St",
+      addressLocality: "Hendersonville",
       addressRegion: "TN",
+      postalCode: "37075",
       addressCountry: "US",
     },
   },

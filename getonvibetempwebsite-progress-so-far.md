@@ -1,5 +1,44 @@
 # GetOnVibe Temporary Website Progress So Far
 
+## August 2026 Entertainment Hub Redesign
+
+The temporary `www.getonvibe.com` homepage has been redesigned as an ONVIBE Events entertainment hub for the GetOnVibe event-led launch strategy.
+
+Current front-page direction:
+
+- ONVIBE Events as the public-facing event brand
+- Featured Bikini Carwash event at Smokeville
+- Flyer-led event visuals using `public/events/flyer1.jpeg` and `public/events/flyer2.jpeg`
+- Remotion Player cinematic homepage reel
+- Simple navigation for Event, Attend, Models, Food Vendors, Brands, Creators, and Businesses
+- Event-led launch strategy section explaining how real-world activations drive GetOnVibe traffic
+- Flyer wall / event poster gallery
+- Signup hub for attendees, models, food vendors, and brands
+
+Files added or substantially updated:
+
+- `app/page.tsx`
+- `app/layout.tsx`
+- `app/globals.css`
+- `components/EventCinematic.tsx`
+- `components/SignupForms.tsx`
+- `lib/validation.ts`
+- `lib/resend.ts`
+- `public/events/flyer1.jpeg`
+- `public/events/flyer2.jpeg`
+- `README.md`
+
+Verification for this redesign:
+
+- `npm run lint` passed
+- `npm run build` passed
+
+TODOs:
+
+- Review the event date/year and age requirements before final public promotion.
+- Confirm Remotion licensing requirements for the intended business use.
+- Rotate any DigitalOcean API token previously pasted into chat.
+
 ## Overview
 
 This project is the temporary ONVIBE Festival and GetOnVibe launch landing page for the planned Nashville-area launch event.

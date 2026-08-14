@@ -23,6 +23,10 @@ export function getLeadTags(type: SubmissionType) {
     return ["attendee", "app-launch"];
   }
 
+  if (type === "model") {
+    return ["model", "event-activation"];
+  }
+
   return [type];
 }
 
@@ -130,6 +134,19 @@ export function buildInternalNotificationEmail(payload: SignupPayload) {
 }
 
 export function buildConfirmationEmail(payload: SignupPayload) {
+  if (payload.type === "model") {
+    return {
+      subject: "Your ONVIBE model signup was received",
+      html: `
+        <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
+          <h1 style="margin:0 0 12px;font-size:24px;">Your model signup was received</h1>
+          <p style="color:#cbd5e1;line-height:1.6;">Thank you for applying for ONVIBE event activations. Our team will review event fit, availability, and next steps.</p>
+          <p style="color:#cbd5e1;line-height:1.6;">Upcoming event opportunities, call times, location details, and participation requirements will be shared with selected applicants.</p>
+        </div>
+      `,
+    };
+  }
+
   if (payload.type === "brand-vendor") {
     return {
       subject: "ONVIBE Festival brand vendor inquiry received",
@@ -189,7 +206,7 @@ export async function upsertAudienceContact(payload: SignupPayload) {
     return;
   }
 
-  const name = payload.type === "attendee" ? payload.fullName : payload.contactName;
+  const name = payload.type === "attendee" || payload.type === "model" ? payload.fullName : payload.contactName;
   const properties = {
     lead_type: payload.type,
     lead_tags: getLeadTags(payload.type).join(","),

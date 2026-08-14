@@ -1,6 +1,6 @@
-# ONVIBE Festival Nashville Landing Page
+# ONVIBE Events / GetOnVibe Entertainment Hub
 
-Production-ready Next.js landing page for ONVIBE Festival in the Nashville area, target date October 17, 2026, and the official GetOnVibe website/app launch.
+Production-ready temporary entertainment hub for ONVIBE Events and the GetOnVibe event-led launch strategy. The current homepage promotes real-world ONVIBE activations, including the Bikini Carwash event at Smokeville, while capturing attendee, model, food vendor, and brand activation leads.
 
 ## Stack
 
@@ -8,6 +8,7 @@ Production-ready Next.js landing page for ONVIBE Festival in the Nashville area,
 - TypeScript
 - Tailwind CSS
 - Framer Motion
+- Remotion Player
 - Lucide React
 - Zod
 - Resend
@@ -47,13 +48,23 @@ The site references these files:
 
 The supplied logo files have been copied into `public/logos`. Before production deployment, confirm both files are present and preserve their original colors, glow, and aspect ratios.
 
+## Event Flyer Assets
+
+The temporary ONVIBE Events homepage references:
+
+- `public/events/flyer1.jpeg`
+- `public/events/flyer2.jpeg`
+
+These flyers are used in the event hero, flyer gallery, and Remotion-powered cinematic reel.
+
 ## Forms and API
 
-All three forms submit JSON to `POST /api/signup`:
+The event hub forms submit JSON to `POST /api/signup`:
 
-- Attendee pre-registration
-- Brand vendor inquiry
+- Attendee event updates
+- Model activation signup
 - Food vendor inquiry
+- Brand activation inquiry
 - Hotel partnership inquiry
 
 Validation runs client-side and server-side with Zod. Attendee age is checked on both sides. Resend API keys are only used server-side.
