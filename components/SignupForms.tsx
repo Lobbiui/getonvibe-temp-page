@@ -1,6 +1,5 @@
 "use client";
 
-import { ClipboardCheck, Mail, Megaphone, Store, UserRound, Utensils } from "lucide-react";
 import type { FormEvent, ReactNode } from "react";
 import { useMemo, useState } from "react";
 import {
@@ -36,12 +35,11 @@ const tabs: Array<{
   type: HubSubmissionType;
   label: string;
   kicker: string;
-  icon: typeof Mail;
 }> = [
-  { type: "attendee", label: "Attend", kicker: "Get event drops", icon: Mail },
-  { type: "model", label: "Models", kicker: "Join activations", icon: UserRound },
-  { type: "food-vendor", label: "Food Vendors", kicker: "Feed the crowd", icon: Utensils },
-  { type: "brand-vendor", label: "Brands", kicker: "Activate onsite", icon: Store },
+  { type: "attendee", label: "Attend", kicker: "Get event drops" },
+  { type: "model", label: "Models", kicker: "Join activations" },
+  { type: "food-vendor", label: "Food Vendors", kicker: "Feed the crowd" },
+  { type: "brand-vendor", label: "Brands", kicker: "Activate onsite" },
 ];
 
 function formDataValue(formData: FormData, key: string) {
@@ -335,8 +333,7 @@ export function SignupForms() {
                   : "border-white/15 bg-white/5 text-slate-200 hover:border-cyan-300",
               )}
             >
-              <span className="flex items-center gap-2 text-sm font-black uppercase tracking-[0.16em]">
-                <tab.icon className="h-4 w-4" aria-hidden="true" />
+              <span className="text-sm font-black uppercase tracking-[0.16em]">
                 {tab.label}
               </span>
               <span className="mt-2 block text-xs font-bold uppercase tracking-[0.14em] opacity-80">
@@ -347,9 +344,9 @@ export function SignupForms() {
         </div>
 
         <div className="mt-7">
-          <div className="mb-5 flex items-center gap-3">
-            {activeTab && <activeTab.icon className="h-6 w-6 text-cyan-300" aria-hidden="true" />}
+          <div className="mb-5">
             <h3 className="text-2xl font-black text-white">{activeTab?.label}</h3>
+            <p className="mt-1 text-sm font-bold uppercase tracking-[0.16em] text-cyan-200">{activeTab?.kicker}</p>
           </div>
 
           {active === "attendee" && (
@@ -367,7 +364,6 @@ export function SignupForms() {
               <ConsentFields type="attendee" errors={activeState.errors} />
               <StatusMessage state={activeState} />
               <button type="submit" disabled={activeState.loading} className="event-submit-button">
-                <ClipboardCheck className="h-4 w-4" aria-hidden="true" />
                 {activeState.loading ? "Submitting" : "Get Event Updates"}
               </button>
             </form>
@@ -392,7 +388,6 @@ export function SignupForms() {
               <ConsentFields type="model" errors={activeState.errors} />
               <StatusMessage state={activeState} />
               <button type="submit" disabled={activeState.loading} className="event-submit-button">
-                <UserRound className="h-4 w-4" aria-hidden="true" />
                 {activeState.loading ? "Submitting" : "Apply For Model Activations"}
               </button>
             </form>
@@ -418,7 +413,6 @@ export function SignupForms() {
               <ConsentFields type="food-vendor" errors={activeState.errors} />
               <StatusMessage state={activeState} />
               <button type="submit" disabled={activeState.loading} className="event-submit-button">
-                <Utensils className="h-4 w-4" aria-hidden="true" />
                 {activeState.loading ? "Submitting" : "Submit Food Vendor Inquiry"}
               </button>
             </form>
@@ -453,7 +447,6 @@ export function SignupForms() {
               <ConsentFields type="brand-vendor" errors={activeState.errors} />
               <StatusMessage state={activeState} />
               <button type="submit" disabled={activeState.loading} className="event-submit-button">
-                <Megaphone className="h-4 w-4" aria-hidden="true" />
                 {activeState.loading ? "Submitting" : "Submit Brand Activation Inquiry"}
               </button>
             </form>
