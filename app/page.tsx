@@ -4,8 +4,8 @@ import { NeonButton } from "@/components/NeonButton";
 import { SignupForms } from "@/components/SignupForms";
 
 const tourStops = [
-  ["Next Stop", "Hendersonville, TN", "Smokeville", "September 12, 2026", "12PM to 4PM"],
-  ["Tour Expanding", "More Tennessee Stops", "Coming Soon", "TBA", "Get updates first"],
+  ["Next Stop", "Hendersonville, TN", "Smokeville", "699 W Main St, Hendersonville, TN", "September 12, 2026", "12PM to 4PM"],
+  ["Tour Expanding", "More Tennessee Stops", "Coming Soon", "Tennessee", "TBA", "Get updates first"],
 ];
 
 const experienceTiles = [
@@ -60,13 +60,14 @@ export default function Home() {
           <h1>Tour Dates</h1>
         </div>
         <div className="tour-date-stage">
-          <Image src="/event-assets/tourdates.png" alt="ONVIBE Tennessee Community Tour" width={1536} height={1024} />
+          <Image src="/event-assets/flyer1.jpeg" alt="Official ONVIBE Bikini Carwash flyer for the next Hendersonville event" width={1080} height={1350} />
           <div className="tour-stop-list">
-            {tourStops.map(([status, city, venue, date, time]) => (
+            {tourStops.map(([status, city, venue, address, date, time]) => (
               <article key={city} className="tour-stop-card">
                 <span>{status}</span>
                 <h2>{city}</h2>
                 <p>{venue}</p>
+                <small>{address}</small>
                 <p>{date}</p>
                 <p>{time}</p>
               </article>

@@ -1298,6 +1298,9 @@ button {
 
 .tour-date-stage > img {
   min-height: auto;
+  height: auto;
+  max-height: 760px;
+  object-fit: contain;
   overflow: visible;
   transform: rotate(-1deg) scale(1.02);
   transition: transform 200ms ease, filter 200ms ease;
