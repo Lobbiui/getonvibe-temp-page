@@ -325,7 +325,7 @@ button {
 
 .event-landing {
   display: grid;
-  min-height: 86vh;
+  min-height: 78vh;
   align-items: center;
   gap: 3rem;
   grid-template-columns: minmax(0, 1.03fr) minmax(340px, 0.97fr);
@@ -335,9 +335,9 @@ button {
   margin-top: 1.15rem;
   max-width: 980px;
   color: #ffffff;
-  font-size: clamp(4rem, 9vw, 9.2rem);
+  font-size: clamp(3.4rem, 7vw, 7rem);
   font-weight: 900;
-  line-height: 0.82;
+  line-height: 0.9;
   text-transform: uppercase;
   text-wrap: balance;
 }
@@ -346,9 +346,9 @@ button {
   margin-top: 1.4rem;
   max-width: 690px;
   color: #d7faff;
-  font-size: clamp(1.25rem, 2.5vw, 2.15rem);
+  font-size: clamp(1.1rem, 2vw, 1.55rem);
   font-weight: 900;
-  line-height: 1.18;
+  line-height: 1.32;
 }
 
 .event-ticket-strip {
@@ -388,7 +388,7 @@ button {
 
 .event-feature-frame {
   position: relative;
-  min-height: 680px;
+  min-height: 610px;
 }
 
 .event-feature-frame::before {
@@ -408,7 +408,7 @@ button {
   right: 0;
   top: 2%;
   z-index: 2;
-  width: min(78vw, 435px);
+  width: min(78vw, 390px);
   height: auto;
   border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 0;
@@ -446,9 +446,9 @@ button {
 .event-section-heading h2 {
   max-width: 820px;
   color: #ffffff;
-  font-size: clamp(2rem, 5vw, 5rem);
+  font-size: clamp(2rem, 4vw, 3.8rem);
   font-weight: 900;
-  line-height: 0.9;
+  line-height: 1;
   text-align: right;
   text-transform: uppercase;
 }
@@ -472,16 +472,16 @@ button {
 .event-show-copy h3 {
   margin-top: 1rem;
   color: #ffffff;
-  font-size: clamp(2.5rem, 5vw, 5.5rem);
+  font-size: clamp(2rem, 4vw, 4rem);
   font-weight: 900;
-  line-height: 0.88;
+  line-height: 0.98;
   text-transform: uppercase;
 }
 
 .event-show-copy p:not(.event-eyebrow) {
   margin-top: 1.5rem;
   color: #cbd5e1;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   line-height: 1.7;
 }
@@ -602,7 +602,7 @@ button {
 
 .event-lane-title {
   color: #ffffff;
-  font-size: 1.45rem;
+  font-size: 1.25rem;
   font-weight: 900;
   text-transform: uppercase;
 }
@@ -683,6 +683,8 @@ button {
   display: grid;
   gap: 1.5rem;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-inline: auto;
+  max-width: 980px;
 }
 
 .event-flyer-wall img {
@@ -845,7 +847,7 @@ button {
   }
 
   .event-feature-frame {
-    min-height: 620px;
+    min-height: 560px;
   }
 
   .event-section-heading {
@@ -899,11 +901,11 @@ button {
   }
 
   .event-feature-frame {
-    min-height: 520px;
+    min-height: 470px;
   }
 
   .event-feature-poster {
-    width: min(82vw, 330px);
+    width: min(82vw, 300px);
   }
 
   .event-feature-poster-back {

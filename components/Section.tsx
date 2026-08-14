@@ -22,9 +22,9 @@ export function Section({ id, eyebrow, title, copy, children, className }: Secti
               </p>
             )}
             {title && (
-              <h2 className="text-3xl font-black leading-tight text-white sm:text-5xl">{title}</h2>
+              <h2 className="text-3xl font-black leading-tight text-white sm:text-4xl">{title}</h2>
             )}
-            {copy && <p className="mt-5 text-lg leading-8 text-slate-300">{copy}</p>}
+            {copy && <p className="mt-4 text-base leading-7 text-slate-300 sm:text-lg">{copy}</p>}
           </div>
         )}
         {children}
