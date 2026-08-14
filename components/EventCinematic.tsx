@@ -5,125 +5,81 @@ import { AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame } from "rem
 
 function CinematicComposition() {
   const frame = useCurrentFrame();
-  const drift = interpolate(frame % 240, [0, 120, 240], [-4, 4, -4]);
-  const flyerScale = interpolate(frame % 240, [0, 120, 240], [1.02, 1.08, 1.02]);
-  const sweep = interpolate(frame % 180, [0, 180], [-40, 140]);
+  const heroScale = interpolate(frame % 260, [0, 130, 260], [1.05, 1.12, 1.05]);
+  const soapX = interpolate(frame % 210, [0, 210], [-58, 112]);
+  const soapY = interpolate(frame % 210, [0, 105, 210], [62, 46, 62]);
+  const priceOne = interpolate(frame, [8, 26], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const priceTwo = interpolate(frame, [34, 52], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const priceFree = interpolate(frame, [60, 82], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const flash = interpolate(frame % 150, [0, 75, 150], [0, 1, 0]);
 
   return (
     <AbsoluteFill style={{ background: "#050008", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
+      <Img
+        src={staticFile("event-assets/Checkusout.png")}
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          scale: heroScale,
+        }}
+      />
       <AbsoluteFill
         style={{
           background:
-            "linear-gradient(90deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.46) 42%, rgba(0,0,0,0.25) 100%), radial-gradient(circle at 18% 18%, rgba(236,72,153,0.45), transparent 28%), radial-gradient(circle at 82% 22%, rgba(6,182,212,0.35), transparent 28%), linear-gradient(135deg, #050008 0%, #111827 52%, #050008 100%)",
+            "linear-gradient(90deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.5) 42%, rgba(0,0,0,0.1) 100%), radial-gradient(circle at 20% 20%, rgba(236,72,153,0.4), transparent 32%), radial-gradient(circle at 78% 70%, rgba(6,182,212,0.32), transparent 30%)",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          opacity: flash * 0.22,
+          background: "linear-gradient(105deg, transparent 25%, #ffffff 48%, transparent 68%)",
         }}
       />
       <Img
-        src={staticFile("events/flyer1.jpeg")}
+        src={staticFile("event-assets/soapandsuds.png")}
         style={{
           position: "absolute",
-          right: "-5%",
-          top: "-24%",
-          width: "47%",
-          minWidth: 460,
-          scale: flyerScale,
-          rotate: "3deg",
+          left: `${soapX}%`,
+          top: `${soapY}%`,
+          width: "68%",
           opacity: 0.92,
-          boxShadow: "0 0 90px rgba(236,72,153,0.34)",
-        }}
-      />
-      <Img
-        src={staticFile("events/flyer2.jpeg")}
-        style={{
-          position: "absolute",
-          right: "28%",
-          bottom: "-30%",
-          width: "34%",
-          minWidth: 330,
-          scale: 1.02,
-          rotate: "-5deg",
-          opacity: 0.38,
-          boxShadow: "0 0 80px rgba(6,182,212,0.24)",
+          rotate: "-8deg",
+          filter: "drop-shadow(0 0 34px rgba(6,182,212,0.55))",
         }}
       />
       <div
         style={{
           position: "absolute",
-          left: `${sweep}%`,
-          top: "-15%",
-          width: "24%",
-          height: "130%",
-          transform: "rotate(16deg)",
-          background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent)",
-          filter: "blur(10px)",
-        }}
-      />
-
-      <div
-        style={{
-          position: "absolute",
-          left: "8%",
-          top: 0,
-          bottom: 0,
-          width: "50%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "flex-start",
-          translate: `${drift}px 0`,
+          left: "6%",
+          top: "12%",
+          width: "46%",
         }}
       >
-        <div
-          style={{
-            color: "#facc15",
-            fontSize: 22,
-            fontWeight: 900,
-            letterSpacing: 5,
-            textTransform: "uppercase",
-          }}
-        >
-          ONVIBE Events Presents
+        <div style={{ color: "#22d3ee", fontSize: 20, fontWeight: 900, letterSpacing: 5, textTransform: "uppercase" }}>
+          Tennessee Community Tour
         </div>
-        <div
-          style={{
-            marginTop: 12,
-            color: "#ec4899",
-            fontSize: 74,
-            lineHeight: 0.92,
-            fontWeight: 900,
-            textTransform: "uppercase",
-          }}
-        >
-          Bikini
+        <div style={{ marginTop: 16, color: "#ec4899", fontSize: 88, fontWeight: 900, lineHeight: 0.9, textTransform: "uppercase" }}>
+          Free Bikini
         </div>
-        <div
-          style={{
-            color: "#ffffff",
-            fontSize: 68,
-            lineHeight: 0.92,
-            fontWeight: 900,
-            textTransform: "uppercase",
-          }}
-        >
-          Carwash
+        <div style={{ color: "#ffffff", fontSize: 82, fontWeight: 900, lineHeight: 0.9, textTransform: "uppercase" }}>
+          Car Wash
         </div>
-        <div
-          style={{
-            marginTop: 20,
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 14,
-            color: "#ffffff",
-            fontSize: 18,
-            fontWeight: 900,
-            textTransform: "uppercase",
-          }}
-        >
-          {["September 12", "12PM to 4PM", "Smokeville"].map((item) => (
+        <div style={{ marginTop: 22, display: "flex", gap: 12, flexWrap: "wrap" }}>
+          {["Food Trucks", "Music", "Brands", "Good Vibes"].map((item) => (
             <span
               key={item}
               style={{
+                color: "#ffffff",
                 border: "1px solid rgba(255,255,255,0.72)",
                 padding: "10px 14px",
+                fontSize: 16,
+                fontWeight: 900,
+                textTransform: "uppercase",
               }}
             >
               {item}
@@ -131,20 +87,52 @@ function CinematicComposition() {
           ))}
         </div>
       </div>
+      <Img
+        src={staticFile("event-assets/onvibe_20_crossed_out.png")}
+        style={{
+          position: "absolute",
+          left: "7%",
+          bottom: "7%",
+          width: "19%",
+          opacity: priceOne,
+          scale: priceOne,
+        }}
+      />
+      <Img
+        src={staticFile("event-assets/onvibe_10_crossed_out.png")}
+        style={{
+          position: "absolute",
+          left: "28%",
+          bottom: "7%",
+          width: "19%",
+          opacity: priceTwo,
+          scale: priceTwo,
+        }}
+      />
+      <Img
+        src={staticFile("event-assets/onvibe_0_free.png")}
+        style={{
+          position: "absolute",
+          left: "49%",
+          bottom: "4%",
+          width: "25%",
+          opacity: priceFree,
+          scale: priceFree,
+          filter: "drop-shadow(0 0 42px rgba(236,72,153,0.72))",
+        }}
+      />
     </AbsoluteFill>
   );
 }
 
-export function EventCinematic({ variant = "wide" }: { variant?: "wide" | "square" }) {
-  const isSquare = variant === "square";
-
+export function EventCinematic() {
   return (
-    <div className={isSquare ? "event-cinematic event-cinematic-square" : "event-cinematic event-cinematic-wide"}>
+    <div className="event-cinematic-full">
       <Player
         component={CinematicComposition}
-        durationInFrames={240}
-        compositionWidth={isSquare ? 1080 : 1280}
-        compositionHeight={isSquare ? 1080 : 720}
+        durationInFrames={260}
+        compositionWidth={1536}
+        compositionHeight={864}
         fps={30}
         autoPlay
         loop

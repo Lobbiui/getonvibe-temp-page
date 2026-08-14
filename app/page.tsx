@@ -4,49 +4,17 @@ import { NeonButton } from "@/components/NeonButton";
 import { SignupForms } from "@/components/SignupForms";
 
 const tourStops = [
-  {
-    city: "Hendersonville, TN",
-    venue: "Smokeville",
-    address: "699 W Main St, Hendersonville, TN 37075",
-    date: "September 12, 2026",
-    time: "12PM to 4PM",
-    status: "Next Stop",
-  },
-  {
-    city: "More Tennessee Stops",
-    venue: "Coming Soon",
-    address: "Stores, lots, and community spaces",
-    date: "TBA",
-    time: "Get updates first",
-    status: "Tour Expanding",
-  },
+  ["Next Stop", "Hendersonville, TN", "Smokeville", "September 12, 2026", "12PM to 4PM"],
+  ["Tour Expanding", "More Tennessee Stops", "Coming Soon", "TBA", "Get updates first"],
 ];
 
 const experienceTiles = [
-  {
-    title: "Free Car Wash",
-    copy: "Yes, really free.",
-    image: "/event-assets/carwashfree.png",
-    href: "#signup",
-  },
-  {
-    title: "Food Trucks",
-    copy: "Come hungry.",
-    image: "/event-assets/onvibefood.png",
-    href: "#food-vendors",
-  },
-  {
-    title: "Music And Good Vibes",
-    copy: "A parking lot with a pulse.",
-    image: "/event-assets/onvibeevents.png",
-    href: "#signup",
-  },
-  {
-    title: "Brand Activations",
-    copy: "Put your brand in the middle of it.",
-    image: "/event-assets/Brandactivation.jpeg",
-    href: "#brands",
-  },
+  ["Free Car Wash", "Yes, really free.", "/event-assets/carwishintrofree.png", "#signup"],
+  ["Pull Up", "Get washed. Have a good time.", "/event-assets/pullupgetwashed.png", "#signup"],
+  ["Food And Good Vibes", "Come hungry.", "/event-assets/onvibefood.png", "#food-vendors"],
+  ["Music And Community", "The lot becomes the party.", "/event-assets/onvibeevents.png", "#signup"],
+  ["Check Us Out", "Follow the tour.", "/event-assets/Checkusout.png", "#tour-dates"],
+  ["Official Flyer", "September 12 at Smokeville.", "/event-assets/flyer1.jpeg", "#tour-dates"],
 ];
 
 const signupCards = [
@@ -81,62 +49,67 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="tour-art-break">
+        <Image src="/event-assets/soapandsuds.png" alt="" width={1536} height={768} aria-hidden="true" />
+      </section>
+
       <section className="tour-free-strip" aria-label="Free carwash price reveal">
         <Image src="/event-assets/onvibe_20_crossed_out.png" alt="20 dollars crossed out" width={500} height={300} />
         <Image src="/event-assets/onvibe_10_crossed_out.png" alt="10 dollars crossed out" width={500} height={300} />
         <Image src="/event-assets/onvibe_0_free.png" alt="0 dollars free" width={500} height={300} />
       </section>
 
-      <section id="tour-dates" className="tour-section tour-dates">
+      <section id="tour-dates" className="tour-section tour-dates tour-open-section">
         <div className="tour-section-heading">
           <p>Tennessee Community Tour</p>
           <h1>Tour Dates</h1>
         </div>
-        <div className="tour-date-grid">
+        <div className="tour-date-stage">
           <Image src="/event-assets/tourdates.png" alt="ONVIBE Tennessee Community Tour" width={1536} height={1024} />
           <div className="tour-stop-list">
-            {tourStops.map((stop) => (
-              <article key={stop.city} className="tour-stop-card">
-                <span>{stop.status}</span>
-                <h2>{stop.city}</h2>
-                <p>{stop.venue}</p>
-                <p>{stop.date}</p>
-                <p>{stop.time}</p>
-                <small>{stop.address}</small>
+            {tourStops.map(([status, city, venue, date, time]) => (
+              <article key={city} className="tour-stop-card">
+                <span>{status}</span>
+                <h2>{city}</h2>
+                <p>{venue}</p>
+                <p>{date}</p>
+                <p>{time}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="experience" className="tour-section">
+      <section id="experience" className="tour-section tour-open-section">
         <div className="tour-section-heading compact">
           <p>Come Enjoy The Vibe</p>
           <h2>Free car wash. Food. Music. Brands. Community.</h2>
         </div>
         <div className="tour-experience-grid">
-          {experienceTiles.map((tile) => (
-            <a href={tile.href} key={tile.title} className="tour-experience-card">
-              <Image src={tile.image} alt={tile.title} width={900} height={600} />
+          {experienceTiles.map(([title, copy, image, href]) => (
+            <a href={href} key={title} className="tour-experience-card">
+              <Image src={image} alt={title} width={1536} height={1024} />
               <div>
-                <h3>{tile.title}</h3>
-                <p>{tile.copy}</p>
+                <h3>{title}</h3>
+                <p>{copy}</p>
               </div>
             </a>
           ))}
         </div>
       </section>
 
-      <section className="tour-section tour-split">
-        <div className="tour-split-copy">
+      <section className="tour-wide-art">
+        <Image src="/event-assets/pullupgetwashed.png" alt="Pull up get washed have a good time" width={1536} height={1024} />
+      </section>
+
+      <section className="tour-section tour-store-invite">
+        <div>
           <p>For stores across Tennessee</p>
-          <h2>We turn parking lots into experiences.</h2>
-          <span>
-            ONVIBE brings the attraction: free car wash, food, brand energy, music, and community traffic.
-          </span>
+          <h2>Host the next stop.</h2>
+          <span>Bring ONVIBE to your parking lot: free car wash, food, music, brands, and community traffic.</span>
           <NeonButton href="#stores">Host A Tour Stop</NeonButton>
         </div>
-        <Image src="/event-assets/Foodtrucks.jpeg" alt="ONVIBE food truck and event crowd" width={1536} height={1024} />
+        <Image src="/event-assets/Checkusout.png" alt="Check us out ONVIBE tour car artwork" width={1536} height={1024} />
       </section>
 
       <section className="tour-section">
@@ -156,11 +129,11 @@ export default function Home() {
 
       <SignupForms />
 
-      <section className="tour-section tour-final">
-        <Image src="/event-assets/pullupgetwashed.png" alt="Pull up get washed have a good time" width={1536} height={1024} />
+      <section className="tour-wide-art final-art">
+        <Image src="/event-assets/onvibeevents.png" alt="ONVIBE Events music and carwash artwork" width={1536} height={1024} />
         <div>
           <p>The car wash is free.</p>
-          <h2>Pull up. Get washed. Have a good time.</h2>
+          <h2>Come enjoy the vibe.</h2>
           <NeonButton href="#signup">Get Event Updates</NeonButton>
         </div>
       </section>
