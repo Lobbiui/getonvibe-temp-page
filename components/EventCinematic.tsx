@@ -77,9 +77,9 @@ function CinematicComposition() {
         src={staticFile("event-assets/flyer1.jpeg")}
         style={{
           position: "absolute",
-          right: "8%",
-          top: "7%",
-          width: "27%",
+          right: "7%",
+          top: "6%",
+          width: "24%",
           border: "2px solid rgba(255,255,255,0.72)",
           boxShadow: "0 32px 90px rgba(0,0,0,0.72), 0 0 42px rgba(236,72,153,0.38)",
           opacity: posterIn,
@@ -92,9 +92,9 @@ function CinematicComposition() {
         src={staticFile("event-assets/onvibeeventstour.png")}
         style={{
           position: "absolute",
-          left: "7%",
-          top: "8%",
-          width: "31%",
+          left: "8%",
+          top: "7%",
+          width: "28%",
           opacity: 0.85,
           transform: `translateY(${slowDrift * 0.2}px)`,
           filter: "drop-shadow(0 0 28px rgba(34,211,238,0.34))",
@@ -104,9 +104,9 @@ function CinematicComposition() {
       <div
         style={{
           position: "absolute",
-          left: "8%",
-          top: "34%",
-          maxWidth: "54%",
+          left: "9%",
+          top: "26%",
+          maxWidth: "56%",
           opacity: titleIn,
           transform: `translateY(${(1 - titleIn) * 28}px)`,
         }}
@@ -128,7 +128,7 @@ function CinematicComposition() {
       <div
         style={{
           position: "absolute",
-          left: "8%",
+          left: "9%",
           bottom: "8%",
           display: "flex",
           gap: 16,
@@ -185,7 +185,7 @@ export function EventCinematic() {
       <Player
         component={CinematicComposition}
         durationInFrames={260}
-        compositionWidth={1536}
+        compositionWidth={1920}
         compositionHeight={760}
         fps={30}
         autoPlay
