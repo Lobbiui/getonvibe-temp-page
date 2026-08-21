@@ -22,18 +22,20 @@
 
 .portal-header {
   position: fixed;
-  inset: 0 0 auto;
+  top: 0.85rem;
+  left: 50%;
   z-index: 30;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
   width: min(1180px, calc(100% - 2rem));
-  margin: 0.85rem auto 0;
+  margin: 0;
   padding: 0.7rem 0.85rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(5, 5, 8, 0.72);
   box-shadow: 0 20px 80px rgba(0, 0, 0, 0.34);
+  transform: translateX(-50%);
   backdrop-filter: blur(18px);
 }
 
@@ -635,8 +637,10 @@
   }
 
   .portal-hero-card {
-    right: 1rem;
+    left: 50%;
     max-width: none;
+    width: calc(100% - 2rem);
+    transform: translateX(-50%);
   }
 
   .portal-now-playing {
