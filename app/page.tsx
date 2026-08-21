@@ -54,15 +54,6 @@ export default function Home() {
 
       <section className="portal-hero">
         <EventCinematic />
-        <div className="portal-hero-card">
-          <p>ONVIBE Events Presents</p>
-          <h1>Free Bikini Car Wash</h1>
-          <span>Food trucks. Music. Brands. Community. A Tennessee tour built to feel like a Saturday you actually want to pull up for.</span>
-          <div>
-            <NeonButton href="#tour-dates">Find The Next Stop</NeonButton>
-            <NeonButton href="#signup" variant="secondary">Get On The List</NeonButton>
-          </div>
-        </div>
       </section>
 
       <section className="portal-now-playing" aria-label="Current event details">
