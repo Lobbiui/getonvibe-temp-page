@@ -73,38 +73,34 @@
 
 .portal-hero {
   position: relative;
-  width: 100%;
+  left: 50%;
+  width: 100vw;
   min-height: 760px;
+  margin-left: -50vw;
   background: #050508;
   overflow: hidden;
 }
 
 .portal-cinematic {
-  width: 100%;
-  height: min(88vh, 760px);
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  height: min(86vh, 760px);
   min-height: 620px;
+  margin-left: -50vw;
   overflow: hidden;
 }
 
 .portal-cinematic > div {
-  width: 100% !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: max(100vw, calc(min(86vh, 760px) * 2.5263157895)) !important;
   height: 100% !important;
   max-width: none !important;
+  transform: translate(-50%, -50%) !important;
 }
 
-.portal-hero-card {
-  position: absolute;
-  left: max(1rem, calc((100vw - 1180px) / 2));
-  bottom: clamp(1rem, 4vw, 3rem);
-  z-index: 4;
-  max-width: 510px;
-  padding: clamp(1rem, 3vw, 1.6rem);
-  background: rgba(0, 0, 0, 0.72);
-  box-shadow: 0 26px 90px rgba(0, 0, 0, 0.48), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(16px);
-}
-
-.portal-hero-card p,
 .portal-section-title p,
 .portal-split-promo p,
 .portal-creator-callout p,
@@ -114,31 +110,6 @@
   font-weight: 950;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-}
-
-.portal-hero-card h1 {
-  margin-top: 0.45rem;
-  color: #ffffff;
-  font-size: clamp(2.35rem, 6vw, 5rem);
-  font-weight: 950;
-  line-height: 0.86;
-  text-transform: uppercase;
-}
-
-.portal-hero-card span {
-  display: block;
-  margin-top: 0.9rem;
-  color: #e5e7eb;
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1.55;
-}
-
-.portal-hero-card div {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 1.15rem;
 }
 
 .portal-now-playing {
@@ -643,13 +614,6 @@
   .portal-cinematic {
     height: 680px;
     min-height: 680px;
-  }
-
-  .portal-hero-card {
-    left: 50%;
-    max-width: none;
-    width: calc(100% - 2rem);
-    transform: translateX(-50%);
   }
 
   .portal-now-playing {
