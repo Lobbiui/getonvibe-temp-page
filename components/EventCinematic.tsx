@@ -1,6 +1,7 @@
 "use client";
 
 import { Player } from "@remotion/player";
+import { useEffect, useRef, useState } from "react";
 import { AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame } from "remotion";
 
 const bubbles = Array.from({ length: 18 }, (_, index) => ({
@@ -180,13 +181,40 @@ function CinematicComposition() {
 }
 
 export function EventCinematic() {
+  const stageRef = useRef<HTMLDivElement>(null);
+  const [stageSize, setStageSize] = useState({ width: 1920, height: 760 });
+
+  useEffect(() => {
+    const stage = stageRef.current;
+
+    if (!stage) {
+      return;
+    }
+
+    const updateSize = () => {
+      const rect = stage.getBoundingClientRect();
+
+      setStageSize({
+        width: Math.max(320, Math.round(rect.width)),
+        height: Math.max(520, Math.round(rect.height)),
+      });
+    };
+
+    updateSize();
+
+    const observer = new ResizeObserver(updateSize);
+    observer.observe(stage);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="portal-cinematic">
+    <div className="portal-cinematic" ref={stageRef}>
       <Player
         component={CinematicComposition}
         durationInFrames={260}
-        compositionWidth={1920}
-        compositionHeight={760}
+        compositionWidth={stageSize.width}
+        compositionHeight={stageSize.height}
         fps={30}
         autoPlay
         loop
