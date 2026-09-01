@@ -212,11 +212,14 @@ export async function sendNewEventAnnouncementEmail(account: DashboardAccountEma
     return false;
   }
 
-  const roleCopy = {
-    ATTENDEE: "A new ONVIBE event is posted in your dashboard. Log in to mark your intent to attend and watch for updates.",
-    MODEL: "A new ONVIBE event is posted in your dashboard. Log in to let the team know if you want to be considered for this date.",
-    VENDOR: "A new ONVIBE event is posted in your dashboard. Log in to request vending interest for this stop.",
-  } as const;
+  const roleCopy =
+    account.role === "VENDOR" && account.vendorType === "BRAND"
+      ? "A new ONVIBE event is posted in your dashboard. Log in to request a booth, table display, or managed brand activation for this stop."
+      : {
+          ATTENDEE: "A new ONVIBE event is posted in your dashboard. Log in to mark your intent to attend and watch for updates.",
+          MODEL: "A new ONVIBE event is posted in your dashboard. Log in to let the team know if you want to be considered for this date.",
+          VENDOR: "A new ONVIBE event is posted in your dashboard. Log in to request vending interest for this stop.",
+        }[account.role];
 
   const result = await resend.emails.send({
     from,
@@ -224,7 +227,7 @@ export async function sendNewEventAnnouncementEmail(account: DashboardAccountEma
     subject: `New ONVIBE event posted: ${event.title}`,
     html: renderPlainEmail(
       "New ONVIBE event posted",
-      `${roleCopy[account.role]}\nEvent: ${event.title}\nLocation: ${event.venue || "Venue TBA"} ${event.address || event.city}\nDate: ${event.startsAt.toLocaleString("en-US", { timeZone: "America/Chicago" })}\nDashboard: ${process.env.NEXT_PUBLIC_SITE_URL || "https://www.getonvibe.com"}/dashboard`,
+      `${roleCopy}\nEvent: ${event.title}\nLocation: ${event.venue || "Venue TBA"} ${event.address || event.city}\nDate: ${event.startsAt.toLocaleString("en-US", { timeZone: "America/Chicago" })}\nDashboard: ${process.env.NEXT_PUBLIC_SITE_URL || "https://www.getonvibe.com"}/dashboard`,
     ),
   });
 
@@ -253,17 +256,20 @@ export async function sendAccountApprovedEmail(account: DashboardAccountEmail) {
 }
 
 export async function sendEventInterestEmail(account: DashboardAccountEmail, event: DashboardEventEmail) {
-  const actionByRole = {
-    ATTENDEE: "marked intent to attend",
-    MODEL: "wants to join the Bikini Team for",
-    VENDOR: "requested to vend at",
-  } as const;
+  const actionByRole =
+    account.role === "VENDOR" && account.vendorType === "BRAND"
+      ? "requested a brand booth or display for"
+      : {
+          ATTENDEE: "marked intent to attend",
+          MODEL: "wants to join the Bikini Team for",
+          VENDOR: "requested to vend at",
+        }[account.role];
 
   await sendDashboardInternalEmail(
-    `[ACTION REQUIRED] ${account.name} ${actionByRole[account.role]} ${event.title}`,
+    `[ACTION REQUIRED] ${account.name} ${actionByRole} ${event.title}`,
     renderPlainEmail(
       "New event response",
-      `${account.name} ${actionByRole[account.role]} ${event.title}.\nRole: ${account.role.toLowerCase()}\nEmail: ${account.email}\nEvent: ${event.title}\nLocation: ${event.venue || ""} ${event.address || ""}\nDate: ${event.startsAt.toLocaleString("en-US", { timeZone: "America/Chicago" })}`,
+      `${account.name} ${actionByRole} ${event.title}.\nRole: ${account.role.toLowerCase()}\nVendor type: ${account.vendorType || ""}\nEmail: ${account.email}\nEvent: ${event.title}\nLocation: ${event.venue || ""} ${event.address || ""}\nDate: ${event.startsAt.toLocaleString("en-US", { timeZone: "America/Chicago" })}`,
     ),
   );
 }

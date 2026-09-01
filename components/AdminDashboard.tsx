@@ -282,6 +282,10 @@ function getAccountRoleLabel(account: AdminAccount) {
   }
 
   if (account.role === "VENDOR") {
+    if (account.vendorType === "BRAND") {
+      return "Brand";
+    }
+
     return account.vendorType ? `${account.vendorType} vendor` : "Vendor";
   }
 
@@ -298,6 +302,10 @@ function getResponseLabel(interest: AdminInterest) {
   }
 
   if (interest.account.role === "VENDOR") {
+    if (interest.account.vendorType === "BRAND") {
+      return "Wants brand booth/display";
+    }
+
     return "Wants to vend";
   }
 

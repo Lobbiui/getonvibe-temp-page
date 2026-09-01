@@ -8,6 +8,7 @@ type PortalAccount = {
   status: string;
   name: string;
   email: string;
+  vendorType: string | null;
 };
 
 type PortalEvent = {
@@ -29,7 +30,7 @@ export function PortalDashboard({ account, events }: { account: PortalAccount; e
   const [message, setMessage] = useState("");
   const [busyId, setBusyId] = useState("");
 
-  const roleContent = getRoleContent(account.role);
+  const roleContent = getRoleContent(account.role, account.vendorType);
 
   async function showInterest(eventId: string) {
     setBusyId(eventId);
@@ -106,9 +107,11 @@ export function PortalDashboard({ account, events }: { account: PortalAccount; e
 
       {account.role === "VENDOR" && (
         <section className="dashboard-card">
-          <h2>Vendor Review</h2>
+          <h2>{account.vendorType === "BRAND" ? "Brand Booth And Display Options" : "Vendor Review"}</h2>
           <p className="dashboard-muted">
-            When you request to vend at an event, the admin team will review fit, space, timing, and event needs before confirming placement.
+            {account.vendorType === "BRAND"
+              ? "Brands can request to booth in person, or ask about mailing approved products for an ONVIBE display table. Our staff can introduce your products using the positioning, talking points, and verbiage you email to the team."
+              : "When you request to vend at an event, the admin team will review fit, space, timing, and event needs before confirming placement."}
           </p>
         </section>
       )}
@@ -155,7 +158,7 @@ export function PortalDashboard({ account, events }: { account: PortalAccount; e
   );
 }
 
-function getRoleContent(role: string) {
+function getRoleContent(role: string, vendorType?: string | null) {
   if (role === "ATTENDEE") {
     return {
       label: "Attendee dashboard",
@@ -168,6 +171,17 @@ function getRoleContent(role: string) {
   }
 
   if (role === "VENDOR") {
+    if (vendorType === "BRAND") {
+      return {
+        label: "Brand dashboard",
+        kicker: "Brand Activation Opportunities",
+        heading: "Request A Booth Or Display",
+        description: "Review upcoming ONVIBE dates and tell the team where your brand wants to be featured.",
+        actionLabel: "Request Brand Booth Or Display",
+        submittedLabel: "Brand Booth Request Sent",
+      };
+    }
+
     return {
       label: "Vendor dashboard",
       kicker: "Vendor Opportunities",

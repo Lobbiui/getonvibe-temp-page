@@ -43,6 +43,7 @@ export default async function DashboardPage() {
         status: account.status,
         name: account.name,
         email: account.email,
+        vendorType: account.vendorType,
       }}
       events={events.map((event) => ({
         id: event.id,

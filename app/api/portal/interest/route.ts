@@ -61,7 +61,7 @@ export async function POST(request: Request) {
   const messageByRole = {
     ATTENDEE: "Your intent to attend was sent.",
     MODEL: "Your interest in joining this event was sent.",
-    VENDOR: "Your vendor interest was sent.",
+    VENDOR: account.vendorType === "BRAND" ? "Your brand booth or display request was sent." : "Your vendor interest was sent.",
   } as const;
 
   return NextResponse.json({ ok: true, message: messageByRole[account.role], interestId: interest.id });
