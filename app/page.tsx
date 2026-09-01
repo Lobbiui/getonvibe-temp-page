@@ -29,6 +29,7 @@ const featureLinks = [
   ["Brands", "Activate onsite", "#brands"],
   ["Stores", "Host a stop", "#stores"],
   ["Creators", "Co-promote", "#creators"],
+  ["Dashboard", "Login or register", "/login"],
 ];
 
 const gallery = [
@@ -49,6 +50,7 @@ export default function Home() {
           <a href="#tour-dates">Tour Dates</a>
           <a href="#experience">Experience</a>
           <a href="#signup">Sign Up</a>
+          <a href="/login">Login</a>
         </nav>
       </header>
 

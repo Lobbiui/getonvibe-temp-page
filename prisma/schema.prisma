@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AccountRole {
+  ATTENDEE
+  MODEL
+  VENDOR
+}
+
+enum AccountStatus {
+  PENDING
+  APPROVED
+  SUSPENDED
+}
+
+enum VendorType {
+  BRAND
+  FOOD
+  STORE
+  OTHER
+}
+
+enum InterestStatus {
+  INTERESTED
+  SELECTED
+  CANT_MAKE
+  DECLINED
+}
+
+enum MessageAudience {
+  ALL
+  ATTENDEES
+  MODELS
+  VENDORS
+  INTERESTED
+  SELECTED
+}
+
+model Account {
+  id             String        @id @default(cuid())
+  role           AccountRole
+  status         AccountStatus @default(PENDING)
+  name           String
+  email          String        @unique
+  phone          String?
+  passwordHash   String
+  city           String?
+  instagram      String?
+  businessName   String?
+  vendorType     VendorType?
+  website        String?
+  notes          String?
+  approvedAt     DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  interests      EventInterest[]
+  messages       MessageLog[]
+}
+
+model Event {
+  id          String        @id @default(cuid())
+  title       String
+  venue       String?
+  address     String?
+  city        String
+  startsAt    DateTime
+  endsAt      DateTime?
+  description String?
+  isPublished Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  interests   EventInterest[]
+  messages    MessageLog[]
+}
+
+model EventInterest {
+  id             String         @id @default(cuid())
+  accountId      String
+  eventId        String
+  status         InterestStatus @default(INTERESTED)
+  note           String?
+  selectedAt     DateTime?
+  cantMakeNote   String?
+  cantMakeAt     DateTime?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  account        Account        @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  event          Event          @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([accountId, eventId])
+}
+
+model MessageLog {
+  id        String          @id @default(cuid())
+  accountId String?
+  eventId   String?
+  audience  MessageAudience
+  subject   String
+  body      String
+  sentTo    String
+  createdAt DateTime        @default(now())
+  account   Account?        @relation(fields: [accountId], references: [id], onDelete: SetNull)
+  event     Event?          @relation(fields: [eventId], references: [id], onDelete: SetNull)
+}

@@ -1,3 +1,4 @@
+import { AccountRole, InterestStatus, MessageAudience, VendorType } from "@prisma/client";
 import { Resend } from "resend";
 import type { SignupPayload, SubmissionType } from "@/lib/validation";
 import { formatFieldLabel } from "@/lib/utils";
@@ -87,6 +88,10 @@ function getNotifyRecipients() {
   );
 }
 
+export function getDashboardNotifyRecipients() {
+  return getNotifyRecipients();
+}
+
 function resendSendFailed(result: ResendSendResult) {
   return Boolean(result.error);
 }
@@ -105,6 +110,198 @@ function htmlEscape(value: string) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+function renderPlainEmail(title: string, body: string) {
+  return `
+    <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
+      <h1 style="margin:0 0 12px;font-size:24px;">${htmlEscape(title)}</h1>
+      ${body
+        .split("\n")
+        .filter(Boolean)
+        .map((line) => `<p style="color:#cbd5e1;line-height:1.6;">${htmlEscape(line)}</p>`)
+        .join("")}
+    </div>
+  `;
+}
+
+export type DashboardAccountEmail = {
+  id: string;
+  role: AccountRole;
+  status: string;
+  name: string;
+  email: string;
+  phone: string | null;
+  city: string | null;
+  instagram: string | null;
+  businessName: string | null;
+  vendorType: VendorType | null;
+};
+
+export type DashboardEventEmail = {
+  id: string;
+  title: string;
+  city: string;
+  venue: string | null;
+  address: string | null;
+  startsAt: Date;
+};
+
+export async function sendDashboardInternalEmail(subject: string, html: string) {
+  const resend = getResendClient();
+  const from = getInternalFromEmail();
+  const recipients = getNotifyRecipients();
+
+  if (!resend || !from || recipients.length === 0) {
+    console.warn("Dashboard internal email skipped because email configuration is incomplete.");
+    return false;
+  }
+
+  const results = await Promise.allSettled(
+    recipients.map((recipient) =>
+      resend.emails.send({
+        from,
+        to: recipient,
+        subject,
+        html,
+      }),
+    ),
+  );
+
+  const failed = results.filter((result) => result.status === "rejected" || resendSendFailed(result.value)).length;
+
+  if (failed > 0) {
+    console.error("Dashboard internal email failed", {
+      failedRecipientCount: failed,
+      totalRecipientCount: recipients.length,
+    });
+  }
+
+  return failed === 0;
+}
+
+export async function sendAccountRegisteredEmail(account: DashboardAccountEmail) {
+  await sendDashboardInternalEmail(
+    `[ACTION REQUIRED] ONVIBE ${account.role.toLowerCase()} account needs approval`,
+    `
+      <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
+        <h1 style="margin:0 0 12px;font-size:24px;">New account registration</h1>
+        <p style="color:#cbd5e1;line-height:1.6;">A ${htmlEscape(account.role.toLowerCase())} account is waiting for admin review.</p>
+        <table cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;background:#0f172a;border:1px solid #1f2937;">
+          <tr><th align="left" style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#cbd5e1;">Name</th><td style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#f8fafc;">${htmlEscape(account.name)}</td></tr>
+          <tr><th align="left" style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#cbd5e1;">Email</th><td style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#f8fafc;">${htmlEscape(account.email)}</td></tr>
+          <tr><th align="left" style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#cbd5e1;">Phone</th><td style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#f8fafc;">${htmlEscape(account.phone || "")}</td></tr>
+          <tr><th align="left" style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#cbd5e1;">City</th><td style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#f8fafc;">${htmlEscape(account.city || "")}</td></tr>
+          <tr><th align="left" style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#cbd5e1;">Business</th><td style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#f8fafc;">${htmlEscape(account.businessName || "")}</td></tr>
+          <tr><th align="left" style="padding:8px 12px;color:#cbd5e1;">Vendor Type</th><td style="padding:8px 12px;color:#f8fafc;">${htmlEscape(account.vendorType || "")}</td></tr>
+        </table>
+      </div>
+    `,
+  );
+}
+
+export async function sendAccountApprovedEmail(account: DashboardAccountEmail) {
+  const resend = getResendClient();
+  const from = process.env.RESEND_FROM_EMAIL;
+
+  if (!resend || !from) {
+    return false;
+  }
+
+  const result = await resend.emails.send({
+    from,
+    to: account.email,
+    subject: "Your ONVIBE account was approved",
+    html: renderPlainEmail(
+      "Your ONVIBE account was approved",
+      "Your ONVIBE account has been approved. You can now log in, view upcoming event dates, and show interest in opportunities that fit you.",
+    ),
+  });
+
+  return !resendSendFailed(result);
+}
+
+export async function sendEventInterestEmail(account: DashboardAccountEmail, event: DashboardEventEmail) {
+  await sendDashboardInternalEmail(
+    `[ACTION REQUIRED] ${account.name} is interested in ${event.title}`,
+    renderPlainEmail(
+      "New event interest",
+      `${account.name} showed interest in ${event.title}.\nRole: ${account.role.toLowerCase()}\nEmail: ${account.email}\nEvent: ${event.title}\nLocation: ${event.venue || ""} ${event.address || ""}\nDate: ${event.startsAt.toLocaleString("en-US", { timeZone: "America/Chicago" })}`,
+    ),
+  );
+}
+
+export async function sendSelectedForEventEmail(account: DashboardAccountEmail, event: DashboardEventEmail) {
+  const resend = getResendClient();
+  const from = process.env.RESEND_FROM_EMAIL;
+
+  if (!resend || !from) {
+    return false;
+  }
+
+  const result = await resend.emails.send({
+    from,
+    to: account.email,
+    subject: `You have been selected for ${event.title}`,
+    html: renderPlainEmail(
+      "You have been selected",
+      `You have been selected for ${event.title}.\nPlease log in to your dashboard to review the event and confirm your availability.\nIf you cannot make it, use the Can't Make It button as soon as possible. Please let us know at least one week in advance so we have time to fill the spot.`,
+    ),
+  });
+
+  return !resendSendFailed(result);
+}
+
+export async function sendCantMakeEventEmail(account: DashboardAccountEmail, event: DashboardEventEmail) {
+  await sendDashboardInternalEmail(
+    `[ACTION REQUIRED] ${account.name} cannot make ${event.title}`,
+    renderPlainEmail(
+      "Selected participant cannot make it",
+      `${account.name} marked that they cannot make ${event.title}.\nRole: ${account.role.toLowerCase()}\nEmail: ${account.email}\nEvent date: ${event.startsAt.toLocaleString("en-US", { timeZone: "America/Chicago" })}`,
+    ),
+  );
+}
+
+export async function sendAdminMessageEmail(account: DashboardAccountEmail, subject: string, body: string) {
+  const resend = getResendClient();
+  const from = process.env.RESEND_FROM_EMAIL;
+
+  if (!resend || !from) {
+    return false;
+  }
+
+  const result = await resend.emails.send({
+    from,
+    to: account.email,
+    subject,
+    html: renderPlainEmail(subject, body),
+  });
+
+  return !resendSendFailed(result);
+}
+
+export function audienceMatchesAccount(audience: MessageAudience, account: DashboardAccountEmail, interestStatus?: InterestStatus) {
+  if (audience === "ALL") {
+    return true;
+  }
+
+  if (audience === "ATTENDEES") {
+    return account.role === "ATTENDEE";
+  }
+
+  if (audience === "MODELS") {
+    return account.role === "MODEL";
+  }
+
+  if (audience === "VENDORS") {
+    return account.role === "VENDOR";
+  }
+
+  if (audience === "INTERESTED") {
+    return interestStatus === "INTERESTED";
+  }
+
+  return interestStatus === "SELECTED";
 }
 
 function renderFields(payload: SignupPayload) {
