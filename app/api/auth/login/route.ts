@@ -22,10 +22,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, message: "Email or password is incorrect." }, { status: 401 });
   }
 
-  if (account.status !== "APPROVED") {
+  if (account.status === "SUSPENDED") {
     return NextResponse.json({
       ok: false,
-      message: "Your account is still waiting for admin approval.",
+      message: "This account is not active. Contact the ONVIBE team for help.",
     }, { status: 403 });
   }
 

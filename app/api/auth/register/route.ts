@@ -46,18 +46,16 @@ export async function POST(request: Request) {
       },
     });
 
-    if (account.role !== AccountRole.ATTENDEE) {
-      await sendAccountRegisteredEmail(account).catch((error) => {
-        console.error("Account registration notification failed", error instanceof Error ? error.message : "Unknown error");
-      });
-    }
+    await sendAccountRegisteredEmail(account).catch((error) => {
+      console.error("Account registration notification failed", error instanceof Error ? error.message : "Unknown error");
+    });
 
     return NextResponse.json({
       ok: true,
       message:
         account.role === AccountRole.ATTENDEE
           ? "Your account is ready. Log in to see upcoming events."
-          : "Your account request was received. Our team will review it before dashboard access is approved.",
+          : "Your account request was received. Log in to see upcoming events while our team reviews your profile.",
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "";

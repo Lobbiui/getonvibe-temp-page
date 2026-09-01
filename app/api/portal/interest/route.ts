@@ -22,8 +22,8 @@ export async function POST(request: Request) {
 
   const account = await prisma.account.findUnique({ where: { id: session.accountId } });
 
-  if (!account || account.status !== "APPROVED") {
-    return NextResponse.json({ ok: false, message: "Your account must be approved first." }, { status: 403 });
+  if (!account || account.status === "SUSPENDED") {
+    return NextResponse.json({ ok: false, message: "This account is not active." }, { status: 403 });
   }
 
   const event = await prisma.event.findFirst({
@@ -58,5 +58,11 @@ export async function POST(request: Request) {
     console.error("Event interest notification failed", error instanceof Error ? error.message : "Unknown error");
   });
 
-  return NextResponse.json({ ok: true, message: "Your interest was sent.", interestId: interest.id });
+  const messageByRole = {
+    ATTENDEE: "Your intent to attend was sent.",
+    MODEL: "Your interest in joining this event was sent.",
+    VENDOR: "Your vendor interest was sent.",
+  } as const;
+
+  return NextResponse.json({ ok: true, message: messageByRole[account.role], interestId: interest.id });
 }

@@ -29,6 +29,8 @@ export function PortalDashboard({ account, events }: { account: PortalAccount; e
   const [message, setMessage] = useState("");
   const [busyId, setBusyId] = useState("");
 
+  const roleContent = getRoleContent(account.role);
+
   async function showInterest(eventId: string) {
     setBusyId(eventId);
     setMessage("");
@@ -73,23 +75,52 @@ export function PortalDashboard({ account, events }: { account: PortalAccount; e
       <header className="dashboard-topbar">
         <div>
           <strong>{account.name}</strong>
-          <span>{account.role.toLowerCase()} dashboard</span>
+          <span>{roleContent.label}</span>
         </div>
         <button type="button" onClick={logout} className="dashboard-ghost-button">Logout</button>
       </header>
 
       <section className="dashboard-hero">
-        <p>Upcoming Dates</p>
-        <h1>Your ONVIBE Dashboard</h1>
-        <span>Show interest in upcoming events and watch this dashboard for selection updates.</span>
+        <p>{roleContent.kicker}</p>
+        <h1>{roleContent.heading}</h1>
+        <span>{roleContent.description}</span>
       </section>
 
-      <section className="dashboard-card">
-        <h2>Availability Notice</h2>
-        <p className="dashboard-muted">
-          If you are selected for a gig and cannot make it, please let us know at least one week in advance so our team has time to fill the spot.
-        </p>
-      </section>
+      {account.status === "PENDING" && (
+        <section className="dashboard-card dashboard-review-card">
+          <h2>Account Review In Progress</h2>
+          <p className="dashboard-muted">
+            Your profile is in the admin review queue. You can still see upcoming event dates and submit interest so the ONVIBE team knows where you want to participate.
+          </p>
+        </section>
+      )}
+
+      {account.role === "MODEL" && (
+        <section className="dashboard-card">
+          <h2>Availability Notice</h2>
+          <p className="dashboard-muted">
+            If you are selected for a gig and cannot make it, please let us know at least one week in advance so our team has time to fill the spot.
+          </p>
+        </section>
+      )}
+
+      {account.role === "VENDOR" && (
+        <section className="dashboard-card">
+          <h2>Vendor Review</h2>
+          <p className="dashboard-muted">
+            When you request to vend at an event, the admin team will review fit, space, timing, and event needs before confirming placement.
+          </p>
+        </section>
+      )}
+
+      {account.role === "ATTENDEE" && (
+        <section className="dashboard-card">
+          <h2>Event Updates</h2>
+          <p className="dashboard-muted">
+            Mark intent to attend so ONVIBE can send you event reminders, updates, and important details as new stops are announced.
+          </p>
+        </section>
+      )}
 
       {message && <p className="dashboard-status">{message}</p>}
 
@@ -110,10 +141,10 @@ export function PortalDashboard({ account, events }: { account: PortalAccount; e
                   </button>
                 </>
               ) : event.interest ? (
-                <span className="dashboard-pill">{event.interest.status.replace("_", " ")}</span>
+                <span className="dashboard-pill">{roleContent.submittedLabel}</span>
               ) : (
                 <button type="button" disabled={busyId === event.id} onClick={() => showInterest(event.id)} className="dashboard-button">
-                  I&apos;m Interested
+                  {roleContent.actionLabel}
                 </button>
               )}
             </div>
@@ -122,4 +153,37 @@ export function PortalDashboard({ account, events }: { account: PortalAccount; e
       </section>
     </div>
   );
+}
+
+function getRoleContent(role: string) {
+  if (role === "ATTENDEE") {
+    return {
+      label: "Attendee dashboard",
+      kicker: "Upcoming ONVIBE Events",
+      heading: "Find The Next Stop",
+      description: "See upcoming ONVIBE dates, mark your intent to attend, and watch for event updates.",
+      actionLabel: "I Want To Attend",
+      submittedLabel: "Intent To Attend Sent",
+    };
+  }
+
+  if (role === "VENDOR") {
+    return {
+      label: "Vendor dashboard",
+      kicker: "Vendor Opportunities",
+      heading: "Request To Vend",
+      description: "Review upcoming ONVIBE event dates and tell the team where your business wants to vend.",
+      actionLabel: "Request To Vend",
+      submittedLabel: "Vendor Request Sent",
+    };
+  }
+
+  return {
+    label: "Bikini Team dashboard",
+    kicker: "Bikini Team Dates",
+    heading: "Choose Events You Want To Work",
+    description: "See upcoming ONVIBE dates, submit interest, and watch your dashboard for selection updates.",
+    actionLabel: "I Want To Join This Event",
+    submittedLabel: "Interest Sent",
+  };
 }

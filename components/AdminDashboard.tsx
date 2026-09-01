@@ -99,6 +99,9 @@ export function AdminDashboard({
   }
 
   const pendingAccounts = accounts.filter((account) => account.status === "PENDING");
+  const attendeeCount = accounts.filter((account) => account.role === "ATTENDEE").length;
+  const modelCount = accounts.filter((account) => account.role === "MODEL").length;
+  const vendorCount = accounts.filter((account) => account.role === "VENDOR").length;
 
   return (
     <main className="dashboard-shell">
@@ -120,9 +123,16 @@ export function AdminDashboard({
 
       <section className="dashboard-stats">
         <div><strong>{accounts.length}</strong><span>Total accounts</span></div>
+        <div><strong>{attendeeCount}</strong><span>Attendees</span></div>
+        <div><strong>{modelCount}</strong><span>Bikini Team</span></div>
+        <div><strong>{vendorCount}</strong><span>Vendors</span></div>
+      </section>
+
+      <section className="dashboard-stats">
         <div><strong>{pendingAccounts.length}</strong><span>Pending approvals</span></div>
         <div><strong>{events.length}</strong><span>Posted events</span></div>
-        <div><strong>{interests.length}</strong><span>Event interests</span></div>
+        <div><strong>{interests.length}</strong><span>Total event responses</span></div>
+        <div><strong>{interests.filter((interest) => interest.status === "SELECTED").length}</strong><span>Selected</span></div>
       </section>
 
       <section className="dashboard-two-column">
@@ -166,7 +176,7 @@ export function AdminDashboard({
       </section>
 
       <section className="dashboard-card">
-        <h2>Event Interest And Selections</h2>
+        <h2>Event Responses And Selections</h2>
         <div className="dashboard-table">
           {interests.map((interest) => (
             <article key={interest.id}>
@@ -178,7 +188,9 @@ export function AdminDashboard({
                 <strong>{interest.event.title}</strong>
                 <span>{new Date(interest.event.startsAt).toLocaleString()}</span>
               </div>
-              <span className={`dashboard-pill ${interest.status === "SELECTED" ? "selected" : ""}`}>{interest.status.replace("_", " ")}</span>
+              <span className={`dashboard-pill ${interest.status === "SELECTED" ? "selected" : ""}`}>
+                {getResponseLabel(interest)}
+              </span>
               {interest.status !== "SELECTED" && (
                 <button type="button" onClick={() => postJson("/api/admin/interests/select", { interestId: interest.id })} className="dashboard-button">
                   Select
@@ -186,7 +198,31 @@ export function AdminDashboard({
               )}
             </article>
           ))}
-          {interests.length === 0 && <p className="dashboard-muted">No event interest yet.</p>}
+          {interests.length === 0 && <p className="dashboard-muted">No event responses yet.</p>}
+        </div>
+      </section>
+
+      <section className="dashboard-card">
+        <h2>Account Directory</h2>
+        <div className="dashboard-table">
+          {accounts.map((account) => (
+            <article key={account.id}>
+              <div>
+                <strong>{account.name}</strong>
+                <span>{account.email}</span>
+              </div>
+              <div>
+                <strong>{getAccountRoleLabel(account)}</strong>
+                <span>{account.businessName || account.city || "No extra details"}</span>
+              </div>
+              <span className={`dashboard-pill ${account.status === "APPROVED" ? "selected" : ""}`}>{account.status}</span>
+              {account.status === "PENDING" && (
+                <button type="button" disabled={busy !== ""} onClick={() => postJson("/api/admin/accounts/approve", { accountId: account.id })} className="dashboard-button">
+                  Approve
+                </button>
+              )}
+            </article>
+          ))}
         </div>
       </section>
 
@@ -238,4 +274,32 @@ function Field({ label, name, type = "text", required = true }: { label: string;
       <input id={name} name={name} type={type} required={required} className="dashboard-input" />
     </div>
   );
+}
+
+function getAccountRoleLabel(account: AdminAccount) {
+  if (account.role === "ATTENDEE") {
+    return "Attendee";
+  }
+
+  if (account.role === "VENDOR") {
+    return account.vendorType ? `${account.vendorType} vendor` : "Vendor";
+  }
+
+  return "Bikini Team";
+}
+
+function getResponseLabel(interest: AdminInterest) {
+  if (interest.status === "SELECTED") {
+    return "Selected";
+  }
+
+  if (interest.account.role === "ATTENDEE") {
+    return "Wants to attend";
+  }
+
+  if (interest.account.role === "VENDOR") {
+    return "Wants to vend";
+  }
+
+  return "Wants to work event";
 }

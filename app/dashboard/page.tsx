@@ -20,7 +20,7 @@ export default async function DashboardPage() {
     where: { id: session.accountId },
   });
 
-  if (!account || account.status !== "APPROVED") {
+  if (!account || account.status === "SUSPENDED") {
     redirect("/login");
   }
 

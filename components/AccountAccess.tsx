@@ -129,7 +129,7 @@ export function AccountAccess() {
             <textarea id="notes" name="notes" rows={4} className="dashboard-input" />
           </div>
           <p className="dashboard-muted">
-            Bikini team and vendor accounts require admin approval before dashboard access is opened.
+            Bikini team and vendor accounts are reviewed by the ONVIBE team. You can still log in to view event dates and submit interest while review is pending.
           </p>
           {message && <p className="dashboard-status">{message}</p>}
           <button type="submit" disabled={loading} className="dashboard-button">

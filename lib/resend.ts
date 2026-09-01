@@ -181,12 +181,16 @@ export async function sendDashboardInternalEmail(subject: string, html: string) 
 }
 
 export async function sendAccountRegisteredEmail(account: DashboardAccountEmail) {
+  const needsApproval = account.role !== AccountRole.ATTENDEE;
+
   await sendDashboardInternalEmail(
-    `[ACTION REQUIRED] ONVIBE ${account.role.toLowerCase()} account needs approval`,
+    needsApproval
+      ? `[ACTION REQUIRED] ONVIBE ${account.role.toLowerCase()} account needs approval`
+      : "New ONVIBE attendee account registered",
     `
       <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
         <h1 style="margin:0 0 12px;font-size:24px;">New account registration</h1>
-        <p style="color:#cbd5e1;line-height:1.6;">A ${htmlEscape(account.role.toLowerCase())} account is waiting for admin review.</p>
+        <p style="color:#cbd5e1;line-height:1.6;">A ${htmlEscape(account.role.toLowerCase())} account ${needsApproval ? "is waiting for admin review" : "was registered and auto-approved"}.</p>
         <table cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;background:#0f172a;border:1px solid #1f2937;">
           <tr><th align="left" style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#cbd5e1;">Name</th><td style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#f8fafc;">${htmlEscape(account.name)}</td></tr>
           <tr><th align="left" style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#cbd5e1;">Email</th><td style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#f8fafc;">${htmlEscape(account.email)}</td></tr>
@@ -198,6 +202,33 @@ export async function sendAccountRegisteredEmail(account: DashboardAccountEmail)
       </div>
     `,
   );
+}
+
+export async function sendNewEventAnnouncementEmail(account: DashboardAccountEmail, event: DashboardEventEmail) {
+  const resend = getResendClient();
+  const from = process.env.RESEND_FROM_EMAIL;
+
+  if (!resend || !from) {
+    return false;
+  }
+
+  const roleCopy = {
+    ATTENDEE: "A new ONVIBE event is posted in your dashboard. Log in to mark your intent to attend and watch for updates.",
+    MODEL: "A new ONVIBE event is posted in your dashboard. Log in to let the team know if you want to be considered for this date.",
+    VENDOR: "A new ONVIBE event is posted in your dashboard. Log in to request vending interest for this stop.",
+  } as const;
+
+  const result = await resend.emails.send({
+    from,
+    to: account.email,
+    subject: `New ONVIBE event posted: ${event.title}`,
+    html: renderPlainEmail(
+      "New ONVIBE event posted",
+      `${roleCopy[account.role]}\nEvent: ${event.title}\nLocation: ${event.venue || "Venue TBA"} ${event.address || event.city}\nDate: ${event.startsAt.toLocaleString("en-US", { timeZone: "America/Chicago" })}\nDashboard: ${process.env.NEXT_PUBLIC_SITE_URL || "https://www.getonvibe.com"}/dashboard`,
+    ),
+  });
+
+  return !resendSendFailed(result);
 }
 
 export async function sendAccountApprovedEmail(account: DashboardAccountEmail) {
@@ -222,11 +253,17 @@ export async function sendAccountApprovedEmail(account: DashboardAccountEmail) {
 }
 
 export async function sendEventInterestEmail(account: DashboardAccountEmail, event: DashboardEventEmail) {
+  const actionByRole = {
+    ATTENDEE: "marked intent to attend",
+    MODEL: "wants to join the Bikini Team for",
+    VENDOR: "requested to vend at",
+  } as const;
+
   await sendDashboardInternalEmail(
-    `[ACTION REQUIRED] ${account.name} is interested in ${event.title}`,
+    `[ACTION REQUIRED] ${account.name} ${actionByRole[account.role]} ${event.title}`,
     renderPlainEmail(
-      "New event interest",
-      `${account.name} showed interest in ${event.title}.\nRole: ${account.role.toLowerCase()}\nEmail: ${account.email}\nEvent: ${event.title}\nLocation: ${event.venue || ""} ${event.address || ""}\nDate: ${event.startsAt.toLocaleString("en-US", { timeZone: "America/Chicago" })}`,
+      "New event response",
+      `${account.name} ${actionByRole[account.role]} ${event.title}.\nRole: ${account.role.toLowerCase()}\nEmail: ${account.email}\nEvent: ${event.title}\nLocation: ${event.venue || ""} ${event.address || ""}\nDate: ${event.startsAt.toLocaleString("en-US", { timeZone: "America/Chicago" })}`,
     ),
   );
 }
