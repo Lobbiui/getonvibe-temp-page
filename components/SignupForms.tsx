@@ -14,6 +14,7 @@ import {
   type SubmissionType,
 } from "@/lib/validation";
 import { Section } from "@/components/Section";
+import { useLanguage } from "@/components/LanguageProvider";
 import { cn } from "@/lib/utils";
 
 type HubSubmissionType = "attendee" | "model" | "food-vendor" | "brand-vendor" | "store-host" | "creator";
@@ -35,15 +36,15 @@ const initialState: SubmitState = {
 
 const tabs: Array<{
   type: HubSubmissionType;
-  label: string;
-  kicker: string;
+  labelKey: string;
+  kickerKey: string;
 }> = [
-  { type: "attendee", label: "Attend", kicker: "Get event drops" },
-  { type: "model", label: "Models", kicker: "Join activations" },
-  { type: "food-vendor", label: "Food Vendors", kicker: "Feed the crowd" },
-  { type: "brand-vendor", label: "Brands", kicker: "Activate onsite" },
-  { type: "store-host", label: "Stores", kicker: "Host a stop" },
-  { type: "creator", label: "Creators", kicker: "Co-promote" },
+  { type: "attendee", labelKey: "signup.attendee.label", kickerKey: "signup.attendee.kicker" },
+  { type: "model", labelKey: "signup.model.label", kickerKey: "signup.model.kicker" },
+  { type: "food-vendor", labelKey: "signup.food.label", kickerKey: "signup.food.kicker" },
+  { type: "brand-vendor", labelKey: "signup.brand.label", kickerKey: "signup.brand.kicker" },
+  { type: "store-host", labelKey: "signup.store.label", kickerKey: "signup.store.kicker" },
+  { type: "creator", labelKey: "signup.creator.label", kickerKey: "signup.creator.kicker" },
 ];
 
 function formDataValue(formData: FormData, key: string) {
@@ -214,12 +215,14 @@ function Field({
 }
 
 function ConsentFields({ type, errors }: { type: HubSubmissionType; errors: FieldErrors }) {
+  const { t } = useLanguage();
+
   return (
     <div className="space-y-3">
       {type === "model" && (
         <label className="flex gap-3 rounded-md border border-pink-400/25 bg-pink-500/10 p-4 text-sm leading-6 text-slate-100">
           <input name="ageConfirmation" type="checkbox" className="mt-1 h-4 w-4 accent-pink-400" />
-          <span>I confirm I am 18 or older and available for event activation review.</span>
+          <span>{t("consent.model")}</span>
         </label>
       )}
       {errors.ageConfirmation && (
@@ -229,9 +232,7 @@ function ConsentFields({ type, errors }: { type: HubSubmissionType; errors: Fiel
       {type === "brand-vendor" && (
         <label className="flex gap-3 rounded-md border border-cyan-300/25 bg-cyan-300/10 p-4 text-sm leading-6 text-slate-100">
           <input name="coaConfirmation" type="checkbox" className="mt-1 h-4 w-4 accent-cyan-300" />
-          <span>
-            I confirm this brand operates in the legal hemp space where applicable and can provide active, verifiable COAs for applicable products.
-          </span>
+          <span>{t("consent.coa")}</span>
         </label>
       )}
       {errors.coaConfirmation && (
@@ -240,7 +241,7 @@ function ConsentFields({ type, errors }: { type: HubSubmissionType; errors: Fiel
 
       <label className="flex gap-3 rounded-md border border-white/15 bg-white/5 p-4 text-sm leading-6 text-slate-200">
         <input name="consent" type="checkbox" className="mt-1 h-4 w-4 accent-cyan-300" />
-        <span>I consent to receive ONVIBE Events and GetOnVibe communications.</span>
+        <span>{t("consent.general")}</span>
       </label>
       {errors.consent && <p className="text-sm font-bold text-pink-200">{errors.consent}</p>}
     </div>
@@ -268,6 +269,7 @@ function StatusMessage({ state }: { state: SubmitState }) {
 }
 
 export function SignupForms() {
+  const { t } = useLanguage();
   const [active, setActive] = useState<HubSubmissionType>("attendee");
   const [states, setStates] = useState<Record<HubSubmissionType, SubmitState>>({
     attendee: initialState,
@@ -294,7 +296,7 @@ export function SignupForms() {
         [type]: {
           ...initialState,
           errors: errorsFromIssues(parsed.error.issues),
-          message: "Please check the highlighted fields and try again.",
+          message: t("error.checkFields"),
         },
       }));
       return;
@@ -323,7 +325,7 @@ export function SignupForms() {
           [type]: {
             ...initialState,
             errors: result.fieldErrors || {},
-            message: result.message || "Submission failed. Please try again.",
+            message: result.message || t("error.submission"),
           },
         }));
         return;
@@ -335,7 +337,7 @@ export function SignupForms() {
         [type]: {
           ...initialState,
           ok: true,
-          message: result.message || successMessages[type as SubmissionType],
+          message: t(`success.${type}`) || successMessages[type as SubmissionType],
         },
       }));
     } catch {
@@ -343,7 +345,7 @@ export function SignupForms() {
         ...current,
         [type]: {
           ...initialState,
-          message: "Network error. Please try again.",
+          message: t("error.network"),
         },
       }));
     }
@@ -352,9 +354,9 @@ export function SignupForms() {
   return (
     <Section
       id="signup"
-      eyebrow="Get involved"
-      title="Choose your lane."
-      copy="Attend the next event, apply for activations, bring a food truck, host a stop, or co-promote as a creator."
+      eyebrow={t("signup.eyebrow")}
+      title={t("signup.title")}
+      copy={t("signup.copy")}
     >
       <div id="models" className="absolute -mt-24" aria-hidden="true" />
       <div id="food-vendors" className="absolute -mt-24" aria-hidden="true" />
@@ -378,10 +380,10 @@ export function SignupForms() {
               )}
             >
               <span className="text-sm font-black uppercase tracking-[0.16em]">
-                {tab.label}
+                {t(tab.labelKey)}
               </span>
               <span className="mt-2 block text-xs font-bold uppercase tracking-[0.14em] opacity-80">
-                {tab.kicker}
+                {t(tab.kickerKey)}
               </span>
             </button>
           ))}
@@ -389,26 +391,26 @@ export function SignupForms() {
 
         <div className="mt-7">
           <div className="mb-5">
-            <h3 className="text-2xl font-black text-white">{activeTab?.label}</h3>
-            <p className="mt-1 text-sm font-bold uppercase tracking-[0.16em] text-cyan-200">{activeTab?.kicker}</p>
+            <h3 className="text-2xl font-black text-white">{activeTab ? t(activeTab.labelKey) : ""}</h3>
+            <p className="mt-1 text-sm font-bold uppercase tracking-[0.16em] text-cyan-200">{activeTab ? t(activeTab.kickerKey) : ""}</p>
           </div>
 
           {active === "attendee" && (
             <form className="grid gap-5" onSubmit={(event) => handleSubmit("attendee", event)}>
               <input className="hidden" tabIndex={-1} autoComplete="off" name="company" aria-hidden="true" />
               <div className="rounded-md border border-cyan-300/35 bg-cyan-300/10 p-4 text-sm font-bold leading-6 text-cyan-100">
-                Get event drops, location updates, special announcements, and future ONVIBE news first.
+                {t("signup.attendee.notice")}
               </div>
               <div className="grid gap-5 md:grid-cols-2">
-                <Field label="Full name" name="fullName" errors={activeState.errors} required />
-                <Field label="Email" name="email" type="email" errors={activeState.errors} required />
-                <Field label="Phone number" name="phone" type="tel" errors={activeState.errors} required />
-                <Field label="Date of birth" name="dateOfBirth" type="date" errors={activeState.errors} required />
+                <Field label={t("field.fullName")} name="fullName" errors={activeState.errors} required />
+                <Field label={t("field.email")} name="email" type="email" errors={activeState.errors} required />
+                <Field label={t("field.phone")} name="phone" type="tel" errors={activeState.errors} required />
+                <Field label={t("field.dob")} name="dateOfBirth" type="date" errors={activeState.errors} required />
               </div>
               <ConsentFields type="attendee" errors={activeState.errors} />
               <StatusMessage state={activeState} />
               <button type="submit" disabled={activeState.loading} className="event-submit-button">
-                {activeState.loading ? "Submitting" : "Get Event Updates"}
+                {activeState.loading ? t("button.submitting") : t("button.attendee")}
               </button>
             </form>
           )}
@@ -417,22 +419,22 @@ export function SignupForms() {
             <form className="grid gap-5" onSubmit={(event) => handleSubmit("model", event)}>
               <input className="hidden" tabIndex={-1} autoComplete="off" name="company" aria-hidden="true" />
               <div className="rounded-md border border-pink-300/35 bg-pink-500/10 p-4 text-sm font-bold leading-6 text-pink-100">
-                Model applicants can be reviewed for ONVIBE event activations, carwash teams, photo moments, and future promotional events.
+                {t("signup.model.notice")}
               </div>
               <div className="grid gap-5 md:grid-cols-2">
-                <Field label="Full name" name="fullName" errors={activeState.errors} required />
-                <Field label="Email" name="email" type="email" errors={activeState.errors} required />
-                <Field label="Phone number" name="phone" type="tel" errors={activeState.errors} required />
-                <Field label="City" name="city" errors={activeState.errors} required />
-                <Field label="Instagram" name="instagram" errors={activeState.errors} required />
+                <Field label={t("field.fullName")} name="fullName" errors={activeState.errors} required />
+                <Field label={t("field.email")} name="email" type="email" errors={activeState.errors} required />
+                <Field label={t("field.phone")} name="phone" type="tel" errors={activeState.errors} required />
+                <Field label={t("field.city")} name="city" errors={activeState.errors} required />
+                <Field label={t("field.instagram")} name="instagram" errors={activeState.errors} required />
               </div>
-              <Field label="Experience / notes" name="experience" errors={activeState.errors}>
+              <Field label={t("field.experience")} name="experience" errors={activeState.errors}>
                 <textarea id="experience" name="experience" rows={4} className="event-textarea" />
               </Field>
               <ConsentFields type="model" errors={activeState.errors} />
               <StatusMessage state={activeState} />
               <button type="submit" disabled={activeState.loading} className="event-submit-button">
-                {activeState.loading ? "Submitting" : "Apply For Model Activations"}
+                {activeState.loading ? t("button.submitting") : t("button.model")}
               </button>
             </form>
           )}
@@ -441,23 +443,23 @@ export function SignupForms() {
             <form className="grid gap-5" onSubmit={(event) => handleSubmit("creator", event)}>
               <input className="hidden" tabIndex={-1} autoComplete="off" name="company" aria-hidden="true" />
               <div className="rounded-md border border-pink-300/35 bg-pink-500/10 p-4 text-sm font-bold leading-6 text-pink-100">
-                Are you a content creator and want to attend? We do co-promotion. Reach out with your contact info and channel.
+                {t("signup.creator.notice")}
               </div>
               <div className="grid gap-5 md:grid-cols-2">
-                <Field label="Full name" name="fullName" errors={activeState.errors} required />
-                <Field label="Email" name="email" type="email" errors={activeState.errors} required />
-                <Field label="Phone number" name="phone" type="tel" errors={activeState.errors} required />
-                <Field label="City" name="city" errors={activeState.errors} required />
-                <Field label="Instagram / primary channel" name="instagram" errors={activeState.errors} required />
-                <Field label="Audience size" name="audienceSize" errors={activeState.errors} />
+                <Field label={t("field.fullName")} name="fullName" errors={activeState.errors} required />
+                <Field label={t("field.email")} name="email" type="email" errors={activeState.errors} required />
+                <Field label={t("field.phone")} name="phone" type="tel" errors={activeState.errors} required />
+                <Field label={t("field.city")} name="city" errors={activeState.errors} required />
+                <Field label={t("field.channel")} name="instagram" errors={activeState.errors} required />
+                <Field label={t("field.audience")} name="audienceSize" errors={activeState.errors} />
               </div>
-              <Field label="Collaboration idea" name="collaborationIdea" errors={activeState.errors}>
+              <Field label={t("field.collaboration")} name="collaborationIdea" errors={activeState.errors}>
                 <textarea id="collaborationIdea" name="collaborationIdea" rows={4} className="event-textarea" />
               </Field>
               <ConsentFields type="creator" errors={activeState.errors} />
               <StatusMessage state={activeState} />
               <button type="submit" disabled={activeState.loading} className="event-submit-button">
-                {activeState.loading ? "Submitting" : "Contact Us About Co-Promotion"}
+                {activeState.loading ? t("button.submitting") : t("button.creator")}
               </button>
             </form>
           )}
@@ -466,23 +468,23 @@ export function SignupForms() {
             <form className="grid gap-5" onSubmit={(event) => handleSubmit("food-vendor", event)}>
               <input className="hidden" tabIndex={-1} autoComplete="off" name="company" aria-hidden="true" />
               <div className="rounded-md border border-cyan-300/35 bg-cyan-300/10 p-4 text-sm font-bold leading-6 text-cyan-100">
-                Food trucks and food vendors can apply for ONVIBE event opportunities and future tour stops.
+                {t("signup.food.notice")}
               </div>
               <div className="grid gap-5 md:grid-cols-2">
-                <Field label="Business name" name="businessName" errors={activeState.errors} required />
-                <Field label="Contact name" name="contactName" errors={activeState.errors} required />
-                <Field label="Email" name="email" type="email" errors={activeState.errors} required />
-                <Field label="Phone number" name="phone" type="tel" errors={activeState.errors} required />
-                <Field label="Cuisine type" name="cuisineType" errors={activeState.errors} required />
-                <Field label="Website or Instagram" name="websiteOrInstagram" errors={activeState.errors} />
+                <Field label={t("field.businessName")} name="businessName" errors={activeState.errors} required />
+                <Field label={t("field.contactName")} name="contactName" errors={activeState.errors} required />
+                <Field label={t("field.email")} name="email" type="email" errors={activeState.errors} required />
+                <Field label={t("field.phone")} name="phone" type="tel" errors={activeState.errors} required />
+                <Field label={t("field.cuisine")} name="cuisineType" errors={activeState.errors} required />
+                <Field label={t("field.website")} name="websiteOrInstagram" errors={activeState.errors} />
               </div>
-              <Field label="Message" name="message" errors={activeState.errors}>
+              <Field label={t("field.message")} name="message" errors={activeState.errors}>
                 <textarea id="message" name="message" rows={4} className="event-textarea" />
               </Field>
               <ConsentFields type="food-vendor" errors={activeState.errors} />
               <StatusMessage state={activeState} />
               <button type="submit" disabled={activeState.loading} className="event-submit-button">
-                {activeState.loading ? "Submitting" : "Submit Food Vendor Inquiry"}
+                {activeState.loading ? t("button.submitting") : t("button.food")}
               </button>
             </form>
           )}
@@ -491,17 +493,17 @@ export function SignupForms() {
             <form className="grid gap-5" onSubmit={(event) => handleSubmit("brand-vendor", event)}>
               <input className="hidden" tabIndex={-1} autoComplete="off" name="company" aria-hidden="true" />
               <div className="rounded-md border border-pink-300/35 bg-pink-500/10 p-4 text-sm font-bold leading-6 text-pink-100">
-                Brands can apply for vendor spots, sponsorships, giveaways, and onsite activation opportunities.
+                {t("signup.brand.notice")}
               </div>
               <div className="grid gap-5 md:grid-cols-2">
-                <Field label="Brand name" name="brandName" errors={activeState.errors} required />
-                <Field label="Contact name" name="contactName" errors={activeState.errors} required />
-                <Field label="Email" name="email" type="email" errors={activeState.errors} required />
-                <Field label="Phone number" name="phone" type="tel" errors={activeState.errors} required />
-                <Field label="Website or Instagram" name="websiteOrInstagram" errors={activeState.errors} />
-                <Field label="Category" name="productCategory" errors={activeState.errors} required>
+                <Field label={t("field.brandName")} name="brandName" errors={activeState.errors} required />
+                <Field label={t("field.contactName")} name="contactName" errors={activeState.errors} required />
+                <Field label={t("field.email")} name="email" type="email" errors={activeState.errors} required />
+                <Field label={t("field.phone")} name="phone" type="tel" errors={activeState.errors} required />
+                <Field label={t("field.website")} name="websiteOrInstagram" errors={activeState.errors} />
+                <Field label={t("field.category")} name="productCategory" errors={activeState.errors} required>
                   <select id="productCategory" name="productCategory" required className="event-select">
-                    <option value="">Choose category</option>
+                    <option value="">{t("select.category")}</option>
                     {productCategories.map((category) => (
                       <option key={category} value={category}>
                         {category}
@@ -510,13 +512,13 @@ export function SignupForms() {
                   </select>
                 </Field>
               </div>
-              <Field label="Message" name="message" errors={activeState.errors}>
+              <Field label={t("field.message")} name="message" errors={activeState.errors}>
                 <textarea id="message" name="message" rows={4} className="event-textarea" />
               </Field>
               <ConsentFields type="brand-vendor" errors={activeState.errors} />
               <StatusMessage state={activeState} />
               <button type="submit" disabled={activeState.loading} className="event-submit-button">
-                {activeState.loading ? "Submitting" : "Submit Brand Activation Inquiry"}
+                {activeState.loading ? t("button.submitting") : t("button.brand")}
               </button>
             </form>
           )}
@@ -525,25 +527,25 @@ export function SignupForms() {
             <form className="grid gap-5" onSubmit={(event) => handleSubmit("store-host", event)}>
               <input className="hidden" tabIndex={-1} autoComplete="off" name="company" aria-hidden="true" />
               <div className="rounded-md border border-cyan-300/35 bg-cyan-300/10 p-4 text-sm font-bold leading-6 text-cyan-100">
-                Tennessee stores can apply to host a future ONVIBE tour stop in their parking lot.
+                {t("signup.store.notice")}
               </div>
               <div className="grid gap-5 md:grid-cols-2">
-                <Field label="Store name" name="storeName" errors={activeState.errors} required />
-                <Field label="Contact name" name="contactName" errors={activeState.errors} required />
-                <Field label="Email" name="email" type="email" errors={activeState.errors} required />
-                <Field label="Phone number" name="phone" type="tel" errors={activeState.errors} required />
-                <Field label="City" name="city" errors={activeState.errors} required />
-                <Field label="Store address" name="storeAddress" errors={activeState.errors} required />
-                <Field label="Parking lot availability" name="parkingLotAvailability" errors={activeState.errors} required />
-                <Field label="Website or Instagram" name="websiteOrInstagram" errors={activeState.errors} />
+                <Field label={t("field.storeName")} name="storeName" errors={activeState.errors} required />
+                <Field label={t("field.contactName")} name="contactName" errors={activeState.errors} required />
+                <Field label={t("field.email")} name="email" type="email" errors={activeState.errors} required />
+                <Field label={t("field.phone")} name="phone" type="tel" errors={activeState.errors} required />
+                <Field label={t("field.city")} name="city" errors={activeState.errors} required />
+                <Field label={t("field.storeAddress")} name="storeAddress" errors={activeState.errors} required />
+                <Field label={t("field.parking")} name="parkingLotAvailability" errors={activeState.errors} required />
+                <Field label={t("field.website")} name="websiteOrInstagram" errors={activeState.errors} />
               </div>
-              <Field label="Message" name="message" errors={activeState.errors}>
+              <Field label={t("field.message")} name="message" errors={activeState.errors}>
                 <textarea id="message" name="message" rows={4} className="event-textarea" />
               </Field>
               <ConsentFields type="store-host" errors={activeState.errors} />
               <StatusMessage state={activeState} />
               <button type="submit" disabled={activeState.loading} className="event-submit-button">
-                {activeState.loading ? "Submitting" : "Host A Tour Stop"}
+                {activeState.loading ? t("button.submitting") : t("button.store")}
               </button>
             </form>
           )}
