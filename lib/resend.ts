@@ -181,16 +181,12 @@ export async function sendDashboardInternalEmail(subject: string, html: string) 
 }
 
 export async function sendAccountRegisteredEmail(account: DashboardAccountEmail) {
-  const needsApproval = account.role !== AccountRole.ATTENDEE;
-
   await sendDashboardInternalEmail(
-    needsApproval
-      ? `[ACTION REQUIRED] ONVIBE ${account.role.toLowerCase()} account needs approval`
-      : "New ONVIBE attendee account registered",
+    `New ONVIBE ${account.role.toLowerCase()} account registered`,
     `
       <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
         <h1 style="margin:0 0 12px;font-size:24px;">New account registration</h1>
-        <p style="color:#cbd5e1;line-height:1.6;">A ${htmlEscape(account.role.toLowerCase())} account ${needsApproval ? "is waiting for admin review" : "was registered and auto-approved"}.</p>
+        <p style="color:#cbd5e1;line-height:1.6;">A ${htmlEscape(account.role.toLowerCase())} account was registered and auto-approved.</p>
         <table cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;background:#0f172a;border:1px solid #1f2937;">
           <tr><th align="left" style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#cbd5e1;">Name</th><td style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#f8fafc;">${htmlEscape(account.name)}</td></tr>
           <tr><th align="left" style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#cbd5e1;">Email</th><td style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#f8fafc;">${htmlEscape(account.email)}</td></tr>

@@ -157,7 +157,7 @@ export function AccountAccess() {
             <textarea id="notes" name="notes" rows={4} className="dashboard-input" />
           </div>
           <p className="dashboard-muted">
-            Bikini team and vendor accounts are reviewed by the ONVIBE team. You can still log in to view event dates and submit interest while review is pending.
+            Accounts are approved immediately. Log in after registration to view event dates, submit interest, and track updates.
           </p>
           {message && <p className="dashboard-status">{message}</p>}
           <button type="submit" disabled={loading} className="dashboard-button">

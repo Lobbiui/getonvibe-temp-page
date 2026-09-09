@@ -46,7 +46,7 @@ ADMIN_PASSWORD_HASH=
 
 `RESEND_API_KEY` is required for actual email sending. `RESEND_FROM_EMAIL` should be a verified Resend sender for attendee, vendor, and hotel partner confirmation emails. `RESEND_INTERNAL_FROM_EMAIL` is optional and should be a different verified sender, such as `ONVIBE Leads <leads@getonvibe.com>`, for internal lead notifications. Internal lead notifications are always sent to `support@getonvibe.com` and `office@lobbicore.com`. `LEADS_NOTIFY_EMAIL` is optional and can add comma-separated internal recipients, such as `office@lobbicore.com,support@getonvibe.com`. Audience IDs are optional; when blank, the API skips audience contact creation and still sends notification and confirmation emails.
 
-`DATABASE_URL` is required for the admin dashboard, user accounts, events, approvals, interest tracking, and message logs. Use a production PostgreSQL database on DigitalOcean or another managed provider. `AUTH_SECRET` signs admin and user login sessions and must be at least 32 characters. `ADMIN_EMAIL` and `ADMIN_PASSWORD_HASH` control the admin login at `/admin/login`; generate the password hash with:
+`DATABASE_URL` is required for the admin dashboard, user accounts, events, interest tracking, and message logs. Use a production PostgreSQL database on DigitalOcean or another managed provider. `AUTH_SECRET` signs admin and user login sessions and must be at least 32 characters. `ADMIN_EMAIL` and `ADMIN_PASSWORD_HASH` control the admin login at `/admin/login`; generate the password hash with:
 
 ```bash
 npm run admin:hash
@@ -57,9 +57,9 @@ npm run admin:hash
 The project includes a database-backed dashboard workflow:
 
 - `/admin/login`: Admin login.
-- `/admin`: Admin dashboard for pending account approvals, event posting, interest review, participant selection, and outbound messages.
+- `/admin`: Admin dashboard for account review, event posting, interest review, participant selection, and outbound messages.
 - `/login`: Public account registration and login for bikini team applicants, vendors, and attendees.
-- `/dashboard`: Approved user dashboard for viewing posted events, showing interest, seeing selected status, and using the `Can't Make It` action.
+- `/dashboard`: User dashboard for viewing posted events, showing interest, seeing selected status, and using the `Can't Make It` action.
 
 Admin workflow:
 
@@ -67,7 +67,7 @@ Admin workflow:
 2. Run `npm run db:migrate` after the production database is attached, or `npm run db:push` for local development.
 3. Log in at `/admin/login`.
 4. Post event dates from the admin dashboard.
-5. Approve bikini team and vendor accounts.
+5. Review auto-approved account registrations as needed.
 6. Review event interest and select participants.
 7. Message everyone, attendees, models, vendors, interested users, selected users, or a direct recipient.
 

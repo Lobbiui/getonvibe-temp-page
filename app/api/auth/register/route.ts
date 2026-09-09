@@ -31,7 +31,7 @@ export async function POST(request: Request) {
     const account = await prisma.account.create({
       data: {
         role: data.role,
-        status: data.role === AccountRole.ATTENDEE ? "APPROVED" : "PENDING",
+        status: "APPROVED",
         name: data.name,
         email: data.email,
         phone: data.phone,
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
         vendorType: data.vendorType,
         website: data.website,
         notes: data.notes,
-        approvedAt: data.role === AccountRole.ATTENDEE ? new Date() : null,
+        approvedAt: new Date(),
       },
     });
 
@@ -52,10 +52,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       ok: true,
-      message:
-        account.role === AccountRole.ATTENDEE
-          ? "Your account is ready. Log in to see upcoming events."
-          : "Your account request was received. Log in to see upcoming events while our team reviews your profile.",
+      message: "Your account is ready. Log in to see upcoming events.",
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "";
