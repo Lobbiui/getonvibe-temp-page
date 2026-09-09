@@ -74,7 +74,7 @@ export function HomeContent() {
       </section>
 
       <section className="portal-now-playing" aria-label="Current event details">
-        <Image src="/event-assets/getonvibe-event-flyer.jpg" alt={t("current.alt")} width={960} height={1280} />
+        <Image src="/event-assets/flyer1.jpeg" alt={t("current.alt")} width={1080} height={1350} />
         <div>
           <span>{t("current.nextStop")}</span>
           <h2>{t("current.city")}</h2>
@@ -86,6 +86,22 @@ export function HomeContent() {
           <span>{t("current.time")}</span>
           <NeonButton href="#signup">{t("current.cta")}</NeonButton>
         </div>
+      </section>
+
+      <section className="portal-flyer-spotlight" aria-label="Featured GetOnVibe event flyer">
+        <div>
+          <p>{t("flyerSpotlight.eyebrow")}</p>
+          <h2>{t("flyerSpotlight.title")}</h2>
+          <span>{t("flyerSpotlight.copy")}</span>
+          <NeonButton href="#signup">{t("flyerSpotlight.cta")}</NeonButton>
+        </div>
+        <Image
+          src="/event-assets/getonvibe-event-flyer.jpg"
+          alt={t("flyerSpotlight.alt")}
+          width={960}
+          height={1280}
+          priority
+        />
       </section>
 
       <section className="portal-ticker" aria-label="Tour highlights">
@@ -102,7 +118,7 @@ export function HomeContent() {
           </div>
 
           <article className="portal-feature-event">
-            <Image src="/event-assets/getonvibe-event-flyer.jpg" alt="Official next event flyer" width={960} height={1280} />
+            <Image src="/event-assets/flyer1.jpeg" alt="Official next event flyer" width={1080} height={1350} />
             <div>
               <span>{t("tour.featured")}</span>
               <h3>{t("tour.featureTitle")}</h3>
