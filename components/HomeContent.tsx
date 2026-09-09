@@ -74,7 +74,7 @@ export function HomeContent() {
       </section>
 
       <section className="portal-now-playing" aria-label="Current event details">
-        <Image src="/event-assets/flyer1.jpeg" alt={t("current.alt")} width={1080} height={1350} />
+        <Image src="/event-assets/getonvibe-event-flyer.jpg" alt={t("current.alt")} width={960} height={1280} />
         <div>
           <span>{t("current.nextStop")}</span>
           <h2>{t("current.city")}</h2>
@@ -102,7 +102,7 @@ export function HomeContent() {
           </div>
 
           <article className="portal-feature-event">
-            <Image src="/event-assets/flyer1.jpeg" alt="Official next event flyer" width={1080} height={1350} />
+            <Image src="/event-assets/getonvibe-event-flyer.jpg" alt="Official next event flyer" width={960} height={1280} />
             <div>
               <span>{t("tour.featured")}</span>
               <h3>{t("tour.featureTitle")}</h3>
