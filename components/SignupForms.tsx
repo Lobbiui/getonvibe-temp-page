@@ -389,6 +389,14 @@ export function SignupForms() {
           ))}
         </div>
 
+        <div className="dashboard-account-bridge">
+          <div>
+            <strong>{t("signup.dashboard.title")}</strong>
+            <span>{t("signup.dashboard.copy")}</span>
+          </div>
+          <a href="/login">{t("signup.dashboard.cta")}</a>
+        </div>
+
         <div className="mt-7">
           <div className="mb-5">
             <h3 className="text-2xl font-black text-white">{activeTab ? t(activeTab.labelKey) : ""}</h3>

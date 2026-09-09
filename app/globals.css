@@ -1867,6 +1867,60 @@ button {
   opacity: 0.6;
 }
 
+.dashboard-account-bridge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  border-radius: 0.5rem;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(236, 72, 153, 0.18), transparent 12rem),
+    rgba(0, 0, 0, 0.48);
+  padding: 1rem;
+}
+
+.dashboard-account-bridge strong,
+.dashboard-account-bridge span {
+  display: block;
+}
+
+.dashboard-account-bridge strong {
+  color: #ffffff;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.dashboard-account-bridge span {
+  margin-top: 0.3rem;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  font-weight: 750;
+  line-height: 1.5;
+}
+
+.dashboard-account-bridge a {
+  flex: 0 0 auto;
+  border: 1px solid rgba(236, 72, 153, 0.45);
+  border-radius: 0.35rem;
+  background: rgba(236, 72, 153, 0.18);
+  padding: 0.75rem 1rem;
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.dashboard-account-bridge a:hover,
+.dashboard-account-bridge a:focus-visible {
+  background: #22d3ee;
+  color: #020617;
+  transform: translateY(-1px);
+}
+
 .event-textarea,
 .event-select {
   width: 100%;
@@ -2722,6 +2776,15 @@ button {
   .tour-experience-grid,
   .tour-signup-cards {
     grid-template-columns: 1fr;
+  }
+
+  .dashboard-account-bridge {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .dashboard-account-bridge a {
+    text-align: center;
   }
 
   .tour-section {

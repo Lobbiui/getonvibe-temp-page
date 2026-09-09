@@ -4,8 +4,23 @@ import { useState, type FormEvent } from "react";
 
 type Mode = "login" | "register";
 type AccountRoleValue = "ATTENDEE" | "MODEL" | "VENDOR";
+type AuthApiResult = {
+  ok?: boolean;
+  message?: string;
+};
 
 const vendorTypes = ["BRAND", "FOOD", "STORE", "OTHER"] as const;
+
+async function readAuthResponse(response: Response): Promise<AuthApiResult> {
+  try {
+    return (await response.json()) as AuthApiResult;
+  } catch {
+    return {
+      ok: false,
+      message: "The server returned an unexpected response. Please refresh and try again.",
+    };
+  }
+}
 
 export function AccountAccess() {
   const [mode, setMode] = useState<Mode>("register");
@@ -18,25 +33,29 @@ export function AccountAccess() {
     setLoading(true);
     setMessage("");
 
-    const formData = new FormData(event.currentTarget);
-    const response = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: formData.get("email"),
-        password: formData.get("password"),
-      }),
-    });
-    const result = await response.json();
+    try {
+      const formData = new FormData(event.currentTarget);
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.get("email"),
+          password: formData.get("password"),
+        }),
+      });
+      const result = await readAuthResponse(response);
 
-    setLoading(false);
+      if (!response.ok || !result.ok) {
+        setMessage(result.message || "Login failed. Please check your email and password.");
+        return;
+      }
 
-    if (!response.ok || !result.ok) {
-      setMessage(result.message || "Login failed.");
-      return;
+      window.location.href = "/dashboard";
+    } catch {
+      setMessage("We could not reach the login server. Please refresh and try again.");
+    } finally {
+      setLoading(false);
     }
-
-    window.location.href = "/dashboard";
   }
 
   async function submitRegister(event: FormEvent<HTMLFormElement>) {
@@ -44,31 +63,40 @@ export function AccountAccess() {
     setLoading(true);
     setMessage("");
 
-    const formData = new FormData(event.currentTarget);
-    const response = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        role,
-        name: formData.get("name"),
-        email: formData.get("email"),
-        phone: formData.get("phone"),
-        password: formData.get("password"),
-        city: formData.get("city"),
-        instagram: formData.get("instagram"),
-        businessName: formData.get("businessName"),
-        vendorType: formData.get("vendorType") || undefined,
-        website: formData.get("website"),
-        notes: formData.get("notes"),
-      }),
-    });
-    const result = await response.json();
+    try {
+      const form = event.currentTarget;
+      const formData = new FormData(form);
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          role,
+          name: formData.get("name"),
+          email: formData.get("email"),
+          phone: formData.get("phone"),
+          password: formData.get("password"),
+          city: formData.get("city"),
+          instagram: formData.get("instagram"),
+          businessName: formData.get("businessName"),
+          vendorType: formData.get("vendorType") || undefined,
+          website: formData.get("website"),
+          notes: formData.get("notes"),
+        }),
+      });
+      const result = await readAuthResponse(response);
 
-    setLoading(false);
-    setMessage(result.message || (result.ok ? "Registration received." : "Registration failed."));
+      if (!response.ok || !result.ok) {
+        setMessage(result.message || "Registration failed. Please check the form and try again.");
+        return;
+      }
 
-    if (result.ok) {
-      event.currentTarget.reset();
+      form.reset();
+      setMode("login");
+      setMessage("Registration received. Log in with the email and password you just created.");
+    } catch {
+      setMessage("We could not reach the registration server. Please refresh and try again.");
+    } finally {
+      setLoading(false);
     }
   }
 
