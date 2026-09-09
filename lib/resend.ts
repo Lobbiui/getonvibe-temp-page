@@ -244,7 +244,7 @@ export async function sendAccountApprovedEmail(account: DashboardAccountEmail) {
     subject: "Your ONVIBE account was approved",
     html: renderPlainEmail(
       "Your ONVIBE account was approved",
-      "Your ONVIBE account has been approved. You can now log in, view upcoming event dates, and show interest in opportunities that fit you.",
+      "Welcome to ONVIBE Events. Your ONVIBE account has been approved.\nYou can now log in, view upcoming event dates, show interest in opportunities that fit you, and track updates from the ONVIBE team.\nDashboard: https://www.getonvibe.com/login",
     ),
   });
 

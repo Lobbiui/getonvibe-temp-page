@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { accountRegisterSchema } from "@/lib/dashboard-validation";
 import { hashPassword } from "@/lib/password";
-import { sendAccountRegisteredEmail } from "@/lib/resend";
+import { sendAccountApprovedEmail, sendAccountRegisteredEmail } from "@/lib/resend";
 
 export const runtime = "nodejs";
 
@@ -48,6 +48,10 @@ export async function POST(request: Request) {
 
     await sendAccountRegisteredEmail(account).catch((error) => {
       console.error("Account registration notification failed", error instanceof Error ? error.message : "Unknown error");
+    });
+
+    await sendAccountApprovedEmail(account).catch((error) => {
+      console.error("Account welcome email failed", error instanceof Error ? error.message : "Unknown error");
     });
 
     return NextResponse.json({
