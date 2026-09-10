@@ -4,7 +4,10 @@ import { z } from "zod";
 const emailSchema = z.string().trim().email("Enter a valid email address.").toLowerCase();
 const passwordSchema = z.string().min(8, "Password must be at least 8 characters.");
 const requiredText = (label: string) => z.string().trim().min(1, `${label} is required.`);
-const optionalText = z.string().trim().optional();
+const optionalText = z.preprocess(
+  (value) => (value === null || value === "" ? undefined : value),
+  z.string().trim().optional(),
+);
 
 export const accountRegisterSchema = z.object({
   role: z.enum(AccountRole),

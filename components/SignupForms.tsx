@@ -202,7 +202,10 @@ function Field({
           required={required}
           aria-invalid={Boolean(errors[name])}
           aria-describedby={errors[name] ? errorId : undefined}
-          className="min-h-12 w-full rounded-md border border-white/15 bg-black/55 px-4 text-white outline-none transition placeholder:text-slate-500 focus:border-pink-400 focus:ring-2 focus:ring-pink-400/30"
+          className={cn(
+            "min-h-12 w-full rounded-md border bg-black/55 px-4 text-white outline-none transition placeholder:text-slate-500 focus:border-pink-400 focus:ring-2 focus:ring-pink-400/30",
+            errors[name] ? "border-pink-300 ring-2 ring-pink-400/30" : "border-white/15",
+          )}
         />
       )}
       {errors[name] && (
@@ -220,7 +223,10 @@ function ConsentFields({ type, errors }: { type: HubSubmissionType; errors: Fiel
   return (
     <div className="space-y-3">
       {type === "model" && (
-        <label className="flex gap-3 rounded-md border border-pink-400/25 bg-pink-500/10 p-4 text-sm leading-6 text-slate-100">
+        <label className={cn(
+          "flex gap-3 rounded-md border bg-pink-500/10 p-4 text-sm leading-6 text-slate-100",
+          errors.ageConfirmation ? "border-pink-300 ring-2 ring-pink-400/30" : "border-pink-400/25",
+        )}>
           <input name="ageConfirmation" type="checkbox" className="mt-1 h-4 w-4 accent-pink-400" />
           <span>{t("consent.model")}</span>
         </label>
@@ -230,7 +236,10 @@ function ConsentFields({ type, errors }: { type: HubSubmissionType; errors: Fiel
       )}
 
       {type === "brand-vendor" && (
-        <label className="flex gap-3 rounded-md border border-cyan-300/25 bg-cyan-300/10 p-4 text-sm leading-6 text-slate-100">
+        <label className={cn(
+          "flex gap-3 rounded-md border bg-cyan-300/10 p-4 text-sm leading-6 text-slate-100",
+          errors.coaConfirmation ? "border-pink-300 ring-2 ring-pink-400/30" : "border-cyan-300/25",
+        )}>
           <input name="coaConfirmation" type="checkbox" className="mt-1 h-4 w-4 accent-cyan-300" />
           <span>{t("consent.coa")}</span>
         </label>
@@ -239,7 +248,10 @@ function ConsentFields({ type, errors }: { type: HubSubmissionType; errors: Fiel
         <p className="text-sm font-bold text-pink-200">{errors.coaConfirmation}</p>
       )}
 
-      <label className="flex gap-3 rounded-md border border-white/15 bg-white/5 p-4 text-sm leading-6 text-slate-200">
+      <label className={cn(
+        "flex gap-3 rounded-md border bg-white/5 p-4 text-sm leading-6 text-slate-200",
+        errors.consent ? "border-pink-300 ring-2 ring-pink-400/30" : "border-white/15",
+      )}>
         <input name="consent" type="checkbox" className="mt-1 h-4 w-4 accent-cyan-300" />
         <span>{t("consent.general")}</span>
       </label>
