@@ -987,6 +987,13 @@
   color: #ffffff;
 }
 
+.dashboard-model-apply-note {
+  border-color: rgba(34, 211, 238, 0.28);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(34, 211, 238, 0.16), transparent 16rem),
+    rgba(0, 0, 0, 0.68);
+}
+
 @media (max-width: 860px) {
   .dashboard-stats,
   .dashboard-two-column,

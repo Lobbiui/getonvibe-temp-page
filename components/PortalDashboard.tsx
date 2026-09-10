@@ -225,6 +225,15 @@ export function PortalDashboard({ account, events }: { account: PortalAccount; e
 
       {message && <p className="dashboard-status">{message}</p>}
 
+      {account.role === "MODEL" && (
+        <section className="dashboard-card dashboard-model-apply-note">
+          <h2>Applying For Another Event</h2>
+          <p className="dashboard-muted">
+            When you mark interest in an event, the ONVIBE team will review availability and reach out to confirm the final date, time, arrival details, and next steps.
+          </p>
+        </section>
+      )}
+
       <section className="dashboard-grid">
         {events.map((event) => (
           <article key={event.id} className="dashboard-card">
