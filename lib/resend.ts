@@ -1,5 +1,7 @@
 import { AccountRole, InterestStatus, MessageAudience, VendorType } from "@prisma/client";
+import type { ModelRelease } from "@prisma/client";
 import { Resend } from "resend";
+import { buildModelReleasePdf } from "@/lib/model-release";
 import type { SignupPayload, SubmissionType } from "@/lib/validation";
 import { formatFieldLabel } from "@/lib/utils";
 
@@ -249,6 +251,50 @@ export async function sendAccountApprovedEmail(account: DashboardAccountEmail) {
   });
 
   return !resendSendFailed(result);
+}
+
+export async function sendModelReleaseSignedEmail(account: DashboardAccountEmail, release: ModelRelease) {
+  const resend = getResendClient();
+  const from = getInternalFromEmail();
+  const recipients = getNotifyRecipients();
+
+  if (!resend || !from || recipients.length === 0) {
+    console.warn("Model release notification skipped because email configuration is incomplete.");
+    return false;
+  }
+
+  const pdf = buildModelReleasePdf({ ...release, account });
+  const signedAt = release.signedAt.toLocaleString("en-US", { timeZone: "America/Chicago" });
+  const results = await Promise.allSettled(
+    recipients.map((recipient) =>
+      resend.emails.send({
+        from,
+        to: recipient,
+        subject: `Signed model release: ${account.name}`,
+        html: renderPlainEmail(
+          "Signed model release received",
+          `A model release has been signed and saved.\nName: ${release.legalName}\nAccount email: ${account.email}\nPhone: ${release.phone}\nSigned at: ${signedAt} Central Time\nRelease version: ${release.agreementVersion}`,
+        ),
+        attachments: [
+          {
+            filename: `onvibe-model-release-${release.id}.pdf`,
+            content: pdf.toString("base64"),
+          },
+        ],
+      }),
+    ),
+  );
+
+  const failed = results.filter((result) => result.status === "rejected" || resendSendFailed(result.value)).length;
+
+  if (failed > 0) {
+    console.error("Model release notification failed", {
+      failedRecipientCount: failed,
+      totalRecipientCount: recipients.length,
+    });
+  }
+
+  return failed === 0;
 }
 
 export async function sendEventInterestEmail(account: DashboardAccountEmail, event: DashboardEventEmail) {

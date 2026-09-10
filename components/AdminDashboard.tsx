@@ -16,6 +16,11 @@ type AdminAccount = {
   businessName: string | null;
   vendorType: string | null;
   createdAt: string;
+  modelRelease: {
+    id: string;
+    signedAt: string;
+    agreementVersion: string;
+  } | null;
 };
 
 type AdminEvent = {
@@ -102,6 +107,7 @@ export function AdminDashboard({
   const attendeeCount = accounts.filter((account) => account.role === "ATTENDEE").length;
   const modelCount = accounts.filter((account) => account.role === "MODEL").length;
   const vendorCount = accounts.filter((account) => account.role === "VENDOR").length;
+  const signedReleaseCount = accounts.filter((account) => account.role === "MODEL" && account.modelRelease).length;
 
   return (
     <main className="dashboard-shell">
@@ -133,6 +139,42 @@ export function AdminDashboard({
         <div><strong>{events.length}</strong><span>Posted events</span></div>
         <div><strong>{interests.length}</strong><span>Total event responses</span></div>
         <div><strong>{interests.filter((interest) => interest.status === "SELECTED").length}</strong><span>Selected</span></div>
+      </section>
+
+      <section className="dashboard-card">
+        <h2>Model Releases</h2>
+        <p className="dashboard-muted">
+          {signedReleaseCount} of {modelCount} model accounts have signed the release.
+        </p>
+        <div className="dashboard-table">
+          {accounts.filter((account) => account.role === "MODEL").map((account) => (
+            <article key={account.id}>
+              <div>
+                <strong>{account.name}</strong>
+                <span>{account.email}</span>
+              </div>
+              <div>
+                <strong>{account.modelRelease ? "Signed" : "Not signed"}</strong>
+                <span>
+                  {account.modelRelease
+                    ? new Date(account.modelRelease.signedAt).toLocaleString()
+                    : "Release required"}
+                </span>
+              </div>
+              <span className={`dashboard-pill ${account.modelRelease ? "selected" : ""}`}>
+                {account.modelRelease ? "Complete" : "Missing"}
+              </span>
+              {account.modelRelease ? (
+                <a href={`/api/admin/model-releases/${account.modelRelease.id}/download`} className="dashboard-button">
+                  Download
+                </a>
+              ) : (
+                <span className="dashboard-muted">Awaiting signature</span>
+              )}
+            </article>
+          ))}
+          {modelCount === 0 && <p className="dashboard-muted">No model accounts yet.</p>}
+        </div>
       </section>
 
       <section className="dashboard-two-column">

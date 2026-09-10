@@ -64,4 +64,22 @@ export const adminMessageSchema = z.object({
   body: requiredText("Message"),
 });
 
+export const modelReleaseSchema = z.object({
+  legalName: requiredText("Legal name"),
+  dateOfBirth: requiredText("Date of birth"),
+  email: emailSchema,
+  phone: requiredText("Phone"),
+  streetAddress: requiredText("Street address"),
+  city: requiredText("City"),
+  state: requiredText("State"),
+  zip: requiredText("ZIP"),
+  signature: requiredText("Digital signature"),
+  agreementAccepted: z.literal(true, {
+    error: "You must agree to the model release before signing.",
+  }),
+}).refine((data) => data.signature.toLowerCase() === data.legalName.toLowerCase(), {
+  path: ["signature"],
+  message: "Digital signature must match your legal name.",
+});
+
 export type AccountRegisterInput = z.infer<typeof accountRegisterSchema>;

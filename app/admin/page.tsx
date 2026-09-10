@@ -17,11 +17,16 @@ export default async function AdminPage() {
   }
 
   const [accounts, events, interests] = await Promise.all([
-    prisma.account.findMany({ orderBy: { createdAt: "desc" } }),
+    prisma.account.findMany({
+      include: { modelRelease: true },
+      orderBy: { createdAt: "desc" },
+    }),
     prisma.event.findMany({ orderBy: { startsAt: "asc" } }),
     prisma.eventInterest.findMany({
       include: {
-        account: true,
+        account: {
+          include: { modelRelease: true },
+        },
         event: true,
       },
       orderBy: { createdAt: "desc" },
@@ -42,6 +47,13 @@ export default async function AdminPage() {
         businessName: account.businessName,
         vendorType: account.vendorType,
         createdAt: account.createdAt.toISOString(),
+        modelRelease: account.modelRelease
+          ? {
+              id: account.modelRelease.id,
+              signedAt: account.modelRelease.signedAt.toISOString(),
+              agreementVersion: account.modelRelease.agreementVersion,
+            }
+          : null,
       }))}
       events={events.map((event) => ({
         id: event.id,
@@ -67,6 +79,13 @@ export default async function AdminPage() {
           businessName: interest.account.businessName,
           vendorType: interest.account.vendorType,
           createdAt: interest.account.createdAt.toISOString(),
+          modelRelease: interest.account.modelRelease
+            ? {
+                id: interest.account.modelRelease.id,
+                signedAt: interest.account.modelRelease.signedAt.toISOString(),
+                agreementVersion: interest.account.modelRelease.agreementVersion,
+              }
+            : null,
         },
         event: {
           id: interest.event.id,

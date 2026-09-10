@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 
 type PortalAccount = {
   id: string;
@@ -8,7 +8,14 @@ type PortalAccount = {
   status: string;
   name: string;
   email: string;
+  phone: string | null;
+  city: string | null;
   vendorType: string | null;
+  modelRelease: {
+    id: string;
+    signedAt: string;
+    agreementVersion: string;
+  } | null;
 };
 
 type PortalEvent = {
@@ -66,6 +73,38 @@ export function PortalDashboard({ account, events }: { account: PortalAccount; e
     }
   }
 
+  async function signModelRelease(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setBusyId("model-release");
+    setMessage("");
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const response = await fetch("/api/portal/model-release", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        legalName: formData.get("legalName"),
+        dateOfBirth: formData.get("dateOfBirth"),
+        email: formData.get("email"),
+        phone: formData.get("phone"),
+        streetAddress: formData.get("streetAddress"),
+        city: formData.get("city"),
+        state: formData.get("state"),
+        zip: formData.get("zip"),
+        signature: formData.get("signature"),
+        agreementAccepted: formData.get("agreementAccepted") === "on",
+      }),
+    });
+    const result = await response.json().catch(() => ({ ok: false, message: "Unexpected server response." }));
+    setMessage(result.message || "Updated.");
+    setBusyId("");
+
+    if (result.ok) {
+      window.location.reload();
+    }
+  }
+
   async function logout() {
     await fetch("/api/auth/logout", { method: "POST" });
     window.location.href = "/login";
@@ -97,12 +136,71 @@ export function PortalDashboard({ account, events }: { account: PortalAccount; e
       )}
 
       {account.role === "MODEL" && (
-        <section className="dashboard-card">
-          <h2>Availability Notice</h2>
-          <p className="dashboard-muted">
-            If you are selected for a gig and cannot make it, please let us know at least one week in advance so our team has time to fill the spot.
-          </p>
-        </section>
+        <>
+          <section className="dashboard-card">
+            <h2>Availability Notice</h2>
+            <p className="dashboard-muted">
+              If you are selected for a gig and cannot make it, please let us know at least one week in advance so our team has time to fill the spot.
+            </p>
+          </section>
+
+          {account.modelRelease ? (
+            <section className="dashboard-card">
+              <h2>Model Release Signed</h2>
+              <p className="dashboard-muted">
+                Your model release was signed on {new Date(account.modelRelease.signedAt).toLocaleString()}.
+              </p>
+              <div className="dashboard-actions">
+                <a href="/api/portal/model-release/download" className="dashboard-button">Download Signed Copy</a>
+              </div>
+            </section>
+          ) : (
+            <section className="dashboard-card">
+              <h2>Model Release Required</h2>
+              <p className="dashboard-muted">
+                Please review and sign the model and promotional content release before participating in ONVIBE event activations.
+              </p>
+              <details className="dashboard-release-text">
+                <summary>Read Model Release Agreement</summary>
+                <div>
+                  <p><strong>Model And Promotional Content Release</strong></p>
+                  <p>
+                    I authorize ShopLobbi Inc., Vape Shop Maps Inc., and related companies, brands, event partners, sponsors, contractors, and representatives to photograph, film, record, livestream, and otherwise capture my name, image, likeness, appearance, voice, performance, statements, and biographical information at or in connection with covered events.
+                  </p>
+                  <p>
+                    I grant unrestricted, worldwide, royalty-free, transferable, sublicensable, and perpetual rights to use, reproduce, edit, adapt, crop, combine, publish, display, distribute, advertise, promote, and otherwise use those materials in any media or format for company, brand, service, and event promotion.
+                  </p>
+                  <p>
+                    I understand this is a master agreement for covered events I apply for and am accepted, confirmed, scheduled, or engaged to participate in. Event-specific written terms may supplement this agreement.
+                  </p>
+                  <p>
+                    I confirm I am at least 18 years old, have authority to sign, understand the agreement, and voluntarily agree to its terms.
+                  </p>
+                </div>
+              </details>
+              <form onSubmit={signModelRelease} className="grid gap-4">
+                <div className="grid gap-4 md:grid-cols-2">
+                  <DashboardField label="Legal name" name="legalName" defaultValue={account.name} />
+                  <DashboardField label="Date of birth" name="dateOfBirth" type="date" />
+                  <DashboardField label="Email" name="email" type="email" defaultValue={account.email} />
+                  <DashboardField label="Phone" name="phone" defaultValue={account.phone || ""} />
+                  <DashboardField label="Street address" name="streetAddress" />
+                  <DashboardField label="City" name="city" defaultValue={account.city || ""} />
+                  <DashboardField label="State" name="state" />
+                  <DashboardField label="ZIP" name="zip" />
+                  <DashboardField label="Digital signature" name="signature" />
+                </div>
+                <label className="dashboard-check">
+                  <input name="agreementAccepted" type="checkbox" required />
+                  <span>I have read and agree to the Model and Promotional Content Release. I confirm I am at least 18 years old.</span>
+                </label>
+                <button type="submit" disabled={busyId === "model-release"} className="dashboard-button">
+                  {busyId === "model-release" ? "Signing" : "Sign Model Release"}
+                </button>
+              </form>
+            </section>
+          )}
+        </>
       )}
 
       {account.role === "VENDOR" && (
@@ -154,6 +252,25 @@ export function PortalDashboard({ account, events }: { account: PortalAccount; e
           </article>
         ))}
       </section>
+    </div>
+  );
+}
+
+function DashboardField({
+  label,
+  name,
+  type = "text",
+  defaultValue = "",
+}: {
+  label: string;
+  name: string;
+  type?: string;
+  defaultValue?: string;
+}) {
+  return (
+    <div>
+      <label htmlFor={name} className="dashboard-label">{label}</label>
+      <input id={name} name={name} type={type} required defaultValue={defaultValue} className="dashboard-input" />
     </div>
   );
 }

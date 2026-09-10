@@ -18,6 +18,7 @@ export default async function DashboardPage() {
 
   const account = await prisma.account.findUnique({
     where: { id: session.accountId },
+    include: { modelRelease: true },
   });
 
   if (!account || account.status === "SUSPENDED") {
@@ -43,7 +44,16 @@ export default async function DashboardPage() {
         status: account.status,
         name: account.name,
         email: account.email,
+        phone: account.phone,
+        city: account.city,
         vendorType: account.vendorType,
+        modelRelease: account.modelRelease
+          ? {
+              id: account.modelRelease.id,
+              signedAt: account.modelRelease.signedAt.toISOString(),
+              agreementVersion: account.modelRelease.agreementVersion,
+            }
+          : null,
       }}
       events={events.map((event) => ({
         id: event.id,

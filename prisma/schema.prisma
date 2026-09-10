@@ -61,6 +61,7 @@ model Account {
   updatedAt      DateTime      @updatedAt
   interests      EventInterest[]
   messages       MessageLog[]
+  modelRelease   ModelRelease?
 }
 
 model Event {
@@ -107,4 +108,24 @@ model MessageLog {
   createdAt DateTime        @default(now())
   account   Account?        @relation(fields: [accountId], references: [id], onDelete: SetNull)
   event     Event?          @relation(fields: [eventId], references: [id], onDelete: SetNull)
+}
+
+model ModelRelease {
+  id              String   @id @default(cuid())
+  accountId       String   @unique
+  legalName       String
+  dateOfBirth     String
+  email           String
+  phone           String
+  streetAddress   String
+  city            String
+  state           String
+  zip             String
+  signature       String
+  agreementText   String
+  agreementVersion String
+  ipAddress       String?
+  userAgent       String?
+  signedAt        DateTime @default(now())
+  account         Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
 }

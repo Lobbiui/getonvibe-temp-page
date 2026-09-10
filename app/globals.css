@@ -956,6 +956,37 @@
   font-weight: 800;
 }
 
+.dashboard-release-text {
+  margin: 1rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.dashboard-release-text summary {
+  cursor: pointer;
+  padding: 1rem;
+  color: #ffffff;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dashboard-release-text div {
+  display: grid;
+  gap: 0.85rem;
+  max-height: 360px;
+  overflow: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 1rem;
+  color: #cbd5e1;
+  font-weight: 750;
+  line-height: 1.65;
+}
+
+.dashboard-release-text strong {
+  color: #ffffff;
+}
+
 @media (max-width: 860px) {
   .dashboard-stats,
   .dashboard-two-column,

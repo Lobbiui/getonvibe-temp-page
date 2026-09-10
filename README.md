@@ -59,7 +59,7 @@ The project includes a database-backed dashboard workflow:
 - `/admin/login`: Admin login.
 - `/admin`: Admin dashboard for account review, event posting, interest review, participant selection, and outbound messages.
 - `/login`: Public account registration and login for bikini team applicants, vendors, and attendees.
-- `/dashboard`: User dashboard for viewing posted events, showing interest, seeing selected status, and using the `Can't Make It` action.
+- `/dashboard`: User dashboard for viewing posted events, showing interest, seeing selected status, signing the model release when applicable, and using the `Can't Make It` action.
 
 Admin workflow:
 
@@ -75,6 +75,7 @@ Email workflow:
 
 - New bikini team and vendor registrations notify `support@getonvibe.com`, `office@lobbicore.com`, and any email in `LEADS_NOTIFY_EMAIL`.
 - Event interest submissions notify the internal team.
+- Signed model releases notify the internal team and include a generated PDF copy.
 - Selected participants receive an email and see selected status in their dashboard.
 - If a selected participant clicks `Can't Make It`, the internal team is notified.
 - Admin messages are delivered by Resend and logged in the database.
