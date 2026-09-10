@@ -140,7 +140,7 @@ export function PortalDashboard({ account, events }: { account: PortalAccount; e
           <section className="dashboard-card">
             <h2>Availability Notice</h2>
             <p className="dashboard-muted">
-              If you are selected for a gig and cannot make it, please let us know at least one week in advance so our team has time to fill the spot.
+              If you are confirmed for a gig and cannot make it, please let us know at least one week in advance so our team has time to fill the spot.
             </p>
           </section>
 
@@ -245,7 +245,7 @@ export function PortalDashboard({ account, events }: { account: PortalAccount; e
             <div className="dashboard-actions">
               {event.interest?.status === "SELECTED" ? (
                 <>
-                  <span className="dashboard-pill selected">Selected</span>
+                  <span className="dashboard-pill selected">Confirmed</span>
                   <button type="button" disabled={busyId === event.interest.id} onClick={() => cantMake(event.interest!.id)} className="dashboard-danger-button">
                     Can&apos;t Make It
                   </button>

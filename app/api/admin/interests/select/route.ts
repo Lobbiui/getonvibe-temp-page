@@ -33,8 +33,8 @@ export async function POST(request: Request) {
   });
 
   await sendSelectedForEventEmail(interest.account, interest.event).catch((error) => {
-    console.error("Selected for event email failed", error instanceof Error ? error.message : "Unknown error");
+    console.error("Confirmed for event email failed", error instanceof Error ? error.message : "Unknown error");
   });
 
-  return NextResponse.json({ ok: true, message: "Participant selected and notified." });
+  return NextResponse.json({ ok: true, message: "Participant confirmed and notified." });
 }

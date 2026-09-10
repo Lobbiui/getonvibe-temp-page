@@ -17,7 +17,7 @@ export async function POST(request: Request) {
   const parsed = cantMakeSchema.safeParse(body);
 
   if (!parsed.success) {
-    return NextResponse.json({ ok: false, message: "Select the event you cannot make." }, { status: 400 });
+    return NextResponse.json({ ok: false, message: "Choose the event you cannot make." }, { status: 400 });
   }
 
   const interest = await prisma.eventInterest.findFirst({
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
   });
 
   if (!interest) {
-    return NextResponse.json({ ok: false, message: "Selected event was not found." }, { status: 404 });
+    return NextResponse.json({ ok: false, message: "Confirmed event was not found." }, { status: 404 });
   }
 
   await prisma.eventInterest.update({

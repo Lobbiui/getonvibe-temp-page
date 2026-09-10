@@ -57,9 +57,9 @@ npm run admin:hash
 The project includes a database-backed dashboard workflow:
 
 - `/admin/login`: Admin login.
-- `/admin`: Admin dashboard for account review, event posting, interest review, participant selection, and outbound messages.
+- `/admin`: Admin dashboard for account review, event posting, interest review, participant confirmation, and outbound messages.
 - `/login`: Public account registration and login for bikini team applicants, vendors, and attendees.
-- `/dashboard`: User dashboard for viewing posted events, showing interest, seeing selected status, signing the model release when applicable, and using the `Can't Make It` action.
+- `/dashboard`: User dashboard for viewing posted events, showing interest, seeing confirmed status, signing the model release when applicable, and using the `Can't Make It` action.
 
 Admin workflow:
 
@@ -68,16 +68,16 @@ Admin workflow:
 3. Log in at `/admin/login`.
 4. Post event dates from the admin dashboard.
 5. Review auto-approved account registrations as needed.
-6. Review event interest and select participants.
-7. Message everyone, attendees, models, vendors, interested users, selected users, or a direct recipient.
+6. Review event interest and confirm participants.
+7. Message everyone, attendees, models, vendors, interested users, confirmed users, or a direct recipient.
 
 Email workflow:
 
 - New bikini team and vendor registrations notify `support@getonvibe.com`, `office@lobbicore.com`, and any email in `LEADS_NOTIFY_EMAIL`.
 - Event interest submissions notify the internal team.
 - Signed model releases notify the internal team and include a generated PDF copy.
-- Selected participants receive an email and see selected status in their dashboard.
-- If a selected participant clicks `Can't Make It`, the internal team is notified.
+- Confirmed participants receive an email and see confirmed status in their dashboard.
+- If a confirmed participant clicks `Can't Make It`, the internal team is notified.
 - Admin messages are delivered by Resend and logged in the database.
 
 ## Logo Assets

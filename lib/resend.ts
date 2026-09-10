@@ -327,10 +327,10 @@ export async function sendSelectedForEventEmail(account: DashboardAccountEmail, 
   const result = await resend.emails.send({
     from,
     to: account.email,
-    subject: `You have been selected for ${event.title}`,
+    subject: `You are confirmed for ${event.title}`,
     html: renderPlainEmail(
-      "You have been selected",
-      `You have been selected for ${event.title}.\nPlease log in to your dashboard to review the event and confirm your availability.\nIf you cannot make it, use the Can't Make It button as soon as possible. Please let us know at least one week in advance so we have time to fill the spot.`,
+      "You are confirmed",
+      `You are confirmed for ${event.title}.\nPlease log in to your dashboard to review the event details and confirm your availability.\nIf you cannot make it, use the Can't Make It button as soon as possible. Please let us know at least one week in advance so we have time to fill the spot.`,
     ),
   });
 
@@ -341,7 +341,7 @@ export async function sendCantMakeEventEmail(account: DashboardAccountEmail, eve
   await sendDashboardInternalEmail(
     `[ACTION REQUIRED] ${account.name} cannot make ${event.title}`,
     renderPlainEmail(
-      "Selected participant cannot make it",
+      "Confirmed participant cannot make it",
       `${account.name} marked that they cannot make ${event.title}.\nRole: ${account.role.toLowerCase()}\nEmail: ${account.email}\nEvent date: ${event.startsAt.toLocaleString("en-US", { timeZone: "America/Chicago" })}`,
     ),
   );
@@ -431,7 +431,7 @@ export function buildConfirmationEmail(payload: SignupPayload) {
         <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
           <h1 style="margin:0 0 12px;font-size:24px;">Your model signup was received</h1>
           <p style="color:#cbd5e1;line-height:1.6;">Thank you for applying for ONVIBE event activations. Our team will review event fit, availability, and next steps.</p>
-          <p style="color:#cbd5e1;line-height:1.6;">Upcoming event opportunities, call times, location details, and participation requirements will be shared with selected applicants.</p>
+          <p style="color:#cbd5e1;line-height:1.6;">Upcoming event opportunities, call times, location details, and participation requirements will be shared with confirmed applicants.</p>
         </div>
       `,
     };
@@ -444,7 +444,7 @@ export function buildConfirmationEmail(payload: SignupPayload) {
         <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
           <h1 style="margin:0 0 12px;font-size:24px;">Your brand activation inquiry was received</h1>
           <p style="color:#cbd5e1;line-height:1.6;">Thank you for applying for ONVIBE event opportunities. Our team will review fit, availability, and compliance requirements, including legal hemp space alignment and current COA readiness for applicable products.</p>
-          <p style="color:#cbd5e1;line-height:1.6;">Tour stop details and vendor next steps will be shared with selected applicants as details are finalized.</p>
+          <p style="color:#cbd5e1;line-height:1.6;">Tour stop details and vendor next steps will be shared with confirmed applicants as details are finalized.</p>
         </div>
       `,
     };

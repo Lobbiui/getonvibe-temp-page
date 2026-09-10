@@ -114,7 +114,7 @@ export function AdminDashboard({
       <header className="dashboard-topbar">
         <div>
           <strong>ONVIBE Admin</strong>
-          <span>Approvals, events, interest, and messages</span>
+          <span>Approvals, events, confirmations, and messages</span>
         </div>
         <button type="button" onClick={logout} className="dashboard-ghost-button">Logout</button>
       </header>
@@ -122,7 +122,7 @@ export function AdminDashboard({
       <section className="dashboard-hero">
         <p>Admin Dashboard</p>
         <h1>Track Everything</h1>
-        <span>Approve accounts, post event dates, select participants, and message your ONVIBE list.</span>
+        <span>Approve accounts, post event dates, confirm participants, and message your ONVIBE list.</span>
       </section>
 
       {message && <p className="dashboard-status">{message}</p>}
@@ -138,7 +138,7 @@ export function AdminDashboard({
         <div><strong>{pendingAccounts.length}</strong><span>Pending approvals</span></div>
         <div><strong>{events.length}</strong><span>Posted events</span></div>
         <div><strong>{interests.length}</strong><span>Total event responses</span></div>
-        <div><strong>{interests.filter((interest) => interest.status === "SELECTED").length}</strong><span>Selected</span></div>
+        <div><strong>{interests.filter((interest) => interest.status === "SELECTED").length}</strong><span>Confirmed</span></div>
       </section>
 
       <section className="dashboard-card">
@@ -218,7 +218,7 @@ export function AdminDashboard({
       </section>
 
       <section className="dashboard-card">
-        <h2>Event Responses And Selections</h2>
+        <h2>Event Responses And Confirmations</h2>
         <div className="dashboard-table">
           {interests.map((interest) => (
             <article key={interest.id}>
@@ -235,7 +235,7 @@ export function AdminDashboard({
               </span>
               {interest.status !== "SELECTED" && (
                 <button type="button" onClick={() => postJson("/api/admin/interests/select", { interestId: interest.id })} className="dashboard-button">
-                  Select
+                  Confirmed
                 </button>
               )}
             </article>
@@ -275,7 +275,7 @@ export function AdminDashboard({
             <label htmlFor="audience" className="dashboard-label">Audience</label>
             <select id="audience" name="audience" className="dashboard-input" defaultValue="ALL">
               {messageAudiences.map((audience) => (
-                <option key={audience} value={audience}>{audience.replace("_", " ")}</option>
+                <option key={audience} value={audience}>{getAudienceLabel(audience)}</option>
               ))}
             </select>
           </div>
@@ -336,7 +336,7 @@ function getAccountRoleLabel(account: AdminAccount) {
 
 function getResponseLabel(interest: AdminInterest) {
   if (interest.status === "SELECTED") {
-    return "Selected";
+    return "Confirmed";
   }
 
   if (interest.account.role === "ATTENDEE") {
@@ -352,4 +352,12 @@ function getResponseLabel(interest: AdminInterest) {
   }
 
   return "Wants to work event";
+}
+
+function getAudienceLabel(audience: (typeof messageAudiences)[number]) {
+  if (audience === "SELECTED") {
+    return "CONFIRMED";
+  }
+
+  return audience.replace("_", " ");
 }
