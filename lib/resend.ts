@@ -355,14 +355,28 @@ export async function sendAdminMessageEmail(account: DashboardAccountEmail, subj
     return false;
   }
 
-  const result = await resend.emails.send({
-    from,
-    to: account.email,
-    subject,
-    html: renderPlainEmail(subject, body),
-  });
+  try {
+    const result = await resend.emails.send({
+      from,
+      to: account.email,
+      subject,
+      html: renderPlainEmail(subject, body),
+    });
 
-  return !resendSendFailed(result);
+    if (resendSendFailed(result)) {
+      console.error("Admin message email failed", {
+        reason: result.error instanceof Error ? result.error.message : String(result.error),
+      });
+    }
+
+    return !resendSendFailed(result);
+  } catch (error) {
+    console.error("Admin message email failed", {
+      reason: error instanceof Error ? error.message : "Unknown error",
+    });
+
+    return false;
+  }
 }
 
 export function audienceMatchesAccount(audience: MessageAudience, account: DashboardAccountEmail, interestStatus?: InterestStatus) {
