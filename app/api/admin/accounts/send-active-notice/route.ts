@@ -40,10 +40,13 @@ export async function POST() {
     }),
   ]);
 
-  const results = await Promise.allSettled(
-    recipients.map(async (account) => {
-      const sent = await sendAdminMessageEmail(account, subject, body);
+  let sentCount = 0;
+  let failedCount = 0;
 
+  for (const account of recipients) {
+    const sent = await sendAdminMessageEmail(account, subject, body);
+
+    if (sent) {
       await prisma.messageLog.create({
         data: {
           accountId: account.id,
@@ -54,12 +57,13 @@ export async function POST() {
         },
       });
 
-      return sent;
-    }),
-  );
+      sentCount += 1;
+    } else {
+      failedCount += 1;
+    }
 
-  const sentCount = results.filter((result) => result.status === "fulfilled" && result.value).length;
-  const failedCount = results.length - sentCount;
+    await new Promise((resolve) => setTimeout(resolve, 150));
+  }
 
   if (failedCount > 0) {
     console.error("Active account notice email failures", { failedCount });
