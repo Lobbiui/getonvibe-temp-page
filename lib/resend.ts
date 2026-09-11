@@ -98,6 +98,22 @@ function resendSendFailed(result: ResendSendResult) {
   return Boolean(result.error);
 }
 
+function formatResendError(error: unknown) {
+  if (!error) {
+    return "Unknown error";
+  }
+
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  try {
+    return JSON.stringify(error);
+  } catch {
+    return String(error);
+  }
+}
+
 function getInternalFromEmail() {
   return process.env.RESEND_INTERNAL_FROM_EMAIL || process.env.RESEND_FROM_EMAIL;
 }
@@ -365,7 +381,7 @@ export async function sendAdminMessageEmail(account: DashboardAccountEmail, subj
 
     if (resendSendFailed(result)) {
       console.error("Admin message email failed", {
-        reason: result.error instanceof Error ? result.error.message : String(result.error),
+        reason: formatResendError(result.error),
       });
     }
 
