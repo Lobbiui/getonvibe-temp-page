@@ -141,6 +141,23 @@ export function AdminDashboard({
         <div><strong>{interests.filter((interest) => interest.status === "SELECTED").length}</strong><span>Confirmed</span></div>
       </section>
 
+      {pendingAccounts.length > 0 && (
+        <section className="dashboard-card">
+          <h2>Approve Pending Accounts</h2>
+          <p className="dashboard-muted">
+            Move every pending registration to approved access and send the standard welcome email.
+          </p>
+          <button
+            type="button"
+            disabled={busy !== ""}
+            onClick={() => postJson("/api/admin/accounts/approve-pending", {})}
+            className="dashboard-button"
+          >
+            Approve All Pending
+          </button>
+        </section>
+      )}
+
       <section className="dashboard-card">
         <h2>Model Releases</h2>
         <p className="dashboard-muted">
