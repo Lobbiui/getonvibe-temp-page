@@ -426,12 +426,13 @@ export function buildInternalNotificationEmail(payload: SignupPayload) {
 export function buildConfirmationEmail(payload: SignupPayload) {
   if (payload.type === "model") {
     return {
-      subject: "Your ONVIBE model signup was received",
+      subject: "Your ONVIBE model signup is in",
       html: `
         <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
-          <h1 style="margin:0 0 12px;font-size:24px;">Your model signup was received</h1>
-          <p style="color:#cbd5e1;line-height:1.6;">Thank you for applying for ONVIBE event activations. Our team will review event fit, availability, and next steps.</p>
-          <p style="color:#cbd5e1;line-height:1.6;">Upcoming event opportunities, call times, location details, and participation requirements will be shared with confirmed applicants.</p>
+          <h1 style="margin:0 0 12px;font-size:24px;">Your model signup is in</h1>
+          <p style="color:#cbd5e1;line-height:1.6;">Thank you for joining the ONVIBE model list for event activations, carwash teams, photo moments, and future promotional events.</p>
+          <p style="color:#cbd5e1;line-height:1.6;">Dashboard accounts are approved immediately. Create an account or log in at www.getonvibe.com/login to see upcoming events, mark interest, sign the model release, and track confirmations.</p>
+          <p style="color:#cbd5e1;line-height:1.6;">Event participation is confirmed separately by the ONVIBE team based on the needs of each event.</p>
         </div>
       `,
     };
@@ -439,12 +440,13 @@ export function buildConfirmationEmail(payload: SignupPayload) {
 
   if (payload.type === "brand-vendor") {
     return {
-      subject: "ONVIBE brand activation inquiry received",
+      subject: "Your ONVIBE brand signup is in",
       html: `
         <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
-          <h1 style="margin:0 0 12px;font-size:24px;">Your brand activation inquiry was received</h1>
-          <p style="color:#cbd5e1;line-height:1.6;">Thank you for applying for ONVIBE event opportunities. Our team will review fit, availability, and compliance requirements, including legal hemp space alignment and current COA readiness for applicable products.</p>
-          <p style="color:#cbd5e1;line-height:1.6;">Tour stop details and vendor next steps will be shared with confirmed applicants as details are finalized.</p>
+          <h1 style="margin:0 0 12px;font-size:24px;">Your brand signup is in</h1>
+          <p style="color:#cbd5e1;line-height:1.6;">Thank you for joining the ONVIBE brand list for vendor spots, sponsorships, giveaways, and onsite activation opportunities.</p>
+          <p style="color:#cbd5e1;line-height:1.6;">Dashboard accounts are approved immediately. Create an account or log in at www.getonvibe.com/login to see upcoming events, mark interest, and track confirmations.</p>
+          <p style="color:#cbd5e1;line-height:1.6;">Brand placement and compliance details are confirmed separately by the ONVIBE team for each event.</p>
         </div>
       `,
     };
@@ -452,11 +454,13 @@ export function buildConfirmationEmail(payload: SignupPayload) {
 
   if (payload.type === "food-vendor") {
     return {
-      subject: "ONVIBE food vendor inquiry received",
+      subject: "Your ONVIBE food vendor signup is in",
       html: `
         <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
-          <h1 style="margin:0 0 12px;font-size:24px;">Your food vendor inquiry was received</h1>
-          <p style="color:#cbd5e1;line-height:1.6;">Thank you for applying for ONVIBE event opportunities. Our team will review availability and follow up with next steps for current and future tour stops.</p>
+          <h1 style="margin:0 0 12px;font-size:24px;">Your food vendor signup is in</h1>
+          <p style="color:#cbd5e1;line-height:1.6;">Thank you for joining the ONVIBE food vendor list for current and future tour stops.</p>
+          <p style="color:#cbd5e1;line-height:1.6;">Dashboard accounts are approved immediately. Create an account or log in at www.getonvibe.com/login to see upcoming events, mark interest, and track confirmations.</p>
+          <p style="color:#cbd5e1;line-height:1.6;">Food vendor placement is confirmed separately by the ONVIBE team for each event.</p>
         </div>
       `,
     };

@@ -124,7 +124,7 @@ export function AccountAccess() {
       form.reset();
       setFieldErrors({});
       setMode("login");
-      setMessage("Registration received. Log in with the email and password you just created.");
+      setMessage("Account created and approved. Log in with the email and password you just created.");
     } catch {
       setMessage("We could not reach the registration server. Please refresh and try again.");
     } finally {

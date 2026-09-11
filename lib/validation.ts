@@ -150,17 +150,17 @@ export const successMessages: Record<SubmissionType, string> = {
   attendee:
     "You are on the list. Watch your inbox for ONVIBE event details and tour updates.",
   model:
-    "Your model signup has been received. Our team will review event fit and follow up with next steps.",
+    "Your model signup is in. To access your dashboard, create an account or log in. Accounts are approved immediately.",
   "brand-vendor":
-    "Your brand inquiry has been received. Our team will review fit, activation opportunities, and compliance requirements.",
+    "Your brand signup is in. To access your dashboard, create an account or log in. Accounts are approved immediately.",
   "food-vendor":
-    "Your food vendor inquiry has been received. Our team will review availability and follow up with next steps.",
+    "Your food vendor signup is in. To access your dashboard, create an account or log in. Accounts are approved immediately.",
   "hotel-partner":
     "Your hotel partnership inquiry has been received. Our team will review the opportunity and follow up with next steps.",
   "store-host":
-    "Your store host inquiry has been received. Our team will review the location, parking lot fit, and tour timing.",
+    "Your store host signup is in. We will follow up about tour timing and location details.",
   creator:
-    "Your creator inquiry has been received. Our team will review co-promotion fit and follow up with next steps.",
+    "Your creator co-promotion signup is in. We will follow up with next steps.",
 };
 
 export function getEmailFromPayload(payload: SignupPayload) {
