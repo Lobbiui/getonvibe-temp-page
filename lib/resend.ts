@@ -204,7 +204,7 @@ export async function sendAccountRegisteredEmail(account: DashboardAccountEmail)
 
 export async function sendNewEventAnnouncementEmail(account: DashboardAccountEmail, event: DashboardEventEmail) {
   const resend = getResendClient();
-  const from = process.env.RESEND_FROM_EMAIL;
+  const from = getInternalFromEmail();
 
   if (!resend || !from) {
     return false;
@@ -234,7 +234,7 @@ export async function sendNewEventAnnouncementEmail(account: DashboardAccountEma
 
 export async function sendAccountApprovedEmail(account: DashboardAccountEmail) {
   const resend = getResendClient();
-  const from = process.env.RESEND_FROM_EMAIL;
+  const from = getInternalFromEmail();
 
   if (!resend || !from) {
     return false;
@@ -318,7 +318,7 @@ export async function sendEventInterestEmail(account: DashboardAccountEmail, eve
 
 export async function sendSelectedForEventEmail(account: DashboardAccountEmail, event: DashboardEventEmail) {
   const resend = getResendClient();
-  const from = process.env.RESEND_FROM_EMAIL;
+  const from = getInternalFromEmail();
 
   if (!resend || !from) {
     return false;
@@ -349,7 +349,7 @@ export async function sendCantMakeEventEmail(account: DashboardAccountEmail, eve
 
 export async function sendAdminMessageEmail(account: DashboardAccountEmail, subject: string, body: string) {
   const resend = getResendClient();
-  const from = process.env.RESEND_FROM_EMAIL;
+  const from = getInternalFromEmail();
 
   if (!resend || !from) {
     return false;
