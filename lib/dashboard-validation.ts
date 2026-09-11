@@ -80,9 +80,6 @@ export const modelReleaseSchema = z.object({
   agreementAccepted: z.literal(true, {
     error: "You must agree to the model release before signing.",
   }),
-}).refine((data) => data.signature.toLowerCase() === data.legalName.toLowerCase(), {
-  path: ["signature"],
-  message: "Digital signature must match your legal name.",
 });
 
 export type AccountRegisterInput = z.infer<typeof accountRegisterSchema>;

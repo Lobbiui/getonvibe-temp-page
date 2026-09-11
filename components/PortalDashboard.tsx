@@ -1,6 +1,9 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { cn } from "@/lib/utils";
+
+type FieldErrors = Record<string, string>;
 
 type PortalAccount = {
   id: string;
@@ -36,6 +39,7 @@ type PortalEvent = {
 export function PortalDashboard({ account, events }: { account: PortalAccount; events: PortalEvent[] }) {
   const [message, setMessage] = useState("");
   const [busyId, setBusyId] = useState("");
+  const [releaseErrors, setReleaseErrors] = useState<FieldErrors>({});
 
   const roleContent = getRoleContent(account.role, account.vendorType);
 
@@ -77,6 +81,7 @@ export function PortalDashboard({ account, events }: { account: PortalAccount; e
     event.preventDefault();
     setBusyId("model-release");
     setMessage("");
+    setReleaseErrors({});
 
     const form = event.currentTarget;
     const formData = new FormData(form);
@@ -84,19 +89,24 @@ export function PortalDashboard({ account, events }: { account: PortalAccount; e
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        legalName: formData.get("legalName"),
-        dateOfBirth: formData.get("dateOfBirth"),
-        email: formData.get("email"),
-        phone: formData.get("phone"),
-        streetAddress: formData.get("streetAddress"),
-        city: formData.get("city"),
-        state: formData.get("state"),
-        zip: formData.get("zip"),
-        signature: formData.get("signature"),
+        legalName: formDataValue(formData, "legalName"),
+        dateOfBirth: formDataValue(formData, "dateOfBirth"),
+        email: formDataValue(formData, "email"),
+        phone: formDataValue(formData, "phone"),
+        streetAddress: formDataValue(formData, "streetAddress"),
+        city: formDataValue(formData, "city"),
+        state: formDataValue(formData, "state"),
+        zip: formDataValue(formData, "zip"),
+        signature: formDataValue(formData, "signature"),
         agreementAccepted: formData.get("agreementAccepted") === "on",
       }),
     });
-    const result = await response.json().catch(() => ({ ok: false, message: "Unexpected server response." }));
+    const result = await response.json().catch(() => ({ ok: false, message: "Unexpected server response." })) as {
+      ok?: boolean;
+      message?: string;
+      fieldErrors?: Record<string, string | string[]>;
+    };
+    setReleaseErrors(normalizeFieldErrors(result.fieldErrors));
     setMessage(result.message || "Updated.");
     setBusyId("");
 
@@ -180,20 +190,21 @@ export function PortalDashboard({ account, events }: { account: PortalAccount; e
               </details>
               <form onSubmit={signModelRelease} className="grid gap-4">
                 <div className="grid gap-4 md:grid-cols-2">
-                  <DashboardField label="Legal name" name="legalName" defaultValue={account.name} />
-                  <DashboardField label="Date of birth" name="dateOfBirth" type="date" />
-                  <DashboardField label="Email" name="email" type="email" defaultValue={account.email} />
-                  <DashboardField label="Phone" name="phone" defaultValue={account.phone || ""} />
-                  <DashboardField label="Street address" name="streetAddress" />
-                  <DashboardField label="City" name="city" defaultValue={account.city || ""} />
-                  <DashboardField label="State" name="state" />
-                  <DashboardField label="ZIP" name="zip" />
-                  <DashboardField label="Digital signature" name="signature" />
+                  <DashboardField label="Legal name" name="legalName" defaultValue={account.name} errors={releaseErrors} />
+                  <DashboardField label="Date of birth" name="dateOfBirth" type="date" errors={releaseErrors} />
+                  <DashboardField label="Email" name="email" type="email" defaultValue={account.email} errors={releaseErrors} />
+                  <DashboardField label="Phone" name="phone" defaultValue={account.phone || ""} errors={releaseErrors} />
+                  <DashboardField label="Street address" name="streetAddress" errors={releaseErrors} />
+                  <DashboardField label="City" name="city" defaultValue={account.city || ""} errors={releaseErrors} />
+                  <DashboardField label="State" name="state" errors={releaseErrors} />
+                  <DashboardField label="ZIP" name="zip" errors={releaseErrors} />
+                  <DashboardField label="Digital signature" name="signature" errors={releaseErrors} />
                 </div>
-                <label className="dashboard-check">
+                <label className={cn("dashboard-check", releaseErrors.agreementAccepted && "border-pink-300 ring-2 ring-pink-400/30")}>
                   <input name="agreementAccepted" type="checkbox" required />
                   <span>I have read and agree to the Model and Promotional Content Release. I confirm I am at least 18 years old.</span>
                 </label>
+                {releaseErrors.agreementAccepted && <p className="text-sm font-bold text-pink-200">{releaseErrors.agreementAccepted}</p>}
                 <button type="submit" disabled={busyId === "model-release"} className="dashboard-button">
                   {busyId === "model-release" ? "Signing" : "Sign Model Release"}
                 </button>
@@ -265,21 +276,52 @@ export function PortalDashboard({ account, events }: { account: PortalAccount; e
   );
 }
 
+function formDataValue(formData: FormData, key: string) {
+  return String(formData.get(key) || "").trim();
+}
+
+function normalizeFieldErrors(fieldErrors?: Record<string, string | string[]>): FieldErrors {
+  if (!fieldErrors) {
+    return {};
+  }
+
+  return Object.fromEntries(
+    Object.entries(fieldErrors).map(([key, value]) => [
+      key,
+      Array.isArray(value) ? value[0] || "Please check this field." : value,
+    ]),
+  );
+}
+
 function DashboardField({
   label,
   name,
+  errors,
   type = "text",
   defaultValue = "",
 }: {
   label: string;
   name: string;
+  errors: FieldErrors;
   type?: string;
   defaultValue?: string;
 }) {
+  const errorId = `${name}-error`;
+
   return (
     <div>
       <label htmlFor={name} className="dashboard-label">{label}</label>
-      <input id={name} name={name} type={type} required defaultValue={defaultValue} className="dashboard-input" />
+      <input
+        id={name}
+        name={name}
+        type={type}
+        required
+        defaultValue={defaultValue}
+        aria-invalid={Boolean(errors[name])}
+        aria-describedby={errors[name] ? errorId : undefined}
+        className={cn("dashboard-input", errors[name] && "border-pink-300 ring-2 ring-pink-400/30")}
+      />
+      {errors[name] && <p id={errorId} className="mt-2 text-sm font-bold text-pink-200">{errors[name]}</p>}
     </div>
   );
 }
