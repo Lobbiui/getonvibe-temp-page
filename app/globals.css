@@ -205,7 +205,7 @@
   gap: clamp(1rem, 4vw, 3rem);
   align-items: center;
   width: min(1120px, calc(100% - 2rem));
-  margin: 0 auto 2.25rem;
+  margin: 0 auto 1.25rem;
   padding: clamp(1rem, 3vw, 2rem);
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -302,6 +302,7 @@
   grid-template-columns: minmax(0, 1fr) 330px;
   gap: clamp(1rem, 3vw, 2rem);
   align-items: start;
+  padding-top: clamp(2rem, 4vw, 3.25rem);
 }
 
 .portal-section-title {
