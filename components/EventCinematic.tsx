@@ -122,7 +122,7 @@ function CinematicComposition() {
           Car Wash
         </div>
         <div style={{ marginTop: 20, color: "#22d3ee", fontSize: 30, fontWeight: 900, textTransform: "uppercase" }}>
-          Hendersonville. September 12. 12PM to 4PM.
+          Hendersonville. September 12. Completed stop.
         </div>
       </div>
 

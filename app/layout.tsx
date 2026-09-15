@@ -7,11 +7,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "ONVIBE Events | GetOnVibe Entertainment Hub",
   description:
-    "Follow ONVIBE Events for food trucks, music, model activations, brand pop-ups, vendor opportunities, and real-world GetOnVibe launch experiences.",
+    "Follow ONVIBE Events after the completed September 12 Hendersonville Bikini Carwash stop for upcoming GetOnVibe Community Tour updates, model registration, vendor opportunities, and future activations.",
   openGraph: {
     title: "ONVIBE Events | GetOnVibe Entertainment Hub",
     description:
-      "Food trucks, music, model activations, brand pop-ups, vendor opportunities, and real-world GetOnVibe launch experiences.",
+      "Follow ONVIBE Events after the completed September 12 Hendersonville Bikini Carwash stop for upcoming tour updates, model registration, vendor opportunities, and future activations.",
     url: siteUrl,
     siteName: "ONVIBE Events",
     images: [
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ONVIBE Events | GetOnVibe Entertainment Hub",
     description:
-      "Food trucks, music, model activations, brand pop-ups, vendor opportunities, and real-world GetOnVibe launch experiences.",
+      "Follow ONVIBE Events after the completed September 12 Hendersonville Bikini Carwash stop for upcoming tour updates and future activations.",
     images: ["/events/flyer1.jpeg"],
   },
   verification: {
@@ -46,11 +46,11 @@ const eventJsonLd = {
   "@type": "Event",
   name: "ONVIBE Events Bikini Carwash",
   description:
-    "ONVIBE Events presents a Bikini Carwash activation with food trucks, music, and a free carwash at Smokeville in Hendersonville, Tennessee.",
+    "ONVIBE Events completed a Bikini Carwash activation with food trucks, music, and a free carwash in Hendersonville, Tennessee.",
   startDate: "2026-09-12T12:00:00-05:00",
   endDate: "2026-09-12T16:00:00-05:00",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-  eventStatus: "https://schema.org/EventScheduled",
+  eventStatus: "https://schema.org/EventCompleted",
   location: {
     "@type": "Place",
     name: "Smokeville",

@@ -8,7 +8,7 @@ import { SignupForms } from "@/components/SignupForms";
 
 const tourStops = [
   {
-    statusKey: "stop.next",
+    statusKey: "stop.completed",
     cityKey: "current.city",
     venueKey: "current.venue",
     addressKey: "current.address",
