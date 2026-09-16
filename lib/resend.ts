@@ -269,6 +269,27 @@ export async function sendAccountApprovedEmail(account: DashboardAccountEmail) {
   return !resendSendFailed(result);
 }
 
+export async function sendPasswordResetEmail(account: DashboardAccountEmail, resetUrl: string) {
+  const resend = getResendClient();
+  const from = getInternalFromEmail();
+
+  if (!resend || !from) {
+    return false;
+  }
+
+  const result = await resend.emails.send({
+    from,
+    to: account.email,
+    subject: "Reset your ONVIBE account password",
+    html: renderPlainEmail(
+      "Reset your ONVIBE account password",
+      `We received a request to reset your ONVIBE account password.\nUse this secure link within 1 hour: ${resetUrl}\nIf you did not request this, you can ignore this email.`,
+    ),
+  });
+
+  return !resendSendFailed(result);
+}
+
 export async function sendModelReleaseSignedEmail(account: DashboardAccountEmail, release: ModelRelease) {
   const resend = getResendClient();
   const from = getInternalFromEmail();

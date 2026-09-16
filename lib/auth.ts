@@ -15,6 +15,13 @@ type AccountSession = {
   accountId: string;
 };
 
+type PasswordResetSession = {
+  kind: "password-reset";
+  accountId: string;
+  email: string;
+  accountUpdatedAt: string;
+};
+
 function getSessionSecret() {
   const secret = process.env.AUTH_SECRET || process.env.ADMIN_SESSION_SECRET;
 
@@ -31,6 +38,22 @@ async function signSession(payload: AdminSession | AccountSession) {
     .setIssuedAt()
     .setExpirationTime("7d")
     .sign(getSessionSecret());
+}
+
+export async function createPasswordResetToken(payload: Omit<PasswordResetSession, "kind">) {
+  return new SignJWT({ kind: "password-reset", ...payload })
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime("1h")
+    .sign(getSessionSecret());
+}
+
+export async function verifyPasswordResetToken(token: string) {
+  try {
+    return await verifySession<PasswordResetSession>(token, "password-reset");
+  } catch {
+    return null;
+  }
 }
 
 async function verifySession<T>(token: string, kind: string) {

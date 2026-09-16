@@ -28,6 +28,15 @@ export const accountLoginSchema = z.object({
   password: z.string().min(1, "Password is required."),
 });
 
+export const passwordResetRequestSchema = z.object({
+  email: emailSchema,
+});
+
+export const passwordResetSchema = z.object({
+  token: requiredText("Reset token"),
+  password: passwordSchema,
+});
+
 export const adminLoginSchema = accountLoginSchema;
 
 export const eventSchema = z.object({

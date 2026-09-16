@@ -810,6 +810,23 @@
   box-shadow: 0 0 34px rgba(34, 211, 238, 0.24);
 }
 
+.dashboard-link-button {
+  justify-self: center;
+  color: #67e8f9;
+  font-size: 0.86rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 0.35rem;
+  transition: color 160ms ease;
+}
+
+.dashboard-link-button:hover,
+.dashboard-link-button:focus-visible {
+  color: #f9a8d4;
+}
+
 .dashboard-danger-button {
   background: #ec4899;
   color: #ffffff;

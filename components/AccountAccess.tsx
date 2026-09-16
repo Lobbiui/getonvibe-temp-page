@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { cn } from "@/lib/utils";
 
-type Mode = "login" | "register";
+type Mode = "login" | "register" | "reset";
 type AccountRoleValue = "ATTENDEE" | "MODEL" | "VENDOR";
 type FieldErrors = Record<string, string>;
 type AuthApiResult = {
@@ -132,6 +132,37 @@ export function AccountAccess() {
     }
   }
 
+  async function submitPasswordResetRequest(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setLoading(true);
+    setMessage("");
+    setFieldErrors({});
+
+    try {
+      const formData = new FormData(event.currentTarget);
+      const response = await fetch("/api/auth/request-password-reset", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formDataValue(formData, "email"),
+        }),
+      });
+      const result = await readAuthResponse(response);
+
+      if (!response.ok || !result.ok) {
+        setFieldErrors(normalizeFieldErrors(result.fieldErrors));
+        setMessage(result.message || "Password reset failed. Please check your email and try again.");
+        return;
+      }
+
+      setMessage(result.message || "If an active account exists for that email, a password reset link has been sent.");
+    } catch {
+      setMessage("We could not reach the password reset server. Please refresh and try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <section className="dashboard-card mx-auto max-w-3xl">
       <div className="dashboard-tabs">
@@ -204,13 +235,41 @@ export function AccountAccess() {
             {loading ? "Submitting" : "Create Account"}
           </button>
         </form>
-      ) : (
+      ) : mode === "login" ? (
         <form onSubmit={submitLogin} className="grid gap-5">
           <Field label="Email" name="email" type="email" errors={fieldErrors} />
           <Field label="Password" name="password" type="password" errors={fieldErrors} />
           {message && <p className="dashboard-status">{message}</p>}
           <button type="submit" disabled={loading} className="dashboard-button">
             {loading ? "Logging In" : "Login"}
+          </button>
+          <button
+            type="button"
+            onClick={() => { setMode("reset"); setFieldErrors({}); setMessage(""); }}
+            className="dashboard-link-button"
+          >
+            Forgot password?
+          </button>
+        </form>
+      ) : (
+        <form onSubmit={submitPasswordResetRequest} className="grid gap-5">
+          <div>
+            <h2 className="text-2xl font-black uppercase text-white">Reset Password</h2>
+            <p className="dashboard-muted mt-2">
+              Enter your account email and we will send a secure reset link.
+            </p>
+          </div>
+          <Field label="Email" name="email" type="email" errors={fieldErrors} />
+          {message && <p className="dashboard-status">{message}</p>}
+          <button type="submit" disabled={loading} className="dashboard-button">
+            {loading ? "Sending" : "Send Reset Link"}
+          </button>
+          <button
+            type="button"
+            onClick={() => { setMode("login"); setFieldErrors({}); setMessage(""); }}
+            className="dashboard-link-button"
+          >
+            Back to Login
           </button>
         </form>
       )}
