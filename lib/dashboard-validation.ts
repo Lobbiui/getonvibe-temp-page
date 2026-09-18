@@ -50,6 +50,11 @@ export const eventSchema = z.object({
   isPublished: z.boolean().default(true),
 });
 
+export const eventNotificationSchema = z.object({
+  eventId: requiredText("Event"),
+  excludeRecent: z.boolean().default(true),
+});
+
 export const interestSchema = z.object({
   eventId: requiredText("Event"),
   note: optionalText,

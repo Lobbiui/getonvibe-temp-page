@@ -218,14 +218,7 @@ export async function sendAccountRegisteredEmail(account: DashboardAccountEmail)
   );
 }
 
-export async function sendNewEventAnnouncementEmail(account: DashboardAccountEmail, event: DashboardEventEmail) {
-  const resend = getResendClient();
-  const from = getInternalFromEmail();
-
-  if (!resend || !from) {
-    return false;
-  }
-
+function buildNewEventAnnouncementEmail(account: DashboardAccountEmail, event: DashboardEventEmail, from: string) {
   const roleCopy =
     account.role === "VENDOR" && account.vendorType === "BRAND"
       ? "A new ONVIBE event is posted in your dashboard. Log in to request a booth, table display, or managed brand activation for this stop."
@@ -235,7 +228,7 @@ export async function sendNewEventAnnouncementEmail(account: DashboardAccountEma
           VENDOR: "A new ONVIBE event is posted in your dashboard. Log in to request vending interest for this stop.",
         }[account.role];
 
-  const result = await resend.emails.send({
+  return {
     from,
     to: account.email,
     subject: `New ONVIBE event posted: ${event.title}`,
@@ -243,9 +236,86 @@ export async function sendNewEventAnnouncementEmail(account: DashboardAccountEma
       "New ONVIBE event posted",
       `${roleCopy}\nEvent: ${event.title}\nLocation: ${event.venue || "Venue TBA"} ${event.address || event.city}\nDate: ${event.startsAt.toLocaleString("en-US", { timeZone: "America/Chicago" })}\nDashboard: ${process.env.NEXT_PUBLIC_SITE_URL || "https://www.getonvibe.com"}/dashboard`,
     ),
-  });
+    tags: [
+      { name: "message_type", value: "event_announcement" },
+      { name: "event_id", value: event.id },
+    ],
+  };
+}
+
+export async function sendNewEventAnnouncementEmail(account: DashboardAccountEmail, event: DashboardEventEmail) {
+  const resend = getResendClient();
+  const from = getInternalFromEmail();
+
+  if (!resend || !from) {
+    return false;
+  }
+
+  const result = await resend.emails.send(buildNewEventAnnouncementEmail(account, event, from));
 
   return !resendSendFailed(result);
+}
+
+export async function sendNewEventAnnouncementBatch(accounts: DashboardAccountEmail[], event: DashboardEventEmail) {
+  const resend = getResendClient();
+  const from = getInternalFromEmail();
+
+  if (!resend || !from || accounts.length === 0) {
+    return { sentCount: 0, failedCount: accounts.length };
+  }
+
+  const result = await resend.batch.send(
+    accounts.map((account) => buildNewEventAnnouncementEmail(account, event, from)),
+    { batchValidation: "permissive" },
+  );
+
+  if (result.error) {
+    console.error("New event batch notification failed", {
+      code: result.error.name,
+      statusCode: result.error.statusCode,
+      recipientCount: accounts.length,
+    });
+    return { sentCount: 0, failedCount: accounts.length };
+  }
+
+  const failedCount = result.data.errors?.length || 0;
+
+  if (failedCount > 0) {
+    console.error("New event batch notification validation failures", {
+      failedRecipientCount: failedCount,
+      recipientCount: accounts.length,
+    });
+  }
+
+  return {
+    sentCount: result.data.data.length,
+    failedCount,
+  };
+}
+
+export async function getRecentEventAnnouncementRecipients(eventTitle: string, since: Date) {
+  const resend = getResendClient();
+
+  if (!resend) {
+    return new Set<string>();
+  }
+
+  const result = await resend.emails.list({ limit: 100 });
+
+  if (result.error) {
+    console.error("Recent event notification lookup failed", {
+      code: result.error.name,
+      statusCode: result.error.statusCode,
+    });
+    return new Set<string>();
+  }
+
+  const subject = `New ONVIBE event posted: ${eventTitle}`;
+  const recipients = result.data.data
+    .filter((email) => email.subject === subject && new Date(email.created_at) >= since)
+    .flatMap((email) => email.to.map((recipient) => recipient.toLowerCase()));
+
+  return new Set(recipients);
 }
 
 export async function sendAccountApprovedEmail(account: DashboardAccountEmail) {

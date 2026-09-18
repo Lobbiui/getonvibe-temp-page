@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/admin-guard";
 import { prisma } from "@/lib/db";
 import { eventSchema } from "@/lib/dashboard-validation";
-import { sendNewEventAnnouncementEmail } from "@/lib/resend";
+import { sendNewEventAnnouncementBatch } from "@/lib/resend";
 
 export const runtime = "nodejs";
 
@@ -44,13 +44,9 @@ export async function POST(request: Request) {
       orderBy: { createdAt: "desc" },
     });
 
-    const results = await Promise.allSettled(
-      accounts.map((account) => sendNewEventAnnouncementEmail(account, event)),
-    );
-
-    notifiedCount = results.filter((result) => result.status === "fulfilled" && result.value).length;
-
-    const failedCount = results.length - notifiedCount;
+    const result = await sendNewEventAnnouncementBatch(accounts, event);
+    notifiedCount = result.sentCount;
+    const failedCount = result.failedCount;
 
     if (failedCount > 0) {
       console.error("New event notification failures", `${failedCount} notification emails failed`);
