@@ -53,6 +53,7 @@ export const eventSchema = z.object({
 export const eventNotificationSchema = z.object({
   eventId: requiredText("Event"),
   excludeRecent: z.boolean().default(true),
+  dryRun: z.boolean().default(false),
 });
 
 export const interestSchema = z.object({

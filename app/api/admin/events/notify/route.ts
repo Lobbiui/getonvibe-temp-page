@@ -47,6 +47,19 @@ export async function POST(request: Request) {
   const recipients = accounts.filter(
     (account) => !recentlyNotified.has(account.email.toLowerCase()),
   );
+
+  if (parsed.data.dryRun) {
+    return NextResponse.json({
+      ok: true,
+      message: "Event notification preview ready. No emails were sent.",
+      totalAccountCount: accounts.length,
+      alreadyNotifiedCount: recentlyNotified.size,
+      attemptedCount: recipients.length,
+      sentCount: 0,
+      failedCount: 0,
+    });
+  }
+
   const result = await sendNewEventAnnouncementBatch(recipients, event);
 
   return NextResponse.json({
@@ -60,5 +73,6 @@ export async function POST(request: Request) {
     attemptedCount: recipients.length,
     sentCount: result.sentCount,
     failedCount: result.failedCount,
+    failureReasons: result.failureReasons,
   });
 }

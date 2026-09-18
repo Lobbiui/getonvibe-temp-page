@@ -260,8 +260,12 @@ export async function sendNewEventAnnouncementBatch(accounts: DashboardAccountEm
   const resend = getResendClient();
   const from = getInternalFromEmail();
 
-  if (!resend || !from || accounts.length === 0) {
-    return { sentCount: 0, failedCount: accounts.length };
+  if (accounts.length === 0) {
+    return { sentCount: 0, failedCount: 0, failureReasons: [] };
+  }
+
+  if (!resend || !from) {
+    return { sentCount: 0, failedCount: accounts.length, failureReasons: ["Email configuration is incomplete."] };
   }
 
   const result = await resend.batch.send(
@@ -275,10 +279,20 @@ export async function sendNewEventAnnouncementBatch(accounts: DashboardAccountEm
       statusCode: result.error.statusCode,
       recipientCount: accounts.length,
     });
-    return { sentCount: 0, failedCount: accounts.length };
+    return {
+      sentCount: 0,
+      failedCount: accounts.length,
+      failureReasons: [`${result.error.name} (${result.error.statusCode || "unknown status"})`],
+    };
   }
 
   const failedCount = result.data.errors?.length || 0;
+  const failureReasonCounts = new Map<string, number>();
+
+  for (const error of result.data.errors || []) {
+    const safeMessage = error.message.replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, "[email]");
+    failureReasonCounts.set(safeMessage, (failureReasonCounts.get(safeMessage) || 0) + 1);
+  }
 
   if (failedCount > 0) {
     console.error("New event batch notification validation failures", {
@@ -290,6 +304,7 @@ export async function sendNewEventAnnouncementBatch(accounts: DashboardAccountEm
   return {
     sentCount: result.data.data.length,
     failedCount,
+    failureReasons: Array.from(failureReasonCounts, ([message, count]) => `${message} (${count})`),
   };
 }
 
