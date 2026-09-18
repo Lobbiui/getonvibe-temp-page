@@ -2,7 +2,7 @@
 
 import { Player } from "@remotion/player";
 import { useEffect, useRef, useState } from "react";
-import { AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame } from "remotion";
+import { AbsoluteFill, Easing, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 
 const bubbles = Array.from({ length: 18 }, (_, index) => ({
   left: 8 + ((index * 13) % 88),
@@ -19,30 +19,48 @@ const lights = [
 
 function CinematicComposition() {
   const frame = useCurrentFrame();
+  const { width } = useVideoConfig();
+  const compact = width < 760;
   const pulse = interpolate(frame % 160, [0, 80, 160], [0, 1, 0]);
   const slowDrift = interpolate(frame % 260, [0, 130, 260], [-18, 18, -18]);
-  const posterIn = interpolate(frame, [18, 48], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const titleIn = interpolate(frame, [38, 70], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const priceIn = interpolate(frame, [72, 104], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const posterIn = interpolate(frame, [0, 28], [0.72, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.16, 1, 0.3, 1),
+  });
+  const titleIn = interpolate(frame, [0, 34], [0.78, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.16, 1, 0.3, 1),
+  });
+  const detailsIn = interpolate(frame, [0, 42], [0.72, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.16, 1, 0.3, 1),
+  });
 
   return (
     <AbsoluteFill style={{ background: "#070008", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
       <Img
-        src={staticFile("event-assets/Checkusout.png")}
+        src={staticFile("event-assets/getonvibe-october-3-2026.png")}
         style={{
           position: "absolute",
           inset: 0,
           width: "100%",
           height: "100%",
           objectFit: "cover",
-          scale: interpolate(frame % 300, [0, 150, 300], [1.04, 1.12, 1.04]),
-          filter: "saturate(1.18) contrast(1.06)",
+          objectPosition: compact ? "52% 45%" : "50% 42%",
+          scale: interpolate(frame % 300, [0, 150, 300], [1.08, 1.16, 1.08]),
+          filter: "blur(16px) saturate(1.22) contrast(1.08)",
+          opacity: 0.66,
         }}
       />
       <AbsoluteFill
         style={{
           background:
-            "linear-gradient(90deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.54) 42%, rgba(0,0,0,0.16) 100%), radial-gradient(circle at 18% 26%, rgba(236,72,153,0.46), transparent 30%), radial-gradient(circle at 82% 12%, rgba(34,211,238,0.34), transparent 28%)",
+            compact
+              ? "linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.26) 44%, rgba(0,0,0,0.96) 78%), radial-gradient(circle at 22% 24%, rgba(236,72,153,0.34), transparent 34%), radial-gradient(circle at 82% 12%, rgba(34,211,238,0.3), transparent 30%)"
+              : "linear-gradient(90deg, rgba(0,0,0,0.94) 0%, rgba(0,0,0,0.72) 46%, rgba(0,0,0,0.3) 100%), radial-gradient(circle at 18% 26%, rgba(236,72,153,0.42), transparent 30%), radial-gradient(circle at 82% 12%, rgba(34,211,238,0.3), transparent 28%)",
         }}
       />
 
@@ -75,82 +93,65 @@ function CinematicComposition() {
       />
 
       <Img
-        src={staticFile("event-assets/flyer1.jpeg")}
+        src={staticFile("event-assets/getonvibe-october-3-2026.png")}
         style={{
           position: "absolute",
-          right: "7%",
-          top: "6%",
-          width: "24%",
+          right: compact ? "14%" : "5%",
+          top: compact ? "3%" : "4%",
+          width: compact ? "72%" : "37%",
+          maxHeight: compact ? "54%" : "92%",
+          objectFit: "contain",
           border: "2px solid rgba(255,255,255,0.72)",
           boxShadow: "0 32px 90px rgba(0,0,0,0.72), 0 0 42px rgba(236,72,153,0.38)",
           opacity: posterIn,
-          scale: 0.9 + posterIn * 0.1,
-          rotate: `${-3 + posterIn * 1.5}deg`,
-        }}
-      />
-
-      <Img
-        src={staticFile("event-assets/onvibeeventstour.png")}
-        style={{
-          position: "absolute",
-          left: "8%",
-          top: "7%",
-          width: "28%",
-          opacity: 0.85,
-          transform: `translateY(${slowDrift * 0.2}px)`,
-          filter: "drop-shadow(0 0 28px rgba(34,211,238,0.34))",
+          scale: interpolate(posterIn, [0.72, 1], [0.96, 1], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+            output: "perceptual-scale",
+          }),
+          rotate: compact ? "0deg" : `${-2 + posterIn}deg`,
         }}
       />
 
       <div
         style={{
           position: "absolute",
-          left: "9%",
-          top: "26%",
-          maxWidth: "56%",
+          left: compact ? "7%" : "7%",
+          top: compact ? "58%" : "18%",
+          maxWidth: compact ? "86%" : "51%",
           opacity: titleIn,
-          transform: `translateY(${(1 - titleIn) * 28}px)`,
+          translate: `0 ${(1 - titleIn) * 28}px`,
         }}
       >
-        <div style={{ color: "#facc15", fontSize: 22, fontWeight: 900, letterSpacing: 6, textTransform: "uppercase" }}>
-          Tennessee Community Tour
+        <div style={{ color: "#22d3ee", fontSize: compact ? 14 : 22, fontWeight: 900, letterSpacing: compact ? 3 : 6, textTransform: "uppercase" }}>
+          GetOnVibe Community Event
         </div>
-        <div style={{ marginTop: 14, color: "#ec4899", fontSize: 92, fontWeight: 950, lineHeight: 0.86, textTransform: "uppercase" }}>
-          Free Bikini
+        <div style={{ marginTop: compact ? 8 : 14, color: "#ec4899", fontSize: compact ? 46 : 92, fontWeight: 950, lineHeight: 0.86, textTransform: "uppercase" }}>
+          Free Car Wash
         </div>
-        <div style={{ color: "#ffffff", fontSize: 90, fontWeight: 950, lineHeight: 0.9, textTransform: "uppercase" }}>
-          Car Wash
+        <div style={{ marginTop: compact ? 12 : 22, color: "#ffffff", fontSize: compact ? 24 : 46, fontWeight: 950, lineHeight: 1, textTransform: "uppercase" }}>
+          Saturday, October 3
         </div>
-        <div style={{ marginTop: 20, color: "#22d3ee", fontSize: 30, fontWeight: 900, textTransform: "uppercase" }}>
-          Hendersonville. September 12. Completed stop.
+        <div style={{ marginTop: 9, color: "#facc15", fontSize: compact ? 19 : 31, fontWeight: 900, textTransform: "uppercase" }}>
+          12PM to 3PM
         </div>
       </div>
 
       <div
         style={{
           position: "absolute",
-          left: "9%",
-          bottom: "8%",
-          display: "flex",
-          gap: 16,
-          opacity: priceIn,
-          transform: `translateY(${(1 - priceIn) * 20}px)`,
+          left: compact ? "7%" : "7%",
+          bottom: compact ? "12%" : "10%",
+          maxWidth: compact ? "86%" : "50%",
+          color: "#ffffff",
+          fontSize: compact ? 14 : 24,
+          fontWeight: 850,
+          lineHeight: 1.35,
+          opacity: detailsIn,
+          translate: `0 ${(1 - detailsIn) * 20}px`,
         }}
       >
-        {[
-          ["event-assets/onvibe_20_crossed_out.png", "20"],
-          ["event-assets/onvibe_10_crossed_out.png", "10"],
-          ["event-assets/onvibe_0_free.png", "0"],
-        ].map(([src, key]) => (
-          <Img
-            key={key}
-            src={staticFile(src)}
-            style={{
-              width: key === "0" ? 210 : 170,
-              filter: key === "0" ? "drop-shadow(0 0 34px rgba(236,72,153,0.74))" : "drop-shadow(0 0 18px rgba(0,0,0,0.7))",
-            }}
-          />
-        ))}
+        14665-D Lebanon Rd, Old Hickory, TN 37138
       </div>
 
       {bubbles.map((bubble) => {

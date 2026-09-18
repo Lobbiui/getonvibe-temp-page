@@ -197,6 +197,14 @@
   gap: 0.6rem;
 }
 
+.portal-now-playing > div {
+  min-width: 0;
+}
+
+.portal-now-playing p {
+  overflow-wrap: anywhere;
+}
+
 .portal-flyer-spotlight {
   position: relative;
   z-index: 4;
@@ -1058,7 +1066,9 @@
 
   .portal-header nav {
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0.7rem 1.35rem;
   }
 
   .portal-header nav a {
@@ -1095,6 +1105,12 @@
   .portal-now-playing > div:last-child {
     grid-column: 1 / -1;
     justify-items: start;
+  }
+
+  .portal-now-playing p {
+    font-size: 0.82rem;
+    line-height: 1.35;
+    word-break: break-word;
   }
 
   .portal-gallery article,

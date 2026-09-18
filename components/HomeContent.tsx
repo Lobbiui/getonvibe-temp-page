@@ -9,11 +9,11 @@ import { SignupForms } from "@/components/SignupForms";
 const tourStops = [
   {
     statusKey: "stop.completed",
-    cityKey: "current.city",
-    venueKey: "current.venue",
-    addressKey: "current.address",
-    dateKey: "current.date",
-    timeKey: "current.time",
+    cityKey: "previous.city",
+    venueKey: "previous.venue",
+    addressKey: "previous.address",
+    dateKey: "previous.date",
+    timeKey: "previous.time",
   },
   {
     statusKey: "stop.expanding",
@@ -74,7 +74,7 @@ export function HomeContent() {
       </section>
 
       <section className="portal-now-playing" aria-label="Current event details">
-        <Image src="/event-assets/flyer1.jpeg" alt={t("current.alt")} width={1080} height={1350} />
+        <Image src="/event-assets/getonvibe-october-3-2026.png" alt={t("current.alt")} width={1135} height={1450} priority />
         <div>
           <span>{t("current.nextStop")}</span>
           <h2>{t("current.city")}</h2>
@@ -96,10 +96,10 @@ export function HomeContent() {
           <NeonButton href="#signup">{t("flyerSpotlight.cta")}</NeonButton>
         </div>
         <Image
-          src="/event-assets/getonvibe-event-flyer.jpg"
+          src="/event-assets/getonvibe-october-3-2026.png"
           alt={t("flyerSpotlight.alt")}
-          width={960}
-          height={1280}
+          width={1135}
+          height={1450}
           priority
         />
       </section>
@@ -118,7 +118,7 @@ export function HomeContent() {
           </div>
 
           <article className="portal-feature-event">
-            <Image src="/event-assets/flyer1.jpeg" alt="Official next event flyer" width={1080} height={1350} />
+            <Image src="/event-assets/getonvibe-october-3-2026.png" alt="Official October 3 GetOnVibe event flyer" width={1135} height={1450} />
             <div>
               <span>{t("tour.featured")}</span>
               <h3>{t("tour.featureTitle")}</h3>

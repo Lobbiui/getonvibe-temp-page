@@ -7,19 +7,19 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "ONVIBE Events | GetOnVibe Entertainment Hub",
   description:
-    "Follow ONVIBE Events after the completed September 12 Hendersonville Bikini Carwash stop for upcoming GetOnVibe Community Tour updates, model registration, vendor opportunities, and future activations.",
+    "Join GetOnVibe for a free car wash, food, brands, music, and community in Old Hickory, Tennessee on October 3, 2026 from 12PM to 3PM.",
   openGraph: {
     title: "ONVIBE Events | GetOnVibe Entertainment Hub",
     description:
-      "Follow ONVIBE Events after the completed September 12 Hendersonville Bikini Carwash stop for upcoming tour updates, model registration, vendor opportunities, and future activations.",
+      "Free car wash, food, brands, music, and community in Old Hickory, Tennessee on October 3, 2026 from 12PM to 3PM.",
     url: siteUrl,
     siteName: "ONVIBE Events",
     images: [
       {
-        url: "/events/flyer1.jpeg",
-        width: 1200,
-        height: 630,
-        alt: "ONVIBE Events Bikini Carwash flyer",
+        url: "/event-assets/getonvibe-october-3-2026.png",
+        width: 1135,
+        height: 1450,
+        alt: "GetOnVibe October 3 free car wash event flyer",
       },
     ],
     locale: "en_US",
@@ -29,8 +29,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ONVIBE Events | GetOnVibe Entertainment Hub",
     description:
-      "Follow ONVIBE Events after the completed September 12 Hendersonville Bikini Carwash stop for upcoming tour updates and future activations.",
-    images: ["/events/flyer1.jpeg"],
+      "Free car wash, food, brands, music, and community in Old Hickory, Tennessee on October 3, 2026 from 12PM to 3PM.",
+    images: ["/event-assets/getonvibe-october-3-2026.png"],
   },
   verification: {
     google: "2QWJErsLQLc7DhsanubPgBPKqx2LDwtlF7MRzxD3rB4",
@@ -44,22 +44,22 @@ export const viewport: Viewport = {
 const eventJsonLd = {
   "@context": "https://schema.org",
   "@type": "Event",
-  name: "ONVIBE Events Bikini Carwash",
+  name: "GetOnVibe Free Car Wash Community Event",
   description:
-    "ONVIBE Events completed a Bikini Carwash activation with food trucks, music, and a free carwash in Hendersonville, Tennessee.",
-  startDate: "2026-09-12T12:00:00-05:00",
-  endDate: "2026-09-12T16:00:00-05:00",
+    "A free GetOnVibe community car wash event with food vendors, onsite brands, music, and community in Old Hickory, Tennessee.",
+  startDate: "2026-10-03T12:00:00-05:00",
+  endDate: "2026-10-03T15:00:00-05:00",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-  eventStatus: "https://schema.org/EventCompleted",
+  eventStatus: "https://schema.org/EventScheduled",
   location: {
     "@type": "Place",
-    name: "Smokeville",
+    name: "GetOnVibe Community Event",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "699 W Main St",
-      addressLocality: "Hendersonville",
+      streetAddress: "14665-D Lebanon Rd",
+      addressLocality: "Old Hickory",
       addressRegion: "TN",
-      postalCode: "37075",
+      postalCode: "37138",
       addressCountry: "US",
     },
   },

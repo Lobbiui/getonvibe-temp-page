@@ -1,5 +1,13 @@
 # GetOnVibe Temporary Website Progress So Far
 
+## September 2026 October 3 Event Update
+
+- Added the official October 3, 2026 GetOnVibe free car wash flyer as the primary homepage event artwork.
+- Updated the hero, current-event strip, featured event, tour dates, metadata, and Event JSON-LD for 14665-D Lebanon Rd, Old Hickory, TN 37138.
+- Updated the Remotion hero composition with the new flyer, cinematic movement, light sweeps, and bubbles.
+- Kept the September 12 Hendersonville activation listed as a completed tour stop.
+- Added the October 3 event to registered-user dashboards and sent the event announcement to all active registered accounts.
+
 ## August 2026 Entertainment Hub Redesign
 
 The temporary `www.getonvibe.com` homepage has been redesigned as an ONVIBE Events entertainment hub for the GetOnVibe event-led launch strategy.
@@ -7,7 +15,7 @@ The temporary `www.getonvibe.com` homepage has been redesigned as an ONVIBE Even
 Current front-page direction:
 
 - ONVIBE Events as the public-facing event brand
-- Featured Bikini Carwash event at Smokeville
+- Featured October 3 free car wash event in Old Hickory
 - Flyer-led event visuals using `public/events/flyer1.jpeg` and `public/events/flyer2.jpeg`
 - Remotion Player cinematic homepage reel
 - Simple navigation for Event, Attend, Models, Food Vendors, Brands, Creators, and Businesses
