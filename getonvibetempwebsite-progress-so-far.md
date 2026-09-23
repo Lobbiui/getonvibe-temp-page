@@ -5,6 +5,7 @@
 - Added the official October 3, 2026 GetOnVibe Costume-Kini Halloween flyer and six-second video as the primary homepage event artwork.
 - Updated the hero, current-event strip, featured event, tour dates, metadata, and Event JSON-LD for 14665-D Lebanon Rd, Old Hickory, TN 37138.
 - Updated the Remotion hero composition with the clean official flyer, cinematic camera drift, light sweeps, and bubbles. The supplied clip is not rendered because its generated frames contain duplicated vehicle artwork.
+- Repaired the malformed white vehicle embedded in the Costume-Kini flyer and updated the homepage, metadata, and social previews to use the corrected flyer asset.
 - Simplified the closing artwork overlay to a compact CTA and restored the artwork's full uncropped aspect ratio so its embedded headline remains readable.
 - Kept the September 12 Hendersonville activation listed as a completed tour stop.
 - Added the October 3 event to registered-user dashboards and sent the event announcement to all active registered accounts.

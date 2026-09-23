@@ -37,7 +37,7 @@ function CinematicComposition() {
   return (
     <AbsoluteFill style={{ background: "#070008", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
       <Img
-        src={staticFile("event-assets/getonvibe-october-3-costume-kini.png")}
+        src={staticFile("event-assets/getonvibe-october-3-costume-kini-fixed.png")}
         style={{
           position: "absolute",
           inset: 0,

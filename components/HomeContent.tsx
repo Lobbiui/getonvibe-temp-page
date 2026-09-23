@@ -75,7 +75,7 @@ export function HomeContent() {
       </section>
 
       <section className="portal-now-playing" aria-label="Current event details">
-        <Image src="/event-assets/getonvibe-october-3-costume-kini.png" alt={t("current.alt")} width={1103} height={1450} priority />
+        <Image src="/event-assets/getonvibe-october-3-costume-kini-fixed.png" alt={t("current.alt")} width={1103} height={1450} priority />
         <div>
           <span>{t("current.nextStop")}</span>
           <h2>{t("current.city")}</h2>
@@ -97,7 +97,7 @@ export function HomeContent() {
           <NeonButton href="#signup">{t("flyerSpotlight.cta")}</NeonButton>
         </div>
         <Image
-          src="/event-assets/getonvibe-october-3-costume-kini.png"
+          src="/event-assets/getonvibe-october-3-costume-kini-fixed.png"
           alt={t("flyerSpotlight.alt")}
           width={1103}
           height={1450}
@@ -119,7 +119,7 @@ export function HomeContent() {
           </div>
 
           <article className="portal-feature-event">
-            <Image src="/event-assets/getonvibe-october-3-costume-kini.png" alt="Official October 3 GetOnVibe Costume-Kini event flyer" width={1103} height={1450} />
+            <Image src="/event-assets/getonvibe-october-3-costume-kini-fixed.png" alt="Official October 3 GetOnVibe Costume-Kini event flyer" width={1103} height={1450} />
             <div>
               <span>{t("tour.featured")}</span>
               <h3>{t("tour.featureTitle")}</h3>
