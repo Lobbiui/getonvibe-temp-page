@@ -1,6 +1,6 @@
 # ONVIBE Events / GetOnVibe Entertainment Hub
 
-Production-ready temporary entertainment hub for ONVIBE Events and the GetOnVibe event-led launch strategy. The current homepage promotes the October 3, 2026 GetOnVibe free car wash community event in Old Hickory while capturing attendee, model, food vendor, and brand activation leads.
+Production-ready temporary entertainment hub for ONVIBE Events and the GetOnVibe event-led launch strategy. The current homepage promotes the October 3, 2026 GetOnVibe Costume-Kini Halloween event in Old Hickory while capturing attendee, model, food vendor, and brand activation leads.
 
 ## Stack
 
@@ -95,9 +95,10 @@ The temporary ONVIBE Events homepage references:
 
 - `public/events/flyer1.jpeg`
 - `public/events/flyer2.jpeg`
-- `public/event-assets/getonvibe-october-3-2026.png`
+- `public/event-assets/getonvibe-october-3-costume-kini.png`
+- `public/event-assets/getonvibe-october-3-costume-kini.mp4`
 
-These flyers are used in the event hero, flyer gallery, and Remotion-powered cinematic reel.
+The updated Costume-Kini flyer and six-second video are used prominently in the event hero, flyer spotlight, tour listing, and Remotion-powered cinematic reel.
 
 ## Forms and API
 

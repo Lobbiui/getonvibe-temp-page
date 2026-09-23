@@ -1,6 +1,7 @@
 "use client";
 
 import { Player } from "@remotion/player";
+import { Video } from "@remotion/media";
 import { useEffect, useRef, useState } from "react";
 import { AbsoluteFill, Easing, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 
@@ -23,11 +24,6 @@ function CinematicComposition() {
   const compact = width < 760;
   const pulse = interpolate(frame % 160, [0, 80, 160], [0, 1, 0]);
   const slowDrift = interpolate(frame % 260, [0, 130, 260], [-18, 18, -18]);
-  const posterIn = interpolate(frame, [0, 28], [0.72, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: Easing.bezier(0.16, 1, 0.3, 1),
-  });
   const titleIn = interpolate(frame, [0, 34], [0.78, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -42,7 +38,7 @@ function CinematicComposition() {
   return (
     <AbsoluteFill style={{ background: "#070008", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
       <Img
-        src={staticFile("event-assets/getonvibe-october-3-2026.png")}
+        src={staticFile("event-assets/getonvibe-october-3-costume-kini.png")}
         style={{
           position: "absolute",
           inset: 0,
@@ -53,6 +49,20 @@ function CinematicComposition() {
           scale: interpolate(frame % 300, [0, 150, 300], [1.08, 1.16, 1.08]),
           filter: "blur(16px) saturate(1.22) contrast(1.08)",
           opacity: 0.66,
+        }}
+      />
+      <Video
+        src={staticFile("event-assets/getonvibe-october-3-costume-kini.mp4")}
+        muted
+        loop
+        objectFit="cover"
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          opacity: 1,
+          filter: "saturate(1.16) contrast(1.05)",
         }}
       />
       <AbsoluteFill
@@ -92,27 +102,6 @@ function CinematicComposition() {
         }}
       />
 
-      <Img
-        src={staticFile("event-assets/getonvibe-october-3-2026.png")}
-        style={{
-          position: "absolute",
-          right: compact ? "14%" : "5%",
-          top: compact ? "3%" : "4%",
-          width: compact ? "72%" : "37%",
-          maxHeight: compact ? "54%" : "92%",
-          objectFit: "contain",
-          border: "2px solid rgba(255,255,255,0.72)",
-          boxShadow: "0 32px 90px rgba(0,0,0,0.72), 0 0 42px rgba(236,72,153,0.38)",
-          opacity: posterIn,
-          scale: interpolate(posterIn, [0.72, 1], [0.96, 1], {
-            extrapolateLeft: "clamp",
-            extrapolateRight: "clamp",
-            output: "perceptual-scale",
-          }),
-          rotate: compact ? "0deg" : `${-2 + posterIn}deg`,
-        }}
-      />
-
       <div
         style={{
           position: "absolute",
@@ -124,16 +113,16 @@ function CinematicComposition() {
         }}
       >
         <div style={{ color: "#22d3ee", fontSize: compact ? 14 : 22, fontWeight: 900, letterSpacing: compact ? 3 : 6, textTransform: "uppercase" }}>
-          GetOnVibe Community Event
+          GetOnVibe Presents
         </div>
-        <div style={{ marginTop: compact ? 8 : 14, color: "#ec4899", fontSize: compact ? 46 : 92, fontWeight: 950, lineHeight: 0.86, textTransform: "uppercase" }}>
-          Free Car Wash
+        <div style={{ marginTop: compact ? 8 : 14, color: "#ec4899", fontSize: compact ? 36 : 92, fontWeight: 950, lineHeight: 0.86, textTransform: "uppercase" }}>
+          Costume-Kini
         </div>
         <div style={{ marginTop: compact ? 12 : 22, color: "#ffffff", fontSize: compact ? 24 : 46, fontWeight: 950, lineHeight: 1, textTransform: "uppercase" }}>
-          Saturday, October 3
+          Halloween Event
         </div>
-        <div style={{ marginTop: 9, color: "#facc15", fontSize: compact ? 19 : 31, fontWeight: 900, textTransform: "uppercase" }}>
-          12PM to 3PM
+        <div style={{ marginTop: 9, color: "#facc15", fontSize: compact ? 17 : 29, fontWeight: 900, textTransform: "uppercase" }}>
+          October 3 | 12PM to 3PM
         </div>
       </div>
 
@@ -213,7 +202,7 @@ export function EventCinematic() {
     <div className="portal-cinematic" ref={stageRef}>
       <Player
         component={CinematicComposition}
-        durationInFrames={260}
+        durationInFrames={180}
         compositionWidth={stageSize.width}
         compositionHeight={stageSize.height}
         fps={30}

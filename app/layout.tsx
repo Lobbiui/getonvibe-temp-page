@@ -7,19 +7,19 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "ONVIBE Events | GetOnVibe Entertainment Hub",
   description:
-    "Join GetOnVibe for a free car wash, food, brands, music, and community in Old Hickory, Tennessee on October 3, 2026 from 12PM to 3PM.",
+    "Join the GetOnVibe Costume-Kini Halloween event for a free car wash, food, brands, music, live-stream challenges, and community in Old Hickory on October 3, 2026.",
   openGraph: {
     title: "ONVIBE Events | GetOnVibe Entertainment Hub",
     description:
-      "Free car wash, food, brands, music, and community in Old Hickory, Tennessee on October 3, 2026 from 12PM to 3PM.",
+      "GetOnVibe Costume-Kini Halloween event with a free car wash, food, brands, music, live-stream challenges, and community in Old Hickory on October 3, 2026.",
     url: siteUrl,
     siteName: "ONVIBE Events",
     images: [
       {
-        url: "/event-assets/getonvibe-october-3-2026.png",
-        width: 1135,
+        url: "/event-assets/getonvibe-october-3-costume-kini.png",
+        width: 1103,
         height: 1450,
-        alt: "GetOnVibe October 3 free car wash event flyer",
+        alt: "GetOnVibe October 3 Costume-Kini Halloween event flyer",
       },
     ],
     locale: "en_US",
@@ -29,8 +29,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ONVIBE Events | GetOnVibe Entertainment Hub",
     description:
-      "Free car wash, food, brands, music, and community in Old Hickory, Tennessee on October 3, 2026 from 12PM to 3PM.",
-    images: ["/event-assets/getonvibe-october-3-2026.png"],
+      "GetOnVibe Costume-Kini Halloween event with a free car wash, food, brands, music, live-stream challenges, and community in Old Hickory on October 3, 2026.",
+    images: ["/event-assets/getonvibe-october-3-costume-kini.png"],
   },
   verification: {
     google: "2QWJErsLQLc7DhsanubPgBPKqx2LDwtlF7MRzxD3rB4",
@@ -44,16 +44,16 @@ export const viewport: Viewport = {
 const eventJsonLd = {
   "@context": "https://schema.org",
   "@type": "Event",
-  name: "GetOnVibe Free Car Wash Community Event",
+  name: "GetOnVibe Costume-Kini Halloween Event",
   description:
-    "A free GetOnVibe community car wash event with food vendors, onsite brands, music, and community in Old Hickory, Tennessee.",
+    "A GetOnVibe Costume-Kini Halloween event with a free car wash, food vendors, onsite brands, music, live-stream challenges, and community in Old Hickory, Tennessee.",
   startDate: "2026-10-03T12:00:00-05:00",
   endDate: "2026-10-03T15:00:00-05:00",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   eventStatus: "https://schema.org/EventScheduled",
   location: {
     "@type": "Place",
-    name: "GetOnVibe Community Event",
+    name: "GetOnVibe Costume-Kini Halloween Event",
     address: {
       "@type": "PostalAddress",
       streetAddress: "14665-D Lebanon Rd",
