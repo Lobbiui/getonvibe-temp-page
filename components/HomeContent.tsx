@@ -206,11 +206,9 @@ export function HomeContent() {
 
       <SignupForms />
 
-      <section className="portal-final">
+      <section id="final-cta" className="portal-final">
         <Image src="/event-assets/onvibeevents.png" alt="ONVIBE Events music and carwash artwork" width={1536} height={1024} />
         <div>
-          <p>{t("final.eyebrow")}</p>
-          <h2>{t("final.title")}</h2>
           <NeonButton href="#signup">{t("final.cta")}</NeonButton>
         </div>
       </section>

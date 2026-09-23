@@ -632,24 +632,21 @@
 }
 
 .portal-final > img {
+  display: block;
   width: 100%;
-  min-height: 420px;
-  object-fit: cover;
+  height: auto;
   filter: saturate(1.12);
 }
 
 .portal-final::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2));
+  content: none;
 }
 
 .portal-final > div {
-  position: absolute;
-  inset: 50% auto auto max(1rem, calc((100vw - 1180px) / 2));
-  max-width: 620px;
-  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  padding: 1.25rem;
+  background: #050508;
 }
 
 .portal-final a {
@@ -1120,10 +1117,6 @@
     min-height: 320px;
   }
 
-  .portal-final > div {
-    inset: auto 1rem 1rem;
-    transform: none;
-  }
 }
 
 * {

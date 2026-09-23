@@ -1,7 +1,6 @@
 "use client";
 
 import { Player } from "@remotion/player";
-import { Video } from "@remotion/media";
 import { useEffect, useRef, useState } from "react";
 import { AbsoluteFill, Easing, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 
@@ -46,23 +45,9 @@ function CinematicComposition() {
           height: "100%",
           objectFit: "cover",
           objectPosition: compact ? "52% 45%" : "50% 42%",
-          scale: interpolate(frame % 300, [0, 150, 300], [1.08, 1.16, 1.08]),
-          filter: "blur(16px) saturate(1.22) contrast(1.08)",
-          opacity: 0.66,
-        }}
-      />
-      <Video
-        src={staticFile("event-assets/getonvibe-october-3-costume-kini.mp4")}
-        muted
-        loop
-        objectFit="cover"
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
+          scale: interpolate(frame % 300, [0, 150, 300], [1.02, 1.08, 1.02]),
+          filter: "saturate(1.12) contrast(1.04)",
           opacity: 1,
-          filter: "saturate(1.16) contrast(1.05)",
         }}
       />
       <AbsoluteFill

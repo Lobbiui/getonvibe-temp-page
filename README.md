@@ -98,7 +98,7 @@ The temporary ONVIBE Events homepage references:
 - `public/event-assets/getonvibe-october-3-costume-kini.png`
 - `public/event-assets/getonvibe-october-3-costume-kini.mp4`
 
-The updated Costume-Kini flyer and six-second video are used prominently in the event hero, flyer spotlight, tour listing, and Remotion-powered cinematic reel.
+The updated Costume-Kini flyer is used prominently in the event hero, flyer spotlight, tour listing, and Remotion-powered cinematic reel. The supplied six-second video is retained as a source asset but is not displayed because its generated frames contain duplicated vehicle artwork.
 
 ## Forms and API
 
