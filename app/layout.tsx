@@ -16,10 +16,10 @@ export const metadata: Metadata = {
     siteName: "ONVIBE Events",
     images: [
       {
-        url: "/event-assets/getonvibe-october-3-costume-kini-fixed.png",
+        url: "/event-assets/getonvibe-october-3-halloween-flyer.png",
         width: 1103,
         height: 1450,
-        alt: "GetOnVibe October 3 Costume-Kini Halloween event flyer",
+        alt: "GetOnVibe October 3 Halloween car wash event flyer",
       },
     ],
     locale: "en_US",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     title: "ONVIBE Events | GetOnVibe Entertainment Hub",
     description:
       "GetOnVibe Costume-Kini Halloween event with a free car wash, food, brands, music, live-stream challenges, and community in Old Hickory on October 3, 2026.",
-    images: ["/event-assets/getonvibe-october-3-costume-kini-fixed.png"],
+    images: ["/event-assets/getonvibe-october-3-halloween-flyer.png"],
   },
   verification: {
     google: "2QWJErsLQLc7DhsanubPgBPKqx2LDwtlF7MRzxD3rB4",

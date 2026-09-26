@@ -96,13 +96,21 @@ export function HomeContent() {
           <span>{t("flyerSpotlight.copy")}</span>
           <NeonButton href="#signup">{t("flyerSpotlight.cta")}</NeonButton>
         </div>
-        <Image
-          src="/event-assets/getonvibe-october-3-costume-kini-fixed.png"
-          alt={t("flyerSpotlight.alt")}
-          width={1103}
-          height={1450}
-          priority
-        />
+        <div className="portal-flyer-pair">
+          <Image
+            src="/event-assets/getonvibe-october-3-halloween-flyer.png"
+            alt="Official GetOnVibe October 3 Halloween car wash event flyer"
+            width={1103}
+            height={1450}
+            priority
+          />
+          <Image
+            src="/event-assets/getonvibe-october-3-costume-kini-fixed.png"
+            alt={t("flyerSpotlight.alt")}
+            width={1103}
+            height={1450}
+          />
+        </div>
       </section>
 
       <section className="portal-ticker" aria-label="Tour highlights">
@@ -119,7 +127,7 @@ export function HomeContent() {
           </div>
 
           <article className="portal-feature-event">
-            <Image src="/event-assets/getonvibe-october-3-costume-kini-fixed.png" alt="Official October 3 GetOnVibe Costume-Kini event flyer" width={1103} height={1450} />
+            <Image src="/event-assets/getonvibe-october-3-halloween-flyer.png" alt="Official October 3 GetOnVibe Halloween car wash event flyer" width={1103} height={1450} />
             <div>
               <span>{t("tour.featured")}</span>
               <h3>{t("tour.featureTitle")}</h3>

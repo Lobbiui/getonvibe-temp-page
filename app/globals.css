@@ -208,6 +208,7 @@
 .portal-flyer-spotlight {
   position: relative;
   z-index: 4;
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: minmax(0, 0.92fr) minmax(260px, 0.58fr);
   gap: clamp(1rem, 4vw, 3rem);
@@ -239,6 +240,15 @@
 .portal-flyer-spotlight > img {
   position: relative;
   z-index: 1;
+}
+
+.portal-flyer-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.65rem, 1.4vw, 1rem);
+  width: min(100%, 610px);
+  justify-self: end;
+  align-items: center;
 }
 
 .portal-flyer-spotlight h2 {
@@ -278,6 +288,27 @@
     0 30px 105px rgba(0, 0, 0, 0.58),
     0 0 0 10px rgba(34, 211, 238, 0.1),
     0 0 58px rgba(250, 204, 21, 0.22);
+}
+
+.portal-flyer-pair img {
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  background: #000000;
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.58), 0 0 36px rgba(59, 130, 246, 0.16);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.portal-flyer-pair img:first-child {
+  transform: scale(1.035);
+  box-shadow: 0 26px 90px rgba(0, 0, 0, 0.62), 0 0 42px rgba(250, 204, 21, 0.2);
+}
+
+.portal-flyer-pair img:hover {
+  position: relative;
+  z-index: 2;
+  transform: translateY(-6px) scale(1.045);
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.65), 0 0 48px rgba(34, 211, 238, 0.22);
 }
 
 .portal-ticker {
@@ -1048,6 +1079,10 @@
     justify-self: center;
   }
 
+  .portal-flyer-pair {
+    justify-self: center;
+  }
+
   .portal-gallery article,
   .portal-gallery article:nth-child(1),
   .portal-gallery article:nth-child(2) {
@@ -1056,6 +1091,15 @@
 }
 
 @media (max-width: 720px) {
+  .portal-flyer-pair {
+    grid-template-columns: 1fr;
+    width: min(100%, 420px);
+  }
+
+  .portal-flyer-pair img:first-child {
+    transform: none;
+  }
+
   .portal-header {
     align-items: flex-start;
     flex-direction: column;

@@ -453,6 +453,15 @@ TODOs:
 
 ## Current Status
 
+### October 3 Event Artwork Update
+
+- Added the second official October 3 Halloween event flyer to the homepage flyer spotlight.
+- Kept the existing Costume-Kini flyer visible so both approved event designs are represented.
+- Promoted the new orange Halloween flyer in the upcoming-event card and social sharing metadata.
+- Verified the artwork uses its original aspect ratio without cropping or distortion.
+- `npm run lint` passed.
+- `npm run build` passed.
+
 The site is a functioning production-oriented landing page with:
 
 - Festival hype content
