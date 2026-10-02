@@ -336,9 +336,12 @@ async function listAllOutboundEmails(resend: Resend) {
 
 export async function sendOctober3AttendeeReminderFromHistory(dryRun: boolean) {
   const resend = getResendClient();
+  const historyResend = process.env.RESEND_READ_API_KEY
+    ? new Resend(process.env.RESEND_READ_API_KEY)
+    : resend;
   const from = getInternalFromEmail();
 
-  if (!resend || !from) {
+  if (!resend || !historyResend || !from) {
     return {
       ok: false,
       candidateCount: 0,
@@ -350,7 +353,7 @@ export async function sendOctober3AttendeeReminderFromHistory(dryRun: boolean) {
     };
   }
 
-  const history = await listAllOutboundEmails(resend);
+  const history = await listAllOutboundEmails(historyResend);
   const candidates = new Set(
     history
       .filter((email) => email.subject === attendeeConfirmationSubject)

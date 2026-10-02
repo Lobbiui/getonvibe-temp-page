@@ -31,6 +31,7 @@ Create `.env.local` from `.env.example`:
 
 ```bash
 RESEND_API_KEY=
+RESEND_READ_API_KEY=
 RESEND_FROM_EMAIL=
 RESEND_INTERNAL_FROM_EMAIL=
 LEADS_NOTIFY_EMAIL=
@@ -44,7 +45,7 @@ ADMIN_EMAIL=
 ADMIN_PASSWORD_HASH=
 ```
 
-`RESEND_API_KEY` is required for actual email sending. `RESEND_FROM_EMAIL` should be a verified Resend sender for attendee, vendor, and hotel partner confirmation emails. `RESEND_INTERNAL_FROM_EMAIL` is optional and should be a different verified sender, such as `ONVIBE Leads <leads@getonvibe.com>`, for internal lead notifications. Internal lead notifications are always sent to `support@getonvibe.com` and `office@lobbicore.com`. `LEADS_NOTIFY_EMAIL` is optional and can add comma-separated internal recipients, such as `office@lobbicore.com,support@getonvibe.com`. Audience IDs are optional; when blank, the API skips audience contact creation and still sends notification and confirmation emails.
+`RESEND_API_KEY` is required for actual email sending. `RESEND_READ_API_KEY` is optional and should be a separate full-access key used only by protected admin recovery tools that inspect delivery history; keep the normal send key restricted. `RESEND_FROM_EMAIL` should be a verified Resend sender for attendee, vendor, and hotel partner confirmation emails. `RESEND_INTERNAL_FROM_EMAIL` is optional and should be a different verified sender, such as `ONVIBE Leads <leads@getonvibe.com>`, for internal lead notifications. Internal lead notifications are always sent to `support@getonvibe.com` and `office@lobbicore.com`. `LEADS_NOTIFY_EMAIL` is optional and can add comma-separated internal recipients, such as `office@lobbicore.com,support@getonvibe.com`. Audience IDs are optional; when blank, the API skips audience contact creation and still sends notification and confirmation emails.
 
 `DATABASE_URL` is required for the admin dashboard, user accounts, events, interest tracking, and message logs. Use a production PostgreSQL database on DigitalOcean or another managed provider. `AUTH_SECRET` signs admin and user login sessions and must be at least 32 characters. `ADMIN_EMAIL` and `ADMIN_PASSWORD_HASH` control the admin login at `/admin/login`; generate the password hash with:
 
