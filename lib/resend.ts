@@ -308,6 +308,123 @@ export async function sendNewEventAnnouncementBatch(accounts: DashboardAccountEm
   };
 }
 
+const october3ReminderSubject = "Tomorrow: Free GetOnVibe Halloween Car Wash in Old Hickory";
+const attendeeConfirmationSubject = "You are on the ONVIBE Events list";
+
+async function listAllOutboundEmails(resend: Resend) {
+  const emails: Array<{ id: string; subject: string; to: string[] }> = [];
+  let after: string | undefined;
+
+  for (let page = 0; page < 100; page += 1) {
+    const result = await resend.emails.list({ limit: 100, ...(after ? { after } : {}) });
+
+    if (result.error) {
+      throw new Error(`Resend email history lookup failed: ${result.error.name}`);
+    }
+
+    emails.push(...result.data.data);
+
+    if (!result.data.has_more || result.data.data.length === 0) {
+      break;
+    }
+
+    after = result.data.data.at(-1)?.id;
+  }
+
+  return emails;
+}
+
+export async function sendOctober3AttendeeReminderFromHistory(dryRun: boolean) {
+  const resend = getResendClient();
+  const from = getInternalFromEmail();
+
+  if (!resend || !from) {
+    return {
+      ok: false,
+      candidateCount: 0,
+      alreadySentCount: 0,
+      attemptedCount: 0,
+      sentCount: 0,
+      failedCount: 0,
+      error: "Email configuration is incomplete.",
+    };
+  }
+
+  const history = await listAllOutboundEmails(resend);
+  const candidates = new Set(
+    history
+      .filter((email) => email.subject === attendeeConfirmationSubject)
+      .flatMap((email) => email.to)
+      .map((email) => email.trim().toLowerCase())
+      .filter(Boolean),
+  );
+  const alreadySent = new Set(
+    history
+      .filter((email) => email.subject === october3ReminderSubject)
+      .flatMap((email) => email.to)
+      .map((email) => email.trim().toLowerCase())
+      .filter(Boolean),
+  );
+  const recipients = Array.from(candidates).filter((email) => !alreadySent.has(email));
+
+  if (dryRun || recipients.length === 0) {
+    return {
+      ok: true,
+      candidateCount: candidates.size,
+      alreadySentCount: alreadySent.size,
+      attemptedCount: recipients.length,
+      sentCount: 0,
+      failedCount: 0,
+    };
+  }
+
+  let sentCount = 0;
+  let failedCount = 0;
+
+  for (let offset = 0; offset < recipients.length; offset += 100) {
+    const batch = recipients.slice(offset, offset + 100);
+    const result = await resend.batch.send(
+      batch.map((email) => ({
+        from,
+        to: email,
+        replyTo: "support@getonvibe.com",
+        subject: october3ReminderSubject,
+        html: renderPlainEmail(
+          "The GetOnVibe event is tomorrow",
+          "Join us Saturday, October 3 from 12PM to 3PM for the GetOnVibe Costume-Kini Halloween event.\n\nLocation: 14665-D Lebanon Rd, Old Hickory, TN 37138\n\nThe event is free to attend and includes a free exterior car wash, food vendors, onsite brands, music, Dunk the Chef, and community. Everyone is welcome.\n\nEvent details: https://www.getonvibe.com",
+        ),
+        tags: [
+          { name: "message_type", value: "attendee_reminder" },
+          { name: "event_date", value: "2026_10_03" },
+        ],
+      })),
+      { batchValidation: "permissive" },
+    );
+
+    if (result.error) {
+      console.error("October 3 attendee reminder batch failed", {
+        code: result.error.name,
+        statusCode: result.error.statusCode,
+        recipientCount: batch.length,
+      });
+      failedCount += batch.length;
+      continue;
+    }
+
+    sentCount += result.data.data.length;
+    failedCount += result.data.errors?.length || 0;
+  }
+
+  return {
+    ok: failedCount === 0,
+    candidateCount: candidates.size,
+    alreadySentCount: alreadySent.size,
+    attemptedCount: recipients.length,
+    sentCount,
+    failedCount,
+  };
+}
+
 export async function getRecentEventAnnouncementRecipients(eventTitle: string, since: Date) {
   const resend = getResendClient();
 
