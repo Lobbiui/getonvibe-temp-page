@@ -545,3 +545,12 @@ The next likely areas to refine are browser reputation review follow-up, live em
 - Moved the October 3 event details and official flyers into a clearly labeled Previous Events section.
 - Preserved future-event signup actions so visitors can receive the next date, location, and participation announcement.
 
+### Beta-Accurate Product Experience Previews
+
+- Replaced the generic creator-profile illustration with product previews grounded in the current `getonvibe-app` design system.
+- Added a media-first Pulse preview with the current content filters, creator metadata, action rail, and bottom navigation behavior.
+- Added a stacked Swipe preview with the current discovery lanes, Back, Pass, Heart, and Share actions, and focused card presentation.
+- Added a role-aware creator Profile preview covering identity, Creator Studio tools, content, Live Vibes, events, and official destinations without invented performance metrics.
+- Added the product experience showcase to both the homepage and Platform page.
+- Added `Launch begins December 1, 2026` to the homepage hero and shared public navigation.
+

@@ -7,7 +7,7 @@ import { PublicSiteHeader } from "@/components/PublicSiteHeader";
 import { SeamlessHeroMedia } from "@/components/SeamlessHeroMedia";
 import { AmbientMotionControl } from "@/components/AmbientMotionControl";
 import { CreatorOpportunitySection } from "@/components/CreatorOpportunitySection";
-import { IllustrativeCreatorProfile } from "@/components/IllustrativeCreatorProfile";
+import { PlatformExperienceShowcase } from "@/components/PlatformExperienceShowcase";
 import { PlatformPreregistrationForm } from "@/components/PlatformPreregistrationForm";
 
 const pathways = [
@@ -80,6 +80,7 @@ export function PublicGateway() {
         <SeamlessHeroMedia />
         <div className="gateway-hero-shade" />
         <div className="gateway-hero-copy">
+          <p className="gateway-launch-date"><span>Platform launch begins</span><strong>December 1, 2026</strong></p>
           <p className="gateway-kicker">The creator discovery network</p>
           <h1><span>Find Your</span><strong>Vibe.</strong></h1>
           <p className="gateway-hero-support">Find your people. Follow their whole world.</p>
@@ -128,7 +129,7 @@ export function PublicGateway() {
       </section>
 
       <CreatorOpportunitySection />
-      <IllustrativeCreatorProfile />
+      <PlatformExperienceShowcase />
 
       <section id="pathways" className="gateway-pathways" aria-labelledby="pathways-title">
         <div className="gateway-section-heading">

@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { PublicSiteHeader } from "@/components/PublicSiteHeader";
 import { PlatformPreregistrationForm } from "@/components/PlatformPreregistrationForm";
 import { CinematicPageHero } from "@/components/CinematicPageHero";
+import { PlatformExperienceShowcase } from "@/components/PlatformExperienceShowcase";
 
 const surfaces = [
   { glyph: "01", title: "Pulse", copy: "Original creator activity and content in a continuous stream." },
@@ -30,6 +31,7 @@ export default function PlatformPage() {
           <Link className="gateway-primary-button" href="/creators">I&apos;m a creator <ArrowRight size={18} /></Link>
           <Link className="gateway-secondary-button" href="/businesses">I represent a business</Link>
       </CinematicPageHero>
+      <PlatformExperienceShowcase />
       <section className="gateway-info-grid">
         {surfaces.map(({ glyph, title, copy }) => (
           <article key={title}>
