@@ -1,5 +1,6 @@
 import { PublicSiteHeader } from "@/components/PublicSiteHeader";
 import { CinematicPageHero } from "@/components/CinematicPageHero";
+import { ContactInquiryForm } from "@/components/ContactInquiryForm";
 
 const contacts = [
   { glyph: "01", title: "Events & Hosting", copy: "Pop-up hosting, venues, creator opportunities, and community activations." },
@@ -22,7 +23,7 @@ export default function ContactPage() {
         title="Bring something real."
         variant="contact"
       >
-        <a className="gateway-primary-button" href="mailto:hello@getonvibe.com">hello@getonvibe.com</a>
+        <a className="gateway-primary-button" href="#contact-form">Send an inquiry</a>
       </CinematicPageHero>
       <section className="gateway-info-grid gateway-contact-grid">
         {contacts.map(({ glyph, title, copy }) => (
@@ -33,6 +34,7 @@ export default function ContactPage() {
           </article>
         ))}
       </section>
+      <ContactInquiryForm />
     </main>
   );
 }

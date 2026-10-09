@@ -571,3 +571,18 @@ The next likely areas to refine are browser reputation review follow-up, live em
 - Added planned hands-on campaign creation, creator briefing, and selected GetOnVibe advertising placement support.
 - Clarified that creator profiles act as a complete social resume, helping brands discover creators inside GetOnVibe and reach the audiences those creators have built elsewhere.
 
+### Cinematic Homepage Navigation Hub
+
+- Evolved the homepage hero into the primary GetOnVibe navigation hub while preserving every existing public page and the full homepage story below it.
+- Added a prominent GetOnVibe mark and wordmark lockup over the existing cinematic Higgsfield hero media.
+- Added a `Find Your Vibe` destination dock for Platform, Creators, Businesses, Pop-Up Events, and Early Access.
+- Added an explicit Home destination to the shared public header so every Platform, Creator, Business, and Contact page returns directly to the cinematic front door.
+- Kept the Events page's dedicated `Back to GetOnVibe` control and retained reduced-motion support for the hero experience.
+
+### Contact Form And Email Routing
+
+- Removed the incorrect public `hello@getonvibe.com` address from the Contact page.
+- Replaced the email link with a complete, accessible contact inquiry form for partnerships, creator opportunities, business campaigns, events, press, community connections, and general inquiries.
+- Added server-side validation, bot-trap handling, and server-only Resend delivery with the visitor's email set as the reply address.
+- Kept Resend credentials out of the browser and added clear submission success and failure states.
+

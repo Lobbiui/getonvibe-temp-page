@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Building2, CalendarDays, Compass, RadioTower, UsersRound } from "lucide-react";
 import { BrandMark } from "@/components/BrandMark";
 import { DiscoveryStage } from "@/components/DiscoveryStage";
 import { PublicSiteHeader } from "@/components/PublicSiteHeader";
@@ -59,6 +59,14 @@ const signalRows = [
   ["Music release", "Behind the scenes", "Vendor wanted", "New menu", "Photo story", "Going live"],
 ];
 
+const heroDestinations = [
+  { href: "/platform", label: "Platform", detail: "See how discovery works", icon: Compass },
+  { href: "/creators", label: "Creators", detail: "Build your whole presence", icon: UsersRound },
+  { href: "/businesses", label: "Businesses", detail: "Grow visibility and reach", icon: Building2 },
+  { href: "/events", label: "Pop-Up Events", detail: "Find what is happening", icon: CalendarDays },
+  { href: "/#early-access", label: "Early Access", detail: "Join the interest list", icon: RadioTower },
+];
+
 export function PublicGateway() {
   return (
     <main className="gateway-page">
@@ -80,8 +88,11 @@ export function PublicGateway() {
         <SeamlessHeroMedia />
         <div className="gateway-hero-shade" />
         <div className="gateway-hero-copy">
+          <div className="gateway-hero-brand-lockup" aria-label="GetOnVibe">
+            <BrandMark size={68} />
+            <span><strong>GetOnVibe</strong><small>The creator discovery network</small></span>
+          </div>
           <p className="gateway-launch-date"><span>Platform launch begins</span><strong>December 1, 2026</strong></p>
-          <p className="gateway-kicker">The creator discovery network</p>
           <h1><span>Find Your</span><strong>Vibe.</strong></h1>
           <p className="gateway-hero-support">Find your people. Follow their whole world.</p>
           <p className="gateway-pillars" aria-label="Discover, follow, amplify">
@@ -93,6 +104,18 @@ export function PublicGateway() {
             <Link className="gateway-secondary-button" href="/platform">See how it works</Link>
           </div>
           <p className="gateway-status">GetOnVibe is opening in phases. Join the early-access list to help shape a better home for creator discovery.</p>
+          <nav className="gateway-hero-destinations" aria-label="Find your GetOnVibe destination">
+            <p>Find Your Vibe</p>
+            <div>
+              {heroDestinations.map(({ href, label, detail, icon: Icon }) => (
+                <Link href={href} key={label}>
+                  <Icon aria-hidden="true" size={19} />
+                  <span><strong>{label}</strong><small>{detail}</small></span>
+                  <ArrowRight aria-hidden="true" size={15} />
+                </Link>
+              ))}
+            </div>
+          </nav>
         </div>
       </section>
 

@@ -4,6 +4,8 @@ import { Resend } from "resend";
 import { buildModelReleasePdf } from "@/lib/model-release";
 import type { SignupPayload, SubmissionType } from "@/lib/validation";
 import type { PlatformLeadPayload } from "@/lib/platform-preregistration";
+import type { ContactInquiryPayload } from "@/lib/contact-inquiry";
+import { contactInquiryLabels } from "@/lib/contact-inquiry";
 import { audienceInterestLabels, creatorOpportunityLabels } from "@/lib/platform-preregistration";
 import { formatFieldLabel } from "@/lib/utils";
 
@@ -198,6 +200,46 @@ export async function sendDashboardInternalEmail(subject: string, html: string) 
   }
 
   return failed === 0;
+}
+
+export async function sendContactInquiryEmail(payload: ContactInquiryPayload) {
+  const resend = getResendClient();
+  const from = getInternalFromEmail();
+  const recipients = getNotifyRecipients();
+
+  if (!resend || !from || recipients.length === 0) {
+    console.warn("Contact inquiry email skipped because email configuration is incomplete.");
+    return false;
+  }
+
+  const topic = contactInquiryLabels[payload.inquiryType];
+  const result = await resend.emails.send({
+    from,
+    to: recipients,
+    replyTo: payload.email,
+    subject: `GetOnVibe contact: ${topic}`,
+    html: `
+      <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
+        <h1 style="margin:0 0 12px;font-size:24px;">New GetOnVibe contact inquiry</h1>
+        <table cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;background:#0f172a;border:1px solid #1f2937;">
+          <tr><th align="left" style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#cbd5e1;">Name</th><td style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#f8fafc;">${htmlEscape(payload.name)}</td></tr>
+          <tr><th align="left" style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#cbd5e1;">Email</th><td style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#f8fafc;">${htmlEscape(payload.email)}</td></tr>
+          <tr><th align="left" style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#cbd5e1;">Topic</th><td style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#f8fafc;">${htmlEscape(topic)}</td></tr>
+          <tr><th align="left" style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#cbd5e1;">Organization</th><td style="padding:8px 12px;border-bottom:1px solid #1f2937;color:#f8fafc;">${htmlEscape(payload.organization || "Not provided")}</td></tr>
+          <tr><th align="left" style="padding:8px 12px;color:#cbd5e1;">Website</th><td style="padding:8px 12px;color:#f8fafc;">${htmlEscape(payload.website || "Not provided")}</td></tr>
+        </table>
+        <h2 style="margin:24px 0 8px;font-size:18px;">Message</h2>
+        <p style="color:#cbd5e1;line-height:1.7;white-space:pre-wrap;">${htmlEscape(payload.message)}</p>
+      </div>
+    `,
+  });
+
+  if (resendSendFailed(result)) {
+    console.error("Contact inquiry email failed", { reason: formatResendError(result.error) });
+    return false;
+  }
+
+  return true;
 }
 
 export async function sendAccountRegisteredEmail(account: DashboardAccountEmail) {
