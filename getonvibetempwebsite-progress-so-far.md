@@ -554,3 +554,13 @@ The next likely areas to refine are browser reputation review follow-up, live em
 - Added the product experience showcase to both the homepage and Platform page.
 - Added `Launch begins December 1, 2026` to the homepage hero and shared public navigation.
 
+### Pop-Up Events Return Navigation
+
+- Replaced the subtle Events-page home label with a clear `Back to GetOnVibe` control.
+- The control returns visitors directly to the main GetOnVibe homepage and remains visible in the fixed Events header on desktop and mobile.
+
+### Business Page Layout Correction
+
+- Rebalanced the four business benefit cards so wide screens use one complete row, medium screens use a deliberate two-by-two grid, and mobile uses one column.
+- Widened the business early-access introduction and constrained its headline scale so the message uses intentional lines instead of a tall stack of isolated words.
+

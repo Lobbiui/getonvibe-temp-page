@@ -2119,15 +2119,33 @@
 }
 
 .portal-logo {
+  display: inline-flex;
+  min-height: 2.6rem;
+  align-items: center;
+  gap: 0.55rem;
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  border-radius: 999px;
+  padding: 0.55rem 0.8rem;
+  background: rgba(34, 211, 238, 0.07);
   color: #ffffff;
   font-size: 0.82rem;
   font-weight: 950;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
-.portal-logo::first-letter {
-  color: #ec4899;
+.portal-logo:hover,
+.portal-logo:focus-visible {
+  border-color: rgba(34, 211, 238, 0.66);
+  background: rgba(34, 211, 238, 0.13);
+  color: #a5f3fc;
+  transform: translateX(-2px);
+}
+
+.portal-logo:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
 }
 
 .portal-header nav {
@@ -6026,4 +6044,57 @@ html[data-gateway-motion="paused"] .gateway-page *::after {
   .gateway-profile-product-identity button { grid-column: 1 / -1; width: 100%; }
   .gateway-profile-product-stats { grid-template-columns: 1fr; }
   .gateway-profile-product-manage div { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+
+/* Business page composition corrections */
+.gateway-business-reasons {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.gateway-business-reasons article {
+  min-width: 0;
+}
+
+.gateway-audience-page .gateway-preregister {
+  box-sizing: border-box;
+  grid-template-columns: minmax(390px, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(2.5rem, 5vw, 5rem);
+}
+
+.gateway-audience-page .gateway-preregister-intro {
+  min-width: 0;
+}
+
+.gateway-audience-page .gateway-preregister-intro h2 {
+  max-width: 10ch;
+  font-size: clamp(2.6rem, 3.8vw, 4rem);
+  line-height: 0.96;
+  overflow-wrap: normal;
+}
+
+@media (max-width: 1100px) {
+  .gateway-business-reasons {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 960px) {
+  .gateway-audience-page .gateway-preregister {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .gateway-audience-page .gateway-preregister-intro h2 {
+    max-width: 13ch;
+  }
+}
+
+@media (max-width: 680px) {
+  .gateway-business-reasons {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .gateway-audience-page .gateway-preregister-intro h2 {
+    max-width: 100%;
+    font-size: clamp(2.5rem, 13vw, 3.4rem);
+  }
 }

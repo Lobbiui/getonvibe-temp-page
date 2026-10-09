@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { EventCinematic } from "@/components/EventCinematic";
 import { LanguageSelector, useLanguage } from "@/components/LanguageProvider";
 import { NeonButton } from "@/components/NeonButton";
@@ -61,7 +62,9 @@ export function HomeContent() {
   return (
     <main className="event-portal" id="top" lang={language} dir={language === "ar" ? "rtl" : "ltr"}>
       <header className="portal-header">
-        <Link href="/" className="portal-logo">GetOnVibe Home</Link>
+        <Link href="/" className="portal-logo" aria-label="Back to the GetOnVibe main page">
+          <ArrowLeft size={16} /> Back to GetOnVibe
+        </Link>
         <nav aria-label="Main navigation">
           <a href="#tour-dates">{t("nav.tourDates")}</a>
           <a href="#experience">{t("nav.experience")}</a>
