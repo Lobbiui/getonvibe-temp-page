@@ -35,16 +35,16 @@ function CinematicComposition() {
   });
 
   return (
-    <AbsoluteFill style={{ background: "#070008", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
+    <AbsoluteFill style={{ background: "transparent", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
       <Img
-        src={staticFile("event-assets/getonvibe-october-3-costume-kini-fixed.png")}
+        src={staticFile("event-assets/onvibeevents.png")}
         style={{
           position: "absolute",
           inset: 0,
           width: "100%",
           height: "100%",
           objectFit: "cover",
-          objectPosition: compact ? "52% 45%" : "50% 42%",
+          objectPosition: compact ? "50% 50%" : "50% 48%",
           scale: interpolate(frame % 300, [0, 150, 300], [1.02, 1.08, 1.02]),
           filter: "saturate(1.12) contrast(1.04)",
           opacity: 1,
@@ -98,16 +98,16 @@ function CinematicComposition() {
         }}
       >
         <div style={{ color: "#22d3ee", fontSize: compact ? 14 : 22, fontWeight: 900, letterSpacing: compact ? 3 : 6, textTransform: "uppercase" }}>
-          GetOnVibe Presents
+          ONVIBE Events
         </div>
         <div style={{ marginTop: compact ? 8 : 14, color: "#ec4899", fontSize: compact ? 36 : 92, fontWeight: 950, lineHeight: 0.86, textTransform: "uppercase" }}>
-          Costume-Kini
+          The Next Vibe
         </div>
         <div style={{ marginTop: compact ? 12 : 22, color: "#ffffff", fontSize: compact ? 24 : 46, fontWeight: 950, lineHeight: 1, textTransform: "uppercase" }}>
-          Halloween Event
+          Is Taking Shape
         </div>
         <div style={{ marginTop: 9, color: "#facc15", fontSize: compact ? 17 : 29, fontWeight: 900, textTransform: "uppercase" }}>
-          Previous Event | October 3 | 12PM to 3PM
+          Follow GetOnVibe For The Next Event
         </div>
       </div>
 
@@ -125,7 +125,7 @@ function CinematicComposition() {
           translate: `0 ${(1 - detailsIn) * 20}px`,
         }}
       >
-        14665-D Lebanon Rd, Old Hickory, TN 37138
+        New dates, locations, and ways to join will be announced here first.
       </div>
 
       {bubbles.map((bubble) => {
@@ -197,6 +197,9 @@ export function EventCinematic() {
         acknowledgeRemotionLicense
         style={{ width: "100%", height: "100%" }}
       />
+      <a className="portal-cinematic-follow" href="#signup">
+        Follow Us For The Next Event
+      </a>
     </div>
   );
 }

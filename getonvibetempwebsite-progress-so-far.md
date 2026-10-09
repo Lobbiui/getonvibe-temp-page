@@ -539,3 +539,9 @@ The next likely areas to refine are browser reputation review follow-up, live em
 - Removed the synthetic verification record after testing and kept database credentials out of source control and public output.
 - Reworded the remaining public creator-opportunity sentences so no em dashes appear in page verbiage.
 
+### Events Page Timeline Update
+
+- Reframed the Events hero around following GetOnVibe for the next event announcement rather than presenting the completed October 3 event as current.
+- Moved the October 3 event details and official flyers into a clearly labeled Previous Events section.
+- Preserved future-event signup actions so visitors can receive the next date, location, and participation announcement.
+

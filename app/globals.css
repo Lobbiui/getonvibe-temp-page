@@ -2197,6 +2197,42 @@
   min-height: 620px;
   margin-left: -50vw;
   overflow: hidden;
+  background: #050508 url("/event-assets/onvibeevents.png") center / cover no-repeat;
+}
+
+.portal-cinematic-follow {
+  position: absolute;
+  z-index: 8;
+  left: 7%;
+  bottom: 4.5%;
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 999px;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(100deg, #22d3ee, #8b5cf6 55%, #ec4899);
+  box-shadow: 0 0 34px rgba(34, 211, 238, 0.3), 0 0 40px rgba(236, 72, 153, 0.2);
+  color: #050508;
+  font-size: 0.78rem;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.portal-cinematic-follow:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 4px;
+}
+
+.portal-previous-events {
+  padding: clamp(3rem, 7vw, 6rem) 0 1.5rem;
+}
+
+.portal-previous-events > .portal-section-title {
+  width: min(1120px, calc(100% - 2rem));
+  margin: 0 auto 2rem;
 }
 
 .portal-cinematic > div {
@@ -2225,7 +2261,7 @@
   gap: 1rem;
   align-items: center;
   width: min(1120px, calc(100% - 2rem));
-  margin: -3.5rem auto 2.25rem;
+  margin: 0 auto 2.25rem;
   padding: 0.8rem;
   background: linear-gradient(90deg, rgba(236, 72, 153, 0.17), rgba(0, 0, 0, 0.82) 34%, rgba(34, 211, 238, 0.13));
   box-shadow: 0 26px 90px rgba(0, 0, 0, 0.56);
@@ -3170,6 +3206,11 @@
 }
 
 @media (max-width: 720px) {
+  .portal-previous-events .portal-section-title h2 {
+    font-size: 1.65rem;
+    line-height: 1;
+  }
+
   .portal-flyer-pair {
     grid-template-columns: 1fr;
     width: min(100%, 420px);
@@ -3211,6 +3252,11 @@
   .portal-cinematic {
     height: 680px;
     min-height: 680px;
+  }
+
+  .portal-cinematic-follow {
+    left: 7%;
+    bottom: 4%;
   }
 
   .portal-now-playing {

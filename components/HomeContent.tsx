@@ -71,46 +71,53 @@ export function HomeContent() {
         <LanguageSelector />
       </header>
 
-      <section className="portal-hero">
+      <section className="portal-hero" aria-label="Follow GetOnVibe for the next event announcement">
         <EventCinematic />
       </section>
 
-      <section className="portal-now-playing" aria-label="Current event details">
-        <Image src="/event-assets/getonvibe-october-3-costume-kini-fixed.png" alt={t("current.alt")} width={1103} height={1450} priority />
-        <div>
-          <span>{t("current.nextStop")}</span>
-          <h2>{t("current.city")}</h2>
-          <p>{t("current.venue")}</p>
-          <p>{t("current.address")}</p>
+      <section id="previous-events" className="portal-previous-events" aria-labelledby="previous-events-title">
+        <div className="portal-section-title centered">
+          <p>Previous Events</p>
+          <h2 id="previous-events-title">Where the vibe<br />has been.</h2>
         </div>
-        <div>
-          <strong>{t("current.date")}</strong>
-          <span>{t("current.time")}</span>
-          <NeonButton href="#signup">{t("current.cta")}</NeonButton>
-        </div>
-      </section>
 
-      <section className="portal-flyer-spotlight" aria-label="Featured GetOnVibe event flyer">
-        <div>
-          <p>{t("flyerSpotlight.eyebrow")}</p>
-          <h2>{t("flyerSpotlight.title")}</h2>
-          <span>{t("flyerSpotlight.copy")}</span>
-          <NeonButton href="#signup">{t("flyerSpotlight.cta")}</NeonButton>
+        <div className="portal-now-playing" aria-label="Previous event details">
+          <Image src="/event-assets/getonvibe-october-3-costume-kini-fixed.png" alt={t("current.alt")} width={1103} height={1450} priority />
+          <div>
+            <span>{t("current.nextStop")}</span>
+            <h2>{t("current.city")}</h2>
+            <p>{t("current.venue")}</p>
+            <p>{t("current.address")}</p>
+          </div>
+          <div>
+            <strong>{t("current.date")}</strong>
+            <span>{t("current.time")}</span>
+            <NeonButton href="#signup">{t("current.cta")}</NeonButton>
+          </div>
         </div>
-        <div className="portal-flyer-pair">
-          <Image
-            src="/event-assets/getonvibe-october-3-halloween-flyer.png"
-            alt="Official GetOnVibe October 3 Halloween car wash event flyer"
-            width={1103}
-            height={1450}
-            priority
-          />
-          <Image
-            src="/event-assets/getonvibe-october-3-costume-kini-fixed.png"
-            alt={t("flyerSpotlight.alt")}
-            width={1103}
-            height={1450}
-          />
+
+        <div className="portal-flyer-spotlight" aria-label="Previous GetOnVibe event flyers">
+          <div>
+            <p>{t("flyerSpotlight.eyebrow")}</p>
+            <h2>{t("flyerSpotlight.title")}</h2>
+            <span>{t("flyerSpotlight.copy")}</span>
+            <NeonButton href="#signup">{t("flyerSpotlight.cta")}</NeonButton>
+          </div>
+          <div className="portal-flyer-pair">
+            <Image
+              src="/event-assets/getonvibe-october-3-halloween-flyer.png"
+              alt="Official GetOnVibe October 3 Halloween car wash event flyer"
+              width={1103}
+              height={1450}
+              priority
+            />
+            <Image
+              src="/event-assets/getonvibe-october-3-costume-kini-fixed.png"
+              alt={t("flyerSpotlight.alt")}
+              width={1103}
+              height={1450}
+            />
+          </div>
         </div>
       </section>
 
