@@ -26,7 +26,7 @@ export function CreatorOpportunitySection() {
       <div className="gateway-opportunity-heading">
         <p>Planned opportunities <span>Launching in phases</span></p>
         <h2 id="creator-opportunities-title">Your creativity.<br /><strong>More possibilities.</strong></h2>
-        <span>We&apos;re building GetOnVibe to help original creators get discovered, connect with brands, and explore paid creative opportunities—from selected GetOnVibe campaigns to brand collaborations, event work, and future creator memberships.</span>
+        <span>We&apos;re building GetOnVibe to help original creators get discovered, connect with brands, and explore paid creative opportunities. These may include selected GetOnVibe campaigns, brand collaborations, event work, and future creator memberships.</span>
         <Link href="/creators#early-access">Join the Creator Early-Access List <ArrowRight size={18} /></Link>
       </div>
       <div className="gateway-opportunity-paths">

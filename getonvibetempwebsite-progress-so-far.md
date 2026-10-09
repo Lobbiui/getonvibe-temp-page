@@ -531,3 +531,11 @@ The next likely areas to refine are browser reputation review follow-up, live em
 - Confirmed the new hero imagery contains no generated text, logos, fake metrics, or claimed creator work.
 - Desktop and mobile visual captures were reviewed for all four updated public pages with no horizontal overflow.
 
+### Transitional Preregistration Database Recovery
+
+- Provisioned a dedicated managed PostgreSQL database for the temporary public website and attached it only to the DigitalOcean App Platform service.
+- Applied the existing Prisma migrations at service startup without changing the separate GetOnVibe platform or its Convex data.
+- Verified preregistration persistence, repeat-submission deduplication, and merged Creator, Business, and Fan/Community interests with a controlled synthetic submission.
+- Removed the synthetic verification record after testing and kept database credentials out of source control and public output.
+- Reworded the remaining public creator-opportunity sentences so no em dashes appear in page verbiage.
+
