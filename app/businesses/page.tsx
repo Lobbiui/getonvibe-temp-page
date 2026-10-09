@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { PlatformPreregistrationForm } from "@/components/PlatformPreregistrationForm";
 import { PublicSiteHeader } from "@/components/PublicSiteHeader";
 import { CinematicPageHero } from "@/components/CinematicPageHero";
+import { BusinessCoreValue, InformationFAQ } from "@/components/PlatformClaritySections";
 
 export const metadata: Metadata = {
   title: "For Businesses | GetOnVibe",
@@ -34,6 +35,7 @@ export default function BusinessesPage() {
         <a className="gateway-primary-button" href="#early-access">Join the Business Early-Access List <ArrowRight size={18} /></a>
         <Link className="gateway-secondary-button" href="/platform">See the platform</Link>
       </CinematicPageHero>
+      <BusinessCoreValue />
       <section className="gateway-info-grid gateway-business-reasons">
         {reasons.map(([title, copy], index) => <article key={title}><span className="gateway-info-glyph">{String(index + 1).padStart(2, "0")}</span><h2>{title}</h2><p>{copy}</p></article>)}
       </section>
@@ -51,6 +53,7 @@ export default function BusinessesPage() {
         </div>
       </section>
       <section className="gateway-info-callout"><p>Built for discovery</p><h2>GetOnVibe creates demand. Your connected destinations do the rest.</h2><span>GetOnVibe is not the merchant of record and does not replace your commerce website. Business profiles are intended to make your work visible and send people to the official links you choose.</span><Link href="/contact">Talk with GetOnVibe <ArrowRight size={18} /></Link></section>
+      <InformationFAQ audience="business" />
       <PlatformPreregistrationForm defaultInterest="BUSINESS" source="business-page" heading="Tell us where your business wants to be discovered." />
     </main>
   );

@@ -4,6 +4,7 @@ import { PublicSiteHeader } from "@/components/PublicSiteHeader";
 import { PlatformPreregistrationForm } from "@/components/PlatformPreregistrationForm";
 import { CinematicPageHero } from "@/components/CinematicPageHero";
 import { PlatformExperienceShowcase } from "@/components/PlatformExperienceShowcase";
+import { InformationFAQ, PlatformStory, PlatformTrustAndLaunch } from "@/components/PlatformClaritySections";
 
 const surfaces = [
   { glyph: "01", title: "Pulse", copy: "Original creator activity and content in a continuous stream." },
@@ -31,6 +32,7 @@ export default function PlatformPage() {
           <Link className="gateway-primary-button" href="/creators">I&apos;m a creator <ArrowRight size={18} /></Link>
           <Link className="gateway-secondary-button" href="/businesses">I represent a business</Link>
       </CinematicPageHero>
+      <PlatformStory />
       <PlatformExperienceShowcase />
       <section className="gateway-info-grid">
         {surfaces.map(({ glyph, title, copy }) => (
@@ -41,12 +43,8 @@ export default function PlatformPage() {
           </article>
         ))}
       </section>
-      <section className="gateway-info-callout">
-        <p>Built in phases</p>
-        <h2>Clear promises. Real readiness gates.</h2>
-        <span>Early access begins with interest lists and a small founding preview. Pulse, Swipe, profiles, Around The Web, follows, and events lead the core beta. Momentum and connected Commerce arrive only after their release gates pass.</span>
-        <Link href="/events">Experience GetOnVibe through pop-up events <ArrowRight size={18} /></Link>
-      </section>
+      <PlatformTrustAndLaunch />
+      <InformationFAQ audience="platform" />
       <PlatformPreregistrationForm source="platform-page" heading="Choose every way you want to take part." />
     </main>
   );

@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { PlatformPreregistrationForm } from "@/components/PlatformPreregistrationForm";
 import { PublicSiteHeader } from "@/components/PublicSiteHeader";
 import { CinematicPageHero } from "@/components/CinematicPageHero";
+import { CreatorCoreValue, InformationFAQ } from "@/components/PlatformClaritySections";
 
 export const metadata: Metadata = {
   title: "For Creators | GetOnVibe",
@@ -37,6 +38,8 @@ export default function CreatorsPage() {
           <Link className="gateway-secondary-button" href="/platform">Explore the platform</Link>
       </CinematicPageHero>
 
+      <CreatorCoreValue />
+
       <section className="gateway-opportunity-detail" aria-labelledby="creator-opportunities-title">
         <div className="gateway-section-heading">
           <p>Planned opportunities / Launching in phases</p>
@@ -60,6 +63,8 @@ export default function CreatorsPage() {
         <div className="gateway-section-heading"><p>How participation is intended to work</p><h2 id="creator-process-title">Interest first.<br />Clear terms before work.</h2></div>
         <ol>{steps.map((step, index) => <li key={step}><span>{String(index + 1).padStart(2, "0")}</span><p>{step}</p></li>)}</ol>
       </section>
+
+      <InformationFAQ audience="creator" />
 
       <PlatformPreregistrationForm defaultInterest="CREATOR" source="creator-page" heading="Tell us how you want to create, connect, and grow." />
     </main>
