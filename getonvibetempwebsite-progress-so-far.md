@@ -586,3 +586,11 @@ The next likely areas to refine are browser reputation review follow-up, live em
 - Added server-side validation, bot-trap handling, and server-only Resend delivery with the visitor's email set as the reply address.
 - Kept Resend credentials out of the browser and added clear submission success and failure states.
 
+### Cinematic Front Door
+
+- Refined `/` into a dedicated, one-screen cinematic navigation portal rather than a conventional long-form landing page.
+- Centered the GetOnVibe signal mark and wordmark over the existing Higgsfield motion environment with subtle brand-colored orbital depth.
+- Placed `Find Your Vibe` directly above six large destinations: Platform, Creators, Businesses, Pop-Up Events, Early Access, and Contact.
+- Added `/early-access` as a focused home for the general creator, business, and community interest form.
+- Preserved every existing public destination and kept explicit Home navigation across the interior pages.
+

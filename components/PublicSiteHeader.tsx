@@ -20,7 +20,7 @@ export function PublicSiteHeader() {
       <nav aria-label="Public website navigation">
         {links.map((link) => <Link key={link.label} href={link.href}>{link.label}</Link>)}
       </nav>
-      <Link className="gateway-nav-cta" href="/#early-access">Join Early Access</Link>
+      <Link className="gateway-nav-cta" href="/early-access">Join Early Access</Link>
     </header>
   );
 }
