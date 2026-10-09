@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">GetOnVibe Creator Spotlight</title>
+  <desc id="desc">A creator steps into view as cyan, violet, and magenta signals amplify outward.</desc>
+  <defs>
+    <linearGradient id="cyanBeam" x1="7" y1="8" x2="35" y2="50" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#58FFF4"/>
+      <stop offset="1" stop-color="#08A9F5"/>
+    </linearGradient>
+    <linearGradient id="violetBeam" x1="27" y1="5" x2="52" y2="54" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5277FF"/>
+      <stop offset="1" stop-color="#8536F5"/>
+    </linearGradient>
+    <linearGradient id="magentaBeam" x1="17" y1="50" x2="60" y2="18" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF2DAC"/>
+      <stop offset="1" stop-color="#D91FF3"/>
+    </linearGradient>
+    <linearGradient id="creatorLight" x1="24" y1="15" x2="42" y2="50" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="0.58" stop-color="#DFFFFF"/>
+      <stop offset="1" stop-color="#66F7EF"/>
+    </linearGradient>
+    <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="1.8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <path d="M7 13 31 5l-3 10-11 4-5 12 6 13 10 5-4 10C12 55 4 45 4 32 4 24 5 18 7 13Z" fill="url(#cyanBeam)"/>
+  <path d="M31 5c12 0 21 6 27 15l-11 2-8-7-11 1 3-11Z" fill="url(#violetBeam)"/>
+  <path d="m48 22 12-3c2 4 3 9 3 14 0 13-8 24-21 28l-3-10 10-6 4-11-5-12Z" fill="url(#magentaBeam)"/>
+
+  <path d="m8 23 10-4-5 7-8 3 3-6Z" fill="#07101A"/>
+  <path d="m47 16 10 3-8 1-7-4h5Z" fill="#07101A"/>
+  <path d="m50 45 8-5-4 8-8 5 4-8Z" fill="#07101A"/>
+
+  <g filter="url(#softGlow)">
+    <path d="M32 13c4.2 0 7.2 3.2 7.2 7.4 0 4.1-3 7.5-7.2 7.5s-7.2-3.4-7.2-7.5c0-4.2 3-7.4 7.2-7.4Z" fill="url(#creatorLight)"/>
+    <path d="M19.4 47.5c.8-10.3 5.3-16 12.6-16s11.8 5.7 12.6 16c-3.9 3.2-8 4.8-12.6 4.8s-8.7-1.6-12.6-4.8Z" fill="url(#creatorLight)"/>
+    <path d="m24.5 35.3-8.8-5.8-2.6 4.1 8.3 7.2 3.1-5.5Zm15 0 8.8-5.8 2.6 4.1-8.3 7.2-3.1-5.5Z" fill="url(#creatorLight)"/>
+  </g>
+
+  <path d="m10 49 10 3-7 2-7-3 4-2Z" fill="#36EDEA"/>
+  <path d="m48 8 9 2-7 3-6-2 4-3Z" fill="#8060FF"/>
+</svg>

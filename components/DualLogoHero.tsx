@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { BrandMark } from "@/components/BrandMark";
 
 export function DualLogoHero() {
   return (
@@ -22,14 +23,10 @@ export function DualLogoHero() {
         />
       </div>
       <div className="glass-panel glow-border flex min-h-36 items-center justify-center rounded-lg p-5">
-        <Image
-          src="/logos/GetOnVibe.png"
-          alt="GetOnVibe"
-          width={520}
-          height={260}
-          priority
-          className="h-auto w-full max-w-[340px] object-contain drop-shadow-[0_0_28px_rgba(6,182,212,0.36)]"
-        />
+        <div className="flex items-center gap-4 text-white">
+          <BrandMark size={84} />
+          <span className="text-2xl font-black uppercase tracking-[0.12em] sm:text-3xl">GetOnVibe</span>
+        </div>
       </div>
     </motion.div>
   );

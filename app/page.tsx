@@ -1,10 +1,5 @@
-import { HomeContent } from "@/components/HomeContent";
-import { LanguageProvider } from "@/components/LanguageProvider";
+import { PublicGateway } from "@/components/PublicGateway";
 
 export default function Home() {
-  return (
-    <LanguageProvider>
-      <HomeContent />
-    </LanguageProvider>
-  );
+  return <PublicGateway />;
 }

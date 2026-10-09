@@ -17,7 +17,7 @@ export function WhatIsGetOnVibe() {
       id="what-is-getonvibe"
       eyebrow="Platform discovery"
       title="What Is GetOnVibe?"
-      copy="GetOnVibe is where people discover food, gear, culture, events, creators, and community."
+      copy="GetOnVibe is where people discover original creators, follow their work across the web, and find the events and communities growing around them."
     >
       <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="glass-panel glow-border rounded-lg p-6 sm:p-8">

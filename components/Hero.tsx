@@ -68,7 +68,7 @@ export function Hero() {
               ONVIBE Festival Lands in Nashville
             </h1>
             <p className="mt-5 text-2xl font-black uppercase tracking-[0.16em] text-fuchsia-200 sm:text-3xl">
-              Food. Gear. Culture.
+              Original Creators. Real Community.
             </p>
             <p className="mt-2 text-3xl font-black text-white sm:text-5xl">
               Find Your Vibe.

@@ -13,7 +13,7 @@ const ecosystemLinks = [
   {
     headline: "For Businesses",
     subheadline: "Your Business Just Became Discoverable.",
-    copy: "Connect with customers. Connect with creators. Promote products. Promote events. Build visibility inside the Food. Gear. Culture. ecosystem.",
+    copy: "Connect with audiences and creators. Promote events, collaborations, and opportunities. Build visibility inside a creator-first discovery network.",
     href: "https://business.getonvibe.com",
     icon: Building2,
   },
@@ -25,7 +25,7 @@ export function EcosystemLinks() {
       id="ecosystem-links"
       eyebrow="GetOnVibe ecosystem"
       title="Learn More About The GetOnVibe Ecosystem"
-      copy="Explore how GetOnVibe supports the people and businesses shaping Food. Gear. Culture."
+      copy="Explore how GetOnVibe helps original creators get discovered and gives businesses meaningful ways to support and amplify their work."
       className="pt-0"
     >
       <div className="grid gap-5 lg:grid-cols-2">

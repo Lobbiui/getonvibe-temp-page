@@ -1,37 +1,36 @@
-import { Shirt, Sparkles, Utensils } from "lucide-react";
 import { NeonButton } from "@/components/NeonButton";
 import { Section } from "@/components/Section";
 
 const pillars = [
   {
-    title: "Food",
-    icon: Utensils,
-    items: ["Restaurants", "Food Trucks", "Festival Vendors"],
+    number: "01",
+    title: "Creators",
+    items: ["Music", "Video", "Live Streams", "Original Work"],
   },
   {
-    title: "Gear",
-    icon: Shirt,
-    items: ["Alternative Products", "Apparel", "Accessories", "Festival Essentials"],
+    number: "02",
+    title: "Discovery",
+    items: ["Profiles", "Events", "Collaborations", "Around The Web"],
   },
   {
-    title: "Culture",
-    icon: Sparkles,
-    items: ["Creators", "Music", "Events", "Community"],
+    number: "03",
+    title: "Community",
+    items: ["Audiences", "Brands", "Venues", "Local Scenes"],
   },
 ];
 
 export function FoodGearCulture() {
   return (
     <Section
-      id="food-gear-culture"
-      eyebrow="Lifestyle ecosystem"
-      title="Food. Gear. Culture."
-      copy="GetOnVibe expands beyond a single category into a broader lifestyle ecosystem for discovery, local visibility, creators, and real-world event energy."
+      id="creator-discovery-network"
+      eyebrow="The creator discovery network"
+      title="Online presence. Real-world connection."
+      copy="GetOnVibe connects original creators, the places their work lives, the audiences looking for them, and the opportunities that help them grow."
     >
       <div className="grid gap-5 lg:grid-cols-3">
         {pillars.map((pillar) => (
           <article key={pillar.title} className="glass-panel glow-border rounded-lg p-6">
-            <pillar.icon className="mb-5 h-8 w-8 text-fuchsia-300" aria-hidden="true" />
+            <span className="mb-5 block text-sm font-black tracking-[0.18em] text-cyan-300" aria-hidden="true">{pillar.number}</span>
             <h3 className="text-3xl font-black text-white">{pillar.title}</h3>
             <ul className="mt-5 space-y-3">
               {pillar.items.map((item) => (

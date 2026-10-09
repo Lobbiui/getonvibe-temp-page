@@ -14,12 +14,12 @@ const faqs = [
   {
     question: "What is GetOnVibe?",
     answer:
-      "GetOnVibe is a discovery platform built around Food, Gear, and Culture. It helps people discover local stores, creators, events, products, food vendors, and experiences while connecting with the communities that move culture. Find Your Vibe.",
+      "GetOnVibe is a creator discovery and amplification platform. It helps people find original creators, follow their work across the web, and discover the events, collaborations, and communities growing around them.",
   },
   {
     question: "What is ONVIBE Festival?",
     answer:
-      "ONVIBE Festival is the real-world expression of the GetOnVibe ecosystem. It brings together music, creators, vendors, food, competitions, community, and culture into one immersive 21+ experience. Food. Gear. Culture. Live.",
+      "ONVIBE Festival is a real-world expression of the GetOnVibe creator ecosystem. It brings together music, creators, vendors, food, competitions, and community in one immersive 21+ experience.",
   },
   {
     question: "Is this a music festival?",
@@ -44,12 +44,12 @@ const faqs = [
   {
     question: "Do I need to compete to attend ONVIBE Festival?",
     answer:
-      "No. ONVIBE Festival is designed for everyone. While attendees will have the opportunity to participate in competitions, competing is completely optional. Come enjoy the music, discover new brands, explore food vendors, connect with creators, meet new people, and experience the official launch of GetOnVibe. Food. Gear. Culture. Find Your Vibe.",
+      "No. ONVIBE Festival is designed for everyone. While attendees will have the opportunity to participate in competitions, competing is completely optional. Come enjoy the music, discover new brands, explore food vendors, connect with creators, meet new people, and experience GetOnVibe in real life.",
   },
   {
     question: "Why is ONVIBE Festival different?",
     answer:
-      "ONVIBE Festival combines Food, Gear, and Culture into one experience: music, creators, vendors, competitions, community, and the launch of GetOnVibe all in one place.",
+      "ONVIBE Festival brings online discovery into one real-world experience: music, creators, vendors, competitions, community, and GetOnVibe all in one place.",
   },
   {
     question: "Do I need a GetOnVibe account to attend?",
