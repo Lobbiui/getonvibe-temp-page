@@ -7,14 +7,14 @@ const ecosystemLinks = [
     headline: "For Creators",
     subheadline: "Build Your Movement.",
     copy: "Get discovered. Build storefronts. Create subscriptions. Promote exclusive content. Connect directly with businesses.",
-    href: "https://creators.getonvibe.com",
+    href: "/creators",
     icon: UsersRound,
   },
   {
     headline: "For Businesses",
     subheadline: "Your Business Just Became Discoverable.",
     copy: "Connect with audiences and creators. Promote events, collaborations, and opportunities. Build visibility inside a creator-first discovery network.",
-    href: "https://business.getonvibe.com",
+    href: "/businesses",
     icon: Building2,
   },
 ];

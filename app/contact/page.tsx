@@ -1,4 +1,5 @@
 import { PublicSiteHeader } from "@/components/PublicSiteHeader";
+import { CinematicPageHero } from "@/components/CinematicPageHero";
 
 const contacts = [
   { glyph: "01", title: "Events & Hosting", copy: "Pop-up hosting, venues, creator opportunities, and community activations." },
@@ -11,12 +12,18 @@ export default function ContactPage() {
   return (
     <main className="gateway-page gateway-information-page">
       <PublicSiteHeader />
-      <section className="gateway-info-hero">
-        <p className="gateway-kicker">Contact GetOnVibe</p>
-        <h1>Let&apos;s connect.</h1>
-        <p>For partnerships, press, sponsorships, event hosting, or general questions, reach the GetOnVibe team directly.</p>
+      <CinematicPageHero
+        accent="Let's make the connection."
+        description="For partnerships, press, sponsorships, event hosting, creator opportunities, or a real idea worth bringing to the community, reach the GetOnVibe team directly."
+        eyebrow="Contact GetOnVibe"
+        image="/brand/page-heroes/contact.png"
+        imageAlt="Backstage production table with contact sheets, passes, cables, and creative notes"
+        note="Real people. Clear conversations. No mystery inbox."
+        title="Bring something real."
+        variant="contact"
+      >
         <a className="gateway-primary-button" href="mailto:hello@getonvibe.com">hello@getonvibe.com</a>
-      </section>
+      </CinematicPageHero>
       <section className="gateway-info-grid gateway-contact-grid">
         {contacts.map(({ glyph, title, copy }) => (
           <article key={title}>

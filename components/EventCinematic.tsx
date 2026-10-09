@@ -107,7 +107,7 @@ function CinematicComposition() {
           Halloween Event
         </div>
         <div style={{ marginTop: 9, color: "#facc15", fontSize: compact ? 17 : 29, fontWeight: 900, textTransform: "uppercase" }}>
-          October 3 | 12PM to 3PM
+          Previous Event | October 3 | 12PM to 3PM
         </div>
       </div>
 
@@ -193,6 +193,7 @@ export function EventCinematic() {
         fps={30}
         autoPlay
         loop
+        controls
         acknowledgeRemotionLicense
         style={{ width: "100%", height: "100%" }}
       />

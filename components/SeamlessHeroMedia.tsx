@@ -8,10 +8,11 @@ export function SeamlessHeroMedia() {
   const videos = useRef<Array<HTMLVideoElement | null>>([]);
   const switching = useRef(false);
   const activeRef = useRef(0);
+  const pausedRef = useRef(false);
   const [active, setActive] = useState(0);
 
   const switchLayer = useCallback((fromIndex: number) => {
-    if (switching.current || fromIndex !== activeRef.current) return;
+    if (pausedRef.current || switching.current || fromIndex !== activeRef.current) return;
 
     const nextIndex = fromIndex === 0 ? 1 : 0;
     const currentVideo = videos.current[fromIndex];
@@ -36,14 +37,32 @@ export function SeamlessHeroMedia() {
 
   useEffect(() => {
     const first = videos.current[0];
-    if (first) void first.play().catch(() => undefined);
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    pausedRef.current = reducedMotion;
+    if (first && !reducedMotion) void first.play().catch(() => undefined);
+
+    function updateMotion(event: Event) {
+      const paused = (event as CustomEvent<{ paused: boolean }>).detail.paused;
+      pausedRef.current = paused;
+
+      if (paused) {
+        videos.current.forEach((video) => video?.pause());
+        return;
+      }
+
+      const current = videos.current[activeRef.current];
+      if (current) void current.play().catch(() => undefined);
+    }
+
+    window.addEventListener("gateway-motion-toggle", updateMotion);
+    return () => window.removeEventListener("gateway-motion-toggle", updateMotion);
   }, []);
 
   return (
     <div className="gateway-hero-video-shell" aria-hidden="true">
       {[0, 1].map((index) => (
         <video
-          autoPlay={index === 0}
+          autoPlay={false}
           className={`gateway-hero-video ${active === index ? "is-active" : ""}`}
           key={index}
           muted

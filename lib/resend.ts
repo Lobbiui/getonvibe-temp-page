@@ -3,6 +3,8 @@ import type { ModelRelease } from "@prisma/client";
 import { Resend } from "resend";
 import { buildModelReleasePdf } from "@/lib/model-release";
 import type { SignupPayload, SubmissionType } from "@/lib/validation";
+import type { PlatformLeadPayload } from "@/lib/platform-preregistration";
+import { audienceInterestLabels, creatorOpportunityLabels } from "@/lib/platform-preregistration";
 import { formatFieldLabel } from "@/lib/utils";
 
 const audienceEnvByType: Partial<Record<SubmissionType, string>> = {
@@ -878,4 +880,75 @@ export async function sendLeadEmails(payload: SignupPayload): Promise<LeadEmailR
     internalNotificationSucceeded: failedInternalCount === 0,
     confirmationSucceeded: true,
   };
+}
+
+export async function sendPlatformLeadEmails(payload: PlatformLeadPayload) {
+  const resend = getResendClient();
+  const from = process.env.RESEND_FROM_EMAIL;
+  const internalFrom = getInternalFromEmail();
+  const notifyRecipients = getNotifyRecipients();
+
+  if (!resend || !from || !internalFrom) {
+    return "skipped" as const;
+  }
+
+  const audience = payload.audienceInterests.map((interest) => audienceInterestLabels[interest]).join(", ");
+  const opportunities = payload.creatorOpportunityInterests
+    .map((interest) => creatorOpportunityLabels[interest])
+    .join(", ");
+
+  const internalBody = `
+    <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
+      <h1 style="margin:0 0 12px;font-size:24px;">New GetOnVibe early-access interest</h1>
+      <p><strong>Name:</strong> ${htmlEscape(payload.name)}</p>
+      <p><strong>Email:</strong> ${htmlEscape(payload.email)}</p>
+      <p><strong>Audience interests:</strong> ${htmlEscape(audience)}</p>
+      <p><strong>Creator opportunities:</strong> ${htmlEscape(opportunities || "None selected")}</p>
+      <p><strong>Website:</strong> ${htmlEscape(payload.website || "Not provided")}</p>
+      <p><strong>Source:</strong> ${htmlEscape(payload.source || "Direct")}</p>
+    </div>
+  `;
+
+  const internalResults = await Promise.allSettled(
+    notifyRecipients.map((recipient) =>
+      resend.emails.send({
+        from: internalFrom,
+        to: recipient,
+        replyTo: payload.email,
+        subject: "New GetOnVibe early-access interest",
+        html: internalBody,
+      }),
+    ),
+  );
+
+  const internalFailures = internalResults.filter(
+    (result) => result.status === "rejected" || resendSendFailed(result.value),
+  ).length;
+
+  if (internalFailures > 0) {
+    console.error("Platform lead notification failed", {
+      failedRecipientCount: internalFailures,
+      totalRecipientCount: notifyRecipients.length,
+    });
+  }
+
+  const confirmation = await resend.emails.send({
+    from,
+    to: payload.email,
+    subject: "You are on the GetOnVibe early-access list",
+    html: `
+      <div style="background:#020617;color:#f8fafc;font-family:Arial,sans-serif;padding:24px;">
+        <h1 style="margin:0 0 12px;font-size:24px;">Find Your Vibe.</h1>
+        <p style="color:#cbd5e1;line-height:1.6;">Thanks for joining the GetOnVibe early-access interest list.</p>
+        <p style="color:#cbd5e1;line-height:1.6;">We recorded your interest in: ${htmlEscape(audience)}.</p>
+        <p style="color:#cbd5e1;line-height:1.6;">This does not create an active platform account or guarantee selection for creator opportunities. We will contact you when the right onboarding path opens.</p>
+      </div>
+    `,
+  });
+
+  if (resendSendFailed(confirmation)) {
+    throw new Error("Platform lead confirmation failed.");
+  }
+
+  return "sent" as const;
 }

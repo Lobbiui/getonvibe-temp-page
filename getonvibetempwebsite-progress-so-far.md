@@ -503,3 +503,31 @@ The next likely areas to refine are browser reputation review follow-up, live em
 - Kept the mark open and asymmetrical so it communicates movement beyond a closed platform.
 - Verified the production SVG in the live landing-page header at desktop and mobile viewport sizes.
 
+### Public Preregistration And Creator Opportunities
+
+- Added a durable GetOnVibe early-access interest list for creators, businesses, and fans/community members; visitors can preserve multiple interests in one submission.
+- Added phased creator-opportunity interests for GetOnVibe promotional assignments, coordinated brand campaigns, direct brand collaborations, events/activations, general onboarding, and future membership updates.
+- Added internal `/creators` and `/businesses` information routes so public education and signup no longer depend on unavailable subdomains.
+- Restored `Find Your Vibe.` as the primary homepage message and retained `Find your people.` as supporting language.
+- Added the homepage `Your creativity. More possibilities.` section, three paid-work paths, and an explicitly illustrative creator-profile example.
+- Made preregistration the primary homepage closing action while keeping partnerships, press, sponsorships, and contact secondary.
+- Added admin visibility for audience interests, opportunity interests, source, consent time, and confirmation status.
+- Saves occur before confirmation email delivery; email failure does not remove a saved lead, and repeat submissions merge interests by normalized email.
+- Added a visible ambient-motion pause/resume control and reduced-motion behavior.
+- Added an obvious route from ONVIBE Events back to the GetOnVibe homepage, retained future dates as TBA, and labeled October 3 as a previous event.
+- Verified `/`, `/platform`, `/creators`, `/businesses`, `/events`, `/contact`, and `/admin/login` return successfully in local development.
+- Verified malformed preregistration requests return validation errors and bot-trap submissions do not create records.
+- `npx tsc --noEmit`, `npm run lint`, and `npm run build` pass. This repo does not define an `npm run typecheck` script.
+- Production database migration and true end-to-end lead/email verification remain release steps; no production deployment or DNS change was made in this work.
+
+### Cinematic Public Pathway Heroes
+
+- Added distinct cinematic hero experiences to `/platform`, `/creators`, `/businesses`, and `/contact` so the visual energy of the homepage continues through every primary public pathway.
+- Created four purpose-built Higgsfield images grounded in real creative environments: a connected production table, a multidisciplinary creator studio, an independent culture storefront, and a backstage collaboration table.
+- Added a shared cinematic hero system with media-first compositions, expressive type, moving cyan/violet/magenta light currents, subtle texture, clear calls to action, and page-specific positioning.
+- Preserved the existing cinematic homepage and ONVIBE Events presentation rather than replacing their established visual systems.
+- Fixed a broad layout rule that pulled the public header into document flow and created excess space above inner-page artwork; the public header now remains fixed as designed.
+- Kept ambient motion controllable and compatible with reduced-motion preferences, with mobile controls positioned below expanded navigation.
+- Confirmed the new hero imagery contains no generated text, logos, fake metrics, or claimed creator work.
+- Desktop and mobile visual captures were reviewed for all four updated public pages with no horizontal overflow.
+

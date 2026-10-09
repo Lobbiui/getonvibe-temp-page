@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { EventCinematic } from "@/components/EventCinematic";
 import { LanguageSelector, useLanguage } from "@/components/LanguageProvider";
 import { NeonButton } from "@/components/NeonButton";
@@ -60,7 +61,7 @@ export function HomeContent() {
   return (
     <main className="event-portal" id="top" lang={language} dir={language === "ar" ? "rtl" : "ltr"}>
       <header className="portal-header">
-        <a href="#top" className="portal-logo">ONVIBE Events</a>
+        <Link href="/" className="portal-logo">GetOnVibe Home</Link>
         <nav aria-label="Main navigation">
           <a href="#tour-dates">{t("nav.tourDates")}</a>
           <a href="#experience">{t("nav.experience")}</a>

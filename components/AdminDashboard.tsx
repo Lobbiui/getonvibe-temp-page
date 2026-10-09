@@ -40,14 +40,30 @@ type AdminInterest = {
   event: AdminEvent;
 };
 
+type AdminPlatformLead = {
+  id: string;
+  name: string;
+  email: string;
+  audienceInterests: string[];
+  creatorOpportunityInterests: string[];
+  website: string | null;
+  sourceFirst: string | null;
+  sourceLatest: string | null;
+  consentAt: string;
+  confirmationStatus: string;
+  lastSubmittedAt: string;
+};
+
 export function AdminDashboard({
   accounts,
   events,
   interests,
+  platformLeads,
 }: {
   accounts: AdminAccount[];
   events: AdminEvent[];
   interests: AdminInterest[];
+  platformLeads: AdminPlatformLead[];
 }) {
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState("");
@@ -135,10 +151,45 @@ export function AdminDashboard({
       </section>
 
       <section className="dashboard-stats">
+        <div><strong>{platformLeads.length}</strong><span>Platform interests</span></div>
+        <div><strong>{platformLeads.filter((lead) => lead.audienceInterests.includes("CREATOR")).length}</strong><span>Creators</span></div>
+        <div><strong>{platformLeads.filter((lead) => lead.audienceInterests.includes("BUSINESS")).length}</strong><span>Businesses</span></div>
+        <div><strong>{platformLeads.filter((lead) => lead.audienceInterests.includes("FAN_COMMUNITY")).length}</strong><span>Fans / Community</span></div>
+      </section>
+
+      <section className="dashboard-stats">
         <div><strong>{pendingAccounts.length}</strong><span>Pending approvals</span></div>
         <div><strong>{events.length}</strong><span>Posted events</span></div>
         <div><strong>{interests.length}</strong><span>Total event responses</span></div>
         <div><strong>{interests.filter((interest) => interest.status === "SELECTED").length}</strong><span>Confirmed</span></div>
+      </section>
+
+      <section className="dashboard-card">
+        <h2>GetOnVibe Early Access</h2>
+        <p className="dashboard-muted">Platform interest-list submissions, selected paths, source, consent, and confirmation status.</p>
+        <div className="dashboard-table dashboard-lead-table">
+          {platformLeads.map((lead) => (
+            <article key={lead.id}>
+              <div>
+                <strong>{lead.name}</strong>
+                <span>{lead.email}</span>
+                {lead.website && <a href={lead.website} target="_blank" rel="noopener noreferrer">Open submitted link</a>}
+              </div>
+              <div>
+                <strong>{lead.audienceInterests.map(formatInterest).join(" / ")}</strong>
+                <span>{lead.creatorOpportunityInterests.length > 0 ? lead.creatorOpportunityInterests.map(formatInterest).join(", ") : "No creator opportunity selections"}</span>
+              </div>
+              <div>
+                <strong>{lead.sourceLatest || "Direct"}</strong>
+                <span>Consent: {new Date(lead.consentAt).toLocaleString()}</span>
+              </div>
+              <span className={`dashboard-pill ${lead.confirmationStatus === "SENT" ? "selected" : ""}`}>
+                {lead.confirmationStatus}
+              </span>
+            </article>
+          ))}
+          {platformLeads.length === 0 && <p className="dashboard-muted">No platform early-access submissions yet.</p>}
+        </div>
       </section>
 
       {pendingAccounts.length > 0 && (
@@ -369,6 +420,14 @@ function getResponseLabel(interest: AdminInterest) {
   }
 
   return "Wants to work event";
+}
+
+function formatInterest(value: string) {
+  return value
+    .toLowerCase()
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }
 
 function getAudienceLabel(audience: (typeof messageAudiences)[number]) {

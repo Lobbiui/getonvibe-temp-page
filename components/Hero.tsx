@@ -29,13 +29,13 @@ export function Hero() {
         <nav aria-label="GetOnVibe ecosystem" className="mb-4 flex justify-center sm:justify-end">
           <div className="glass-panel flex flex-wrap items-center justify-center gap-2 rounded-md px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-cyan-100">
             <a
-              href="https://creators.getonvibe.com"
+              href="/creators"
               className="rounded px-3 py-2 transition hover:bg-cyan-300/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-300"
             >
               Creators
             </a>
             <a
-              href="https://business.getonvibe.com"
+              href="/businesses"
               className="rounded px-3 py-2 transition hover:bg-fuchsia-300/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-300"
             >
               Businesses

@@ -3,8 +3,8 @@ import { BrandMark } from "@/components/BrandMark";
 
 const links = [
   { href: "/platform", label: "Platform" },
-  { href: "https://creators.getonvibe.com", label: "Creators", external: true },
-  { href: "https://business.getonvibe.com", label: "Businesses", external: true },
+  { href: "/creators", label: "Creators" },
+  { href: "/businesses", label: "Businesses" },
   { href: "/events", label: "Pop-Up Events" },
   { href: "/contact", label: "Contact" },
 ];
@@ -17,15 +17,9 @@ export function PublicSiteHeader() {
         <span>GetOnVibe</span>
       </Link>
       <nav aria-label="Public website navigation">
-        {links.map((link) =>
-          link.external ? (
-            <a key={link.label} href={link.href}>{link.label}</a>
-          ) : (
-            <Link key={link.label} href={link.href}>{link.label}</Link>
-          ),
-        )}
+        {links.map((link) => <Link key={link.label} href={link.href}>{link.label}</Link>)}
       </nav>
-      <a className="gateway-nav-cta" href="/#pathways">Join Early Access</a>
+      <Link className="gateway-nav-cta" href="/#early-access">Join Early Access</Link>
     </header>
   );
 }

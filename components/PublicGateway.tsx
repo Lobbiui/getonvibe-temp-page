@@ -5,6 +5,10 @@ import { BrandMark } from "@/components/BrandMark";
 import { DiscoveryStage } from "@/components/DiscoveryStage";
 import { PublicSiteHeader } from "@/components/PublicSiteHeader";
 import { SeamlessHeroMedia } from "@/components/SeamlessHeroMedia";
+import { AmbientMotionControl } from "@/components/AmbientMotionControl";
+import { CreatorOpportunitySection } from "@/components/CreatorOpportunitySection";
+import { IllustrativeCreatorProfile } from "@/components/IllustrativeCreatorProfile";
+import { PlatformPreregistrationForm } from "@/components/PlatformPreregistrationForm";
 
 const pathways = [
   {
@@ -16,7 +20,7 @@ const pathways = [
     glyph: "01",
   },
   {
-    href: "https://creators.getonvibe.com",
+    href: "/creators",
     eyebrow: "For Creators",
     title: "Put your whole presence in one place.",
     copy: "Give people one profile for your work, links, events, collaborations, and everything you want them to find next.",
@@ -24,7 +28,7 @@ const pathways = [
     glyph: "02",
   },
   {
-    href: "https://business.getonvibe.com",
+    href: "/businesses",
     eyebrow: "For Businesses",
     title: "Be easier to find and follow.",
     copy: "Show people who you are, what is happening, where to visit, and where to shop through the links you control.",
@@ -38,6 +42,14 @@ const pathways = [
     copy: "Find GetOnVibe and ONVIBE pop-ups, local activations, creator opportunities, and future event dates.",
     action: "View pop-up events",
     glyph: "04",
+  },
+  {
+    href: "/#early-access",
+    eyebrow: "For Fans & Community",
+    title: "Find the people worth following.",
+    copy: "Discover original creators, new work, live moments, and communities without keeping every platform open.",
+    action: "Join the discovery list",
+    glyph: "05",
   },
 ];
 
@@ -54,6 +66,7 @@ export function PublicGateway() {
         <span /><span /><span />
       </div>
       <PublicSiteHeader />
+      <AmbientMotionControl />
 
       <section className="gateway-hero">
         <Image
@@ -68,13 +81,14 @@ export function PublicGateway() {
         <div className="gateway-hero-shade" />
         <div className="gateway-hero-copy">
           <p className="gateway-kicker">The creator discovery network</p>
-          <h1><span>Find Your</span><strong>People.</strong></h1>
+          <h1><span>Find Your</span><strong>Vibe.</strong></h1>
+          <p className="gateway-hero-support">Find your people. Follow their whole world.</p>
           <p className="gateway-pillars" aria-label="Discover, follow, amplify">
             <span>Discover.</span><span>Follow.</span><span>Amplify.</span>
           </p>
           <p className="gateway-lede">One place to discover original creators, follow everything they make across the web, and catch what they do next.</p>
           <div className="gateway-actions">
-            <a className="gateway-primary-button" href="#pathways">Join the early-access list <ArrowRight size={19} /></a>
+            <a className="gateway-primary-button" href="#early-access">Join the early-access list <ArrowRight size={19} /></a>
             <Link className="gateway-secondary-button" href="/platform">See how it works</Link>
           </div>
           <p className="gateway-status">GetOnVibe is opening in phases. Join the early-access list to help shape a better home for creator discovery.</p>
@@ -113,6 +127,9 @@ export function PublicGateway() {
         <DiscoveryStage />
       </section>
 
+      <CreatorOpportunitySection />
+      <IllustrativeCreatorProfile />
+
       <section id="pathways" className="gateway-pathways" aria-labelledby="pathways-title">
         <div className="gateway-section-heading">
           <p>Choose your path</p>
@@ -145,9 +162,11 @@ export function PublicGateway() {
         <div>
           <p>GetOnVibe is being built around real creators, businesses, places, and communities. The work stays yours. The audience relationship stays yours. We simply make the trail easier to follow.</p>
           <p>Our visual world can move, glow, and experiment. What it will not do is manufacture a community that is not there. People, places, reviews, events, and creative work should come from real sources with permission.</p>
-          <a href="https://creators.getonvibe.com">Founding creators: show us what you make <ArrowRight size={18} /></a>
+          <Link href="/creators">Founding creators: show us what you make <ArrowRight size={18} /></Link>
         </div>
       </section>
+
+      <PlatformPreregistrationForm source="homepage" />
 
       <section className="gateway-contact-strip">
         <BrandMark className="gateway-contact-signal" size={42} />

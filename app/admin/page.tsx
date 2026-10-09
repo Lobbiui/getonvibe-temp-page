@@ -16,7 +16,7 @@ export default async function AdminPage() {
     redirect("/admin/login");
   }
 
-  const [accounts, events, interests] = await Promise.all([
+  const [accounts, events, interests, platformLeads] = await Promise.all([
     prisma.account.findMany({
       include: { modelRelease: true },
       orderBy: { createdAt: "desc" },
@@ -31,6 +31,7 @@ export default async function AdminPage() {
       },
       orderBy: { createdAt: "desc" },
     }),
+    prisma.platformLead.findMany({ orderBy: { lastSubmittedAt: "desc" } }),
   ]);
 
   return (
@@ -95,6 +96,19 @@ export default async function AdminPage() {
           address: interest.event.address,
           startsAt: interest.event.startsAt.toISOString(),
         },
+      }))}
+      platformLeads={platformLeads.map((lead) => ({
+        id: lead.id,
+        name: lead.name,
+        email: lead.email,
+        audienceInterests: lead.audienceInterests,
+        creatorOpportunityInterests: lead.creatorOpportunityInterests,
+        website: lead.website,
+        sourceFirst: lead.sourceFirst,
+        sourceLatest: lead.sourceLatest,
+        consentAt: lead.consentAt.toISOString(),
+        confirmationStatus: lead.confirmationStatus,
+        lastSubmittedAt: lead.lastSubmittedAt.toISOString(),
       }))}
     />
   );
